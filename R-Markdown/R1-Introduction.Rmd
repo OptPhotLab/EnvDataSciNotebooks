@@ -1,0 +1,42 @@
+---
+title: "R1-Introduction"
+author: "Chao Jon Yann"
+date: "9 lokakuuta 2018"
+output: pdf_document
+---
+
+#1.variables and Arithmetic Operators and logical Operators
+
+A variable is something that .... This is how we assign a variable.
+
+A variable has a type, 
+
+**+**, **-**, * ,**/**,**=** 
+
+```{r }
+34+5
+```
+
+we can use operator to...
+
+```{r}
+54/6
+
+```
+
+#2. Basic data structure
+
+vector, factor,list
+
+
+
+#3. Conditions using vector
+
+
+
+#4. Advanced data structure: Dataframe and Matrices
+
+The main data structure we use in R 
+
+#5. Functions and Applying functions
+
