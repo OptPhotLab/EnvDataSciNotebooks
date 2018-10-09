@@ -20,7 +20,7 @@ A variable has a type,
 we can use operator to...
 
 ```{r}
-
+54/6
 ```
 
 #2. Basic data structure
