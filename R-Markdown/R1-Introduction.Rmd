@@ -5,38 +5,325 @@ date: "9 lokakuuta 2018"
 output: pdf_document
 ---
 
-#1.variables and Arithmetic Operators and logical Operators
+#1.variables and Operators
 
-A variable is something that .... This is how we assign a variable.
+A variable is used to store your data or various information that could be
+changed.
 
-A variable has a type, 
-
-**+**, **-**, * ,**/**,**=** 
-
-```{r }
-34+5
-```
-
-we can use operator to...
+##1.1. Assign a variable using <- , ->or =
+This is how we assign a variable using <- , ->or =
 
 ```{r}
-54/6
+x<-1
+#now we want to show the contents of x using print function 
+print(x)
+```
+
+```{r}
+y=c(12,3)
+print(y)
+```
+
+```{r}
+c('h','i',9)->z
+print(z)
+```
+
+##1.2. Names of the variables
+The name of a variable should be unique, and can consist of letters, numbers, underline or dots. The
+variable should start with: a letter or a dot (this dot cannot followed by a number), but cannot start
+with a number or underline.
+For example, can you find which variable name is not correct?
+
+x.1<-1 ; x_2<-2 ;.x<-3 ; 4y<-5 ; *_z<-6; _2<-7, .2a<-8*
+
+Try here:
+
+```{r}
 
 ```
 
-#2. Basic data structure
 
-vector, factor,list
+##1.3. Data types
+
+In R, there are 4 basic data types that are widely used, namely, a single data type. 
+
+character: ‘a’ 
+
+numeric: 2,0, or 5.6 
+
+integer: 4L (the L means R will store 4 as integer) 
+
+logical: TRUE, FALSE
+
+The data types of R objects can be the variable types. These variables can consist of a dataset.
+Try to find the type of above mentioned variables x,y,z using class(), and the structure of x,y,z using str()
+The common used structure of the dataset in R include:
+vector (basis), factor, matrix,array, data frame and list.
+
+##1.4. Operaters 
+
+we can use operator to. . .
++, -, *, /, =
+
+```{r}
+math1=5+6*8-9+5/6
+print(math1)
+```
+
+!=: not equal
+
+```{r}
+34!=5
+```
+
+: can be used to generate a sequence of numbers
+
+```{r}
+1:10
+```
 
 
 
-#3. Conditions using vector
+#2. Data structures and Control flow
+
+##2.1. A vector is the first basic data structure.
+
+Vectors are one dimension array that can consist of numberic, character,or logical data. All the elements inside a vector should be one data type (numberic, character,or logical).
+
+A vector is formed using function: c(), which combines all the arguments into one common type.
+
+For example (1) Create a vector named as a, store letters of b to e into a, (2) print a, (3) check type of a, and (4) structure of a.
+
+```{r}
+#(1)create a character vector: a
+a<-c('b','c','d','e')
+#(2)print: a
+print(a)
+```
+
+```{r}
+#(3)check type of a
+class(a)
+```
+
+```{r}
+#(4)check structure of a
+str(a)
+```
+
+Try to (1) create a vector named as a1, store first 10 numbers into a1,(2) print a1, (3) check type of a1, and
+(4) structure of a1.
+Which type of above mentiond variable z (z<-c(‘h’,‘i’,9))?
+
+```{r}
+
+```
+
+##2.1. A factor is created using a vector
+
+All the elements inside this factor will be character. A factor can efficiently store characters, because only
+once per character is stored.
+
+```{r}
+#create a vector
+treatment<-c('control','control','drought','nutrient','drought')
+#check the type of treatment
+class(treatment)
+```
+
+```{r}
+#check the structure of treatment
+str(treatment)
+```
+
+Now let’s create a factor and check the class and structure of this factor. 
+
+Can you see the difference between treatment and treatment.factor?
+
+```{r}
+#create a factor
+treatment.factor<-factor(treatment)
+#check the type
+class(treatment.factor)
+
+```
+
+```{r}
+#check the structure
+str(treatment.factor)
+```
+
+
+Yes, the numbers of these unique character are called levels, which can be examined using levels() function
+
+```{r}
+#check levels of treatment.factor
+levels(treatment.factor)
+```
+
+Try to create a factor named as plantnum.factor which is from a vector plant.number contains 5 elements
+c(1,2,3,3,2). How many levels plantnum.factor have, and what are they? Can you see the difference between
+plant.number and plantnum.factor?
+
+```{r}
+
+```
+
+##2.2. A list can contain mant types of datasets.
+
+A list is ...
+
+```{r}
+alist<-list(c('b','c','d','e'),
+            c('control','control','drought'),
+            c(1:10),
+            c(1L,3L),
+            88,
+            '%&()',
+            c(0.3,2.34,6.57,0),
+            3+9,
+            c('4','9'),
+            list(c(1,2,'g')))
+print(alist)
+```
+
+```{r}
+class(alist)
+```
+
+```{r}
+str(alist)
+
+```
+
+
+##2.3. Conditions and Loops using vector: if, for, while, repeat
+
+###2.3.1. if, if else, ifelse
+
+if (condition) {statement} or if (condition) statement
+
+```{r}
+x<-10
+if (x<5) {print('X is smaller than 5')}
+if (x>5) print('X is larger than 5')
+```
+
+if (condition) { statement1 } else { statement2 }
+or
+if (condition) { statement1 } else if (condition2){ statement2 } else if (condition3){ statement3 } else if
+(condition4){ statement4 } else { statement5 }
+
+```{r}
+y<-20
+if (y>10) {
+print ('y is larger than 10')
+} else {
+print('y is smaller than 10')
+}
+```
+
+```{r}
+y<-20
+if (y<0) {
+print ('y is a negative number')
+} else if (y==0) {
+print('y is 0')
+} else if (y>0 & y <10) {
+print('y is greater than 0 and smaller than 10')
+} else if (y==10) {
+print ('y is 10')
+} else if (y>10 & y <20){
+print ('y is greater than 10 and smaller than 20')
+} else {
+print ('y is 20')
+}
+
+```
+
+
+ifesle (statement, a, b) #if statement is true, print a, if false print b
+
+```{r}
+z<-c(1,10,30)
+ifelse (z==10|z>15,'yes','no')
+
+```
+
+##2.3.2. Loop: for, while and repeat
+
+
+#2.4 Advanced data structure: Dataframe 
+
+##2.4.1 Dataframe is the main and fundamental data structure used in R
+
+Dataframes are generated by data.frame() function, which has silimar format with the dataset we use in Excel, SPASS, SigmaPlot etc.
+
+In a dataframe: (1)the columns are variables, the rows are observations (the row numbers will be object numbers); (2) all the variables are of same length.
+
+```{r}
+#create a dataframe
+x=c(1:3)
+y=c('a','b','c')
+z=c(30,40,50)
+df1<-data.frame(x,y,z)
+#print df1
+print(df1)
+```
+
+```{r}
+#check the structure of df1
+str(df1)
+```
+
+Try to create a new dataframe names as mydata, which has 2 variables and 4 objects:
+
+```{r}
+
+```
+
+##2.3.2. A matix is a two-dimentsion array in where all the elements should be same type
+
+Matices are created by matrix() function.
 
 
 
-#4. Advanced data structure: Dataframe and Matrices
+```{r}
+d<-c(1:20)
+#create a matrix
+matr1<-matrix(d,nrow = 5,ncol=4,byrow = T,
+              dimnames =list(c('r1','r2','r3','r4','r5'),
+                             c('c1','c2','c3','c4')))
+matr1
+```
 
-The main data structure we use in R 
+```{r}
+str(matr1)
+```
 
-#5. Functions and Applying functions
+##2.3.3. An array is similar to a matrix, but can have more than two dimensions.
+
+Arrays are created by array() function
+
+```{r}
+x<-c('a1','a2','a3')
+y<-c('b1','b2')
+z<-c('c1','c2','c3','c4','c5')
+mydata<-c(1:30)
+array1<-array(mydata,c(3,2,5),
+dimnames = list(x,y,z))
+array1
+```
+
+#3. Functions and Applying functions
+##3.1.
+##3.2.
+##3.3. 
+
+##3.4. Extral funcitons
+
+car
+
+
 

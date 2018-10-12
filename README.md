@@ -16,3 +16,5 @@ library(rmd2jupyter)
 rmd2jupyter('C:/Users/.../test.Rmd')
 
 #3. open via your jupyter notebook method
+
+# rmd2jupyter('Z:/EnvDataSciNotebooks/R-Markdown/R1-Introduction.Rmd')
