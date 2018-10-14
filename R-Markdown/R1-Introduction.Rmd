@@ -451,8 +451,9 @@ print
 
 ```
 
-You can get information (help) on any function with the question 
-mark operator, try typing it out with print:
+You can get information (help) on any function by placing the question 
+mark operator at the front of a function (e.g "?function"), 
+try it out with print:
 ```{r}
 
 
@@ -570,9 +571,20 @@ more
 
 ## 5.1 installing packages 
 
-## 5.2 writing scripts and running files
+Functions are bundled together in packages (libraries). Each package
+has a general theme e.g. ggplot2 is for improved plotting capabilites.
+You can download packages using the *install.packages* function. 
 
-## 5.3 Additional resources
+## 5.2 Additional resources
+
+R is an opensource language, with an open source ethos! This means
+there are lots of good free resources available should you wish to 
+learn more about the fundamentals. For programmers coming from 
+other languages, be sure to check out *The R inferno*. There are also
+a bunch of online tutorials for you to follow should you 
+have time, Google is your friend here!
+
+
 
 
 
