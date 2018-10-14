@@ -7,6 +7,7 @@
 <ul>
 <li>variable and operators</li>
 <li>data types</li>
+<li>objects<br /></li>
 <li>Data structures</li>
 <li>lists</li>
 <li>factors</li>
@@ -69,6 +70,7 @@
 B&lt;-<span class="dv">3</span>:<span class="dv">6</span>
 <span class="kw">print</span>(A%in%B)</code></pre>
 <pre><code>##  [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
+<h3 id="objects">Objects</h3>
 <h1 id="data-structures-and-control-flow">2. Data structures and Control flow</h1>
 <h2 id="data-structures-are-...">2.1. Data structures are ...</h2>
 <p>Data structures are ...</p>
@@ -311,10 +313,16 @@ treatment.factor&lt;-<span class="kw">factor</span>(treatment)
 <pre><code>## [1] &quot;control&quot;  &quot;drought&quot;  &quot;nutrient&quot;</code></pre>
 <p>Try to create a factor named as <strong>plantnum.factor</strong> which is from a vector <strong>plant.number</strong> contains 5 elements c(1,2,3,3,2). How many levels <strong>plantnum.factor</strong> have, and what are they? Can you see the difference between <strong>plant.number</strong> and <strong>plantnum.factor</strong>?</p>
 <h1 id="functions-and-applying-functions">4. Functions and Applying functions</h1>
-<p>Functions are central to the way R works; think of them as the building blocks of larger programs.</p>
-<h2 id="section">4.1.</h2>
-<h2 id="section-1">4.2.</h2>
-<h2 id="section-2">4.3.</h2>
+<p>Functions are central to the way R works; think of them as the building blocks of larger programs. Just like building blocks, functions are elements of a larger whole. If you want to take the next step beyond writing simple scripts, then functions are your friend!</p>
+<p>In simple terms, a function takes an input, does something to it, then returns something else which is the results of that something.<br />In R language, functions consist of <em>arguments</em> which are the input, the <em>body</em> which is the bit where things happen, and the <em>name</em>, which is self evident!</p>
+<h2 id="built-in-functions">4.1. built-in functions</h2>
+<p>Most things in R involve functions, typically these are built-in to the language or perhaps part of a package that you have installed.</p>
+<p>When you print something to the screen then you are using the <strong>print</strong> function:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="st">&quot;print is a commonly used function!&quot;</span>)</code></pre>
+<pre><code>## [1] &quot;print is a commonly used function!&quot;</code></pre>
+<p>Sometimes there is more than one function that achieves a similar result. Can you think of another function that prints messages to the screen?</p>
+<h2 id="user-defined-functions">4.2. User-defined functions</h2>
+<h2 id="section">4.3.</h2>
 <h2 id="extra-functions-and-other-stuff">4.4. Extra functions and other stuff</h2>
 <p>cat() is similar print(paste())</p>
 <pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">2</span>

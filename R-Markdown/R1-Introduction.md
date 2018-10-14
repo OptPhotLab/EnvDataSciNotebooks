@@ -24,12 +24,13 @@ following terms and how they relate to R, then perhaps this tutorial is
 not for you. In this session we will go over:
 
 * variable and operators 
-* data types 
+* data types
+* objects  
 * Data structures 
 * lists 
 * factors
 * dataframes 
-* matrices 
+* matrices
 * functions 
 * applying functions.     
 
@@ -192,7 +193,7 @@ print(A%in%B)
 ```
 
 
-
+### Objects
 
 #2. Data structures and Control flow
 
@@ -643,12 +644,38 @@ c(1,2,3,3,2). How many levels **plantnum.factor** have, and what are they? Can y
 
 #4. Functions and Applying functions
 
-Functions are central to the way R works; think of them as the building
-blocks of larger programs.  
+Functions are central to the way R works; think of them as the
+building blocks of larger programs. Just like building blocks,
+functions are elements of a larger whole. If you want to take the next
+step beyond writing simple scripts, then functions are your friend!
 
-##4.1.
+In simple terms, a function takes an input, does something to it, 
+then returns something else which is the results of that something.  
+In R language, functions consist of *arguments* which are the input,
+the *body* which is the bit where things happen, and the *name*, which
+is self evident! 
 
-##4.2.
+##4.1. built-in functions
+
+Most things in R involve functions, typically these are built-in to 
+the language or perhaps part of a package that you have installed.
+
+When you print something to the screen then you are using the **print** 
+function:
+
+```r
+print("print is a commonly used function!")
+```
+
+```
+## [1] "print is a commonly used function!"
+```
+
+Sometimes there is more than one function that achieves a similar result.
+Can you think of another function that prints messages to the screen?
+
+
+##4.2. User-defined functions
 
 ##4.3. 
 
