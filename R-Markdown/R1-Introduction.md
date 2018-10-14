@@ -673,7 +673,7 @@ print("print is a commonly used function!")
 ## [1] "print is a commonly used function!"
 ```
 
-You can inspect the contents of a function by typing the function
+You can take a look at the contents of a function by typing the function
 name, but missing out the paranthesis:
 
 
@@ -684,9 +684,14 @@ print
 ```
 ## function (x, ...) 
 ## UseMethod("print")
-## <bytecode: 0x242bf60>
+## <bytecode: 0x2bf6db0>
 ## <environment: namespace:base>
 ```
+
+You can get information (help) on any function with the question 
+mark operator, try typing it out with print:
+
+
 The code inside the function is called the *body*, the input to the
 functions is referred to as the *argument*(s)
 
@@ -732,13 +737,62 @@ are familiar with. In essence apply functions are similar to for loops,
 in fact in R when you find yourself reaching for a for-loop we often ask
 ourselves can we use apply instead?
 
-Apply functions iterate (repeat) a function over a datastructure. Let's
-say you have a list containing a bunch of words.
+Apply functions iterate (repeat) a function over a datastructure. We
+can use the *paste* function to join two characters together e.g. 'hi '
+and 'there'
 
 
-  
+```r
+paste('hi ','there')
+```
 
-apply functions come in a few different flavours  
+```
+## [1] "hi  there"
+```
+We could use apply to paste 'hi' to list of different words. We 
+do this by defining a new *anonymous* function within the apply
+call. An *anonymous* function is simply a function with no name!
+Let's use the lapply function, as this is designed to work on 
+vectors
+
+
+```r
+sentenc.e <- c("This "," is a ", " setence." )
+
+
+# now lets use apply to mess up our sentence!
+
+nonsense <- lappy(sentenc.e, function(input) paste(input," oops ")  )  
+```
+
+```
+## Error in lappy(sentenc.e, function(input) paste(input, " oops ")): could not find function "lappy"
+```
+We have now turned out sentence into nonsense! However if you
+inspect the *class()* of  nonsense you will notice that it is a list!
+This is because lapply returns a list.
+To convert to an array you can use another function:
+
+
+```r
+nonsense <- unlist(nonsense)
+```
+
+```
+## Error in unlist(nonsense): object 'nonsense' not found
+```
+Now we have a character array, just like our original sentence.
+
+In R there are a bunch of apply functions, each one is intended for
+slighly different inputs and outpus :
+* lapply: input are vectors and lists. Outputs are list
+* apply: inputs are array or matrix,outputs vectors or array
+* sapply: input are vectors and lists. Outputs are "user friendly"
+
+what is the difference in using sapply over lapply in the example above?
+
+
+
 
 
 

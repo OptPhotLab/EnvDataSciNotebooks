@@ -321,12 +321,13 @@ treatment.factor&lt;-<span class="kw">factor</span>(treatment)
 <p>When you print something to the screen then you are using the <strong>print</strong> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="st">&quot;print is a commonly used function!&quot;</span>)</code></pre>
 <pre><code>## [1] &quot;print is a commonly used function!&quot;</code></pre>
-<p>You can inspect the contents of a function by typing the function name, but missing out the paranthesis:</p>
+<p>You can take a look at the contents of a function by typing the function name, but missing out the paranthesis:</p>
 <pre class="sourceCode r"><code class="sourceCode r">print</code></pre>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;print&quot;)
-## &lt;bytecode: 0x242bf60&gt;
+## &lt;bytecode: 0x2bf6db0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
+<p>You can get information (help) on any function with the question mark operator, try typing it out with print:</p>
 <p>The code inside the function is called the <em>body</em>, the input to the functions is referred to as the <em>argument</em>(s)</p>
 <p>Sometimes there is more than one function that achieves a similar result. Can you think of another function that prints messages to the screen?</p>
 <h2 id="user-defined-functions">4.2. User-defined functions</h2>
@@ -340,8 +341,23 @@ treatment.factor&lt;-<span class="kw">factor</span>(treatment)
 <p>One important note about functions; the output of an R function is whatever is calculated on the last line of the body. In our case we only have one line so that is what we get back.</p>
 <h2 id="the-apply-family-and-anonymous-functions">4.3. The apply family and anonymous functions</h2>
 <p>The <em>apply</em> family are a special group of functions that most R users are familiar with. In essence apply functions are similar to for loops, in fact in R when you find yourself reaching for a for-loop we often ask ourselves can we use apply instead?</p>
-<p>Apply functions iterate (repeat) a function over a datastructure. Let's say you have a list containing a bunch of words.</p>
-<p>apply functions come in a few different flavours</p>
+<p>Apply functions iterate (repeat) a function over a datastructure. We can use the <em>paste</em> function to join two characters together e.g. 'hi ' and 'there'</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">paste</span>(<span class="st">&#39;hi &#39;</span>,<span class="st">&#39;there&#39;</span>)</code></pre>
+<pre><code>## [1] &quot;hi  there&quot;</code></pre>
+<p>We could use apply to paste 'hi' to list of different words. We do this by defining a new <em>anonymous</em> function within the apply call. An <em>anonymous</em> function is simply a function with no name! Let's use the lapply function, as this is designed to work on vectors</p>
+<pre class="sourceCode r"><code class="sourceCode r">sentenc.e &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;This &quot;</span>,<span class="st">&quot; is a &quot;</span>, <span class="st">&quot; setence.&quot;</span> )
+
+
+<span class="co"># now lets use apply to mess up our sentence!</span>
+
+nonsense &lt;-<span class="st"> </span><span class="kw">lappy</span>(sentenc.e, function(input) <span class="kw">paste</span>(input,<span class="st">&quot; oops &quot;</span>)  )  </code></pre>
+<pre><code>## Error in lappy(sentenc.e, function(input) paste(input, &quot; oops &quot;)): could not find function &quot;lappy&quot;</code></pre>
+<p>We have now turned out sentence into nonsense! However if you inspect the <em>class()</em> of nonsense you will notice that it is a list! This is because lapply returns a list. To convert to an array you can use another function:</p>
+<pre class="sourceCode r"><code class="sourceCode r">nonsense &lt;-<span class="st"> </span><span class="kw">unlist</span>(nonsense)</code></pre>
+<pre><code>## Error in unlist(nonsense): object &#39;nonsense&#39; not found</code></pre>
+<p>Now we have a character array, just like our original sentence.</p>
+<p>In R there are a bunch of apply functions, each one is intended for slighly different inputs and outpus : * lapply: input are vectors and lists. Outputs are list * apply: inputs are array or matrix,outputs vectors or array * sapply: input are vectors and lists. Outputs are &quot;user friendly&quot;</p>
+<p>what is the difference in using sapply over lapply in the example above?</p>
 <h1 id="other-stuff">5. Other stuff</h1>
 <p>We have only scratched the very basics of R in this tutorial. We will cover more</p>
 <h2 id="getting-help">5.1. getting help</h2>
