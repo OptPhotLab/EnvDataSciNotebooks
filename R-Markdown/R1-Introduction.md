@@ -684,7 +684,7 @@ print
 ```
 ## function (x, ...) 
 ## UseMethod("print")
-## <bytecode: 0x2bf6db0>
+## <bytecode: 0x224ffb8>
 ## <environment: namespace:base>
 ```
 
@@ -770,8 +770,18 @@ nonsense <- lappy(sentenc.e, function(input) paste(input," oops ")  )
 ```
 We have now turned out sentence into nonsense! However if you
 inspect the *class()* of  nonsense you will notice that it is a list!
-This is because lapply returns a list.
-To convert to an array you can use another function:
+
+
+```r
+class(nonsense)
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'nonsense' not found
+```
+
+This is because lapply returns a list. Lists are a little tricky
+to work with. To convert back to a vector you can use another function:
 
 
 ```r
@@ -781,17 +791,16 @@ nonsense <- unlist(nonsense)
 ```
 ## Error in unlist(nonsense): object 'nonsense' not found
 ```
-Now we have a character array, just like our original sentence.
+Now we have a character vector, just like our original sentence.
 
 In R there are a bunch of apply functions, each one is intended for
-slighly different inputs and outpus :
+slighly different inputs and outputs. Here are a few that you may
+come across:
 * lapply: input are vectors and lists. Outputs are list
-* apply: inputs are array or matrix,outputs vectors or array
 * sapply: input are vectors and lists. Outputs are "user friendly"
+* mapply: multivariate version of sapply. Outputs are "user friendly"
 
 what is the difference in using sapply over lapply in the example above?
-
-
 
 
 
@@ -801,13 +810,11 @@ what is the difference in using sapply over lapply in the example above?
 We have only scratched the very basics of R in this tutorial. We will cover
 more  
 
-## 5.1. getting help
+## 5.1 installing packages 
 
-## 5.2 installing packages 
+## 5.2 writing scripts and running files
 
-## 5.3 writing scripts and running files
-
-## 5.4 Additional resources
+## 5.3 Additional resources
 
 
 

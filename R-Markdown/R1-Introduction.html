@@ -325,7 +325,7 @@ treatment.factor&lt;-<span class="kw">factor</span>(treatment)
 <pre class="sourceCode r"><code class="sourceCode r">print</code></pre>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;print&quot;)
-## &lt;bytecode: 0x2bf6db0&gt;
+## &lt;bytecode: 0x224ffb8&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p>You can get information (help) on any function with the question mark operator, try typing it out with print:</p>
 <p>The code inside the function is called the <em>body</em>, the input to the functions is referred to as the <em>argument</em>(s)</p>
@@ -352,15 +352,17 @@ treatment.factor&lt;-<span class="kw">factor</span>(treatment)
 
 nonsense &lt;-<span class="st"> </span><span class="kw">lappy</span>(sentenc.e, function(input) <span class="kw">paste</span>(input,<span class="st">&quot; oops &quot;</span>)  )  </code></pre>
 <pre><code>## Error in lappy(sentenc.e, function(input) paste(input, &quot; oops &quot;)): could not find function &quot;lappy&quot;</code></pre>
-<p>We have now turned out sentence into nonsense! However if you inspect the <em>class()</em> of nonsense you will notice that it is a list! This is because lapply returns a list. To convert to an array you can use another function:</p>
+<p>We have now turned out sentence into nonsense! However if you inspect the <em>class()</em> of nonsense you will notice that it is a list!</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(nonsense)</code></pre>
+<pre><code>## Error in eval(expr, envir, enclos): object &#39;nonsense&#39; not found</code></pre>
+<p>This is because lapply returns a list. Lists are a little tricky to work with. To convert back to a vector you can use another function:</p>
 <pre class="sourceCode r"><code class="sourceCode r">nonsense &lt;-<span class="st"> </span><span class="kw">unlist</span>(nonsense)</code></pre>
 <pre><code>## Error in unlist(nonsense): object &#39;nonsense&#39; not found</code></pre>
-<p>Now we have a character array, just like our original sentence.</p>
-<p>In R there are a bunch of apply functions, each one is intended for slighly different inputs and outpus : * lapply: input are vectors and lists. Outputs are list * apply: inputs are array or matrix,outputs vectors or array * sapply: input are vectors and lists. Outputs are &quot;user friendly&quot;</p>
+<p>Now we have a character vector, just like our original sentence.</p>
+<p>In R there are a bunch of apply functions, each one is intended for slighly different inputs and outputs. Here are a few that you may come across: * lapply: input are vectors and lists. Outputs are list * sapply: input are vectors and lists. Outputs are &quot;user friendly&quot; * mapply: multivariate version of sapply. Outputs are &quot;user friendly&quot;</p>
 <p>what is the difference in using sapply over lapply in the example above?</p>
 <h1 id="other-stuff">5. Other stuff</h1>
 <p>We have only scratched the very basics of R in this tutorial. We will cover more</p>
-<h2 id="getting-help">5.1. getting help</h2>
-<h2 id="installing-packages">5.2 installing packages</h2>
-<h2 id="writing-scripts-and-running-files">5.3 writing scripts and running files</h2>
-<h2 id="additional-resources">5.4 Additional resources</h2>
+<h2 id="installing-packages">5.1 installing packages</h2>
+<h2 id="writing-scripts-and-running-files">5.2 writing scripts and running files</h2>
+<h2 id="additional-resources">5.3 Additional resources</h2>
