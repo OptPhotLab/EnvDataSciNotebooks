@@ -7,7 +7,7 @@ output: pdf_document
 
 # *Readme* before starting!
 
-Welcome to Environmental Data Sciences introducting R session! In this
+Welcome to Environmental Data Sciences introducing R session. In this
 session we start from scratch and assume no prior knowledge of R. Fill in
 the blanks as you go to test your understanding.
 
@@ -15,9 +15,9 @@ Used R before?
 
 Did you glance at the first section and think, this is very basic? 
 
-It could still be worth going through this stuff to remind yourself
-of how it all starts, there might even be something you skipped over
-last time round. 
+It could still be worth going through the whole notebook or 
+just particular sections; there might even be something you skipped over
+first time round. 
 
 On the other hand if you understand and can explain each of the 
 following terms and how they relate to R, then perhaps this tutorial is
