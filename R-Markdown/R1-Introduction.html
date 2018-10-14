@@ -1,0 +1,327 @@
+<h1 id="readme-before-starting"><em>Readme</em> before starting!</h1>
+<p>Welcome to Environmental Data Sciences introducting R session! In this session we start from scratch and assume no prior knowledge of R. Fill in the blanks as you go to test your understanding.</p>
+<p>Used R before?</p>
+<p>Did you glance at the first section and think, this is very basic?</p>
+<p>It could still be worth going through this stuff to remind yourself of how it all starts, there might even be something you skipped over last time round.</p>
+<p>On the other hand if you understand and can explain each of the following terms and how they relate to R, then perhaps this tutorial is not for you. In this session we will go over:</p>
+<ul>
+<li>variable and operators</li>
+<li>data types</li>
+<li>Data structures</li>
+<li>lists</li>
+<li>factors</li>
+<li>dataframes</li>
+<li>matrices</li>
+<li>functions</li>
+<li>applying functions.</li>
+</ul>
+<p>By the end of the session you should know what each of these terms refers to.</p>
+<p>As an aside, the <em>dictionary</em> of programming languages borrows heavily from logic and mathematics. This is especially true for R, which is a language desgined with mathematics (statistics) in mind. Knowing the mathematical meaning of a word, e.g. a matrix is (imprecisely) a grid of numbers, helps with knowing what R is aiming for.</p>
+<p>Let's get started!</p>
+<h1 id="variables-and-operators">1.Variables and operators</h1>
+<p>A <strong>variable</strong> is used to store your data or various information that could be changed.</p>
+<h2 id="assign-a-variable-using----or">1.1. Assign a variable using &lt;- , -&gt;or =</h2>
+<p>This is how we assign a variable using &lt;- , -&gt;or =</p>
+<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">1</span>
+<span class="co">#now we want to show the contents of x using print function </span>
+<span class="kw">print</span>(x)</code></pre>
+<pre><code>## [1] 1</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">y=<span class="kw">c</span>(<span class="dv">12</span>,<span class="dv">3</span>)
+<span class="kw">print</span>(y)</code></pre>
+<pre><code>## [1] 12  3</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">c</span>(<span class="st">&#39;h&#39;</span>,<span class="st">&#39;i&#39;</span>,<span class="dv">9</span>)-&gt;z
+<span class="kw">print</span>(z)</code></pre>
+<pre><code>## [1] &quot;h&quot; &quot;i&quot; &quot;9&quot;</code></pre>
+<h2 id="give-your-variable-a-name">1.2. Give your variable a name!</h2>
+<p>The name of a variable should be unique, and can consist of letters, numbers, underline or dots. The variable should start with: a letter or a dot (this dot cannot followed by a number), but cannot start with a number or underline. For example, can you find which variable name is not correct?</p>
+<p>x.1&lt;-1 ; x_2&lt;-2 ;.x&lt;-3 ; 4y&lt;-5 ; <em><em>z&lt;-6; </em>2&lt;-7, .2a&lt;-8</em></p>
+<p>Try here:</p>
+<h2 id="data-types">1.3. Data types</h2>
+<p>Each variables has a <strong>data types</strong>. The data type of a variable is its defining quality, it is what it is!</p>
+<p>In R, there are 4 basic data types that we typically use:</p>
+<p>character: ‘a’</p>
+<p>numeric: 2,0, or 5.6</p>
+<p>integer: 4L (the L means R will store 4 as integer)</p>
+<p>logical: TRUE, FALSE</p>
+<p>The data types of R objects can be the variable types. These variables can consist of a dataset. Try to find the type of above mentioned variables x,y,z using class(), and the structure of x,y,z using str() The common used structure of the dataset in R include: vector (basis), factor, matrix,array, data frame and list.</p>
+<h2 id="operators">1.4. Operators</h2>
+<p>we can use operator to. . .</p>
+<h3 id="arithmetic-operators">1.4.1.Arithmetic operators</h3>
+<p>add, substract, mutiply, divide, equal, expeonent:</p>
+<p>+, -, *, /, =, ^</p>
+<pre class="sourceCode r"><code class="sourceCode r">math1=<span class="dv">5+6</span>*<span class="dv">8-9+5</span>/<span class="dv">6</span>
+<span class="kw">print</span>(math1)</code></pre>
+<pre><code>## [1] 44.83333</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">4</span>^<span class="dv">3</span></code></pre>
+<pre><code>## [1] 64</code></pre>
+<h3 id="relational-operators">1.4.2.Relational operators</h3>
+<p>great, less, equal: <strong>&gt;, &lt;, &gt;=, &lt;=, ==, !=</strong></p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">34</span>!=<span class="dv">5</span></code></pre>
+<pre><code>## [1] TRUE</code></pre>
+<h3 id="logical-operators">1.4.3. Logical operators</h3>
+<p>and, or, not: <strong>&amp;, |, !</strong></p>
+<h3 id="miscellaneous-operators">1.4.4.Miscellaneous Operators</h3>
+<p>colon operator: <strong>:</strong>, generate a sequence of numbers</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="dv">1</span>:<span class="dv">10</span></code></pre>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<p>%in%: detect if the elements in <strong>A</strong> also in <strong>B</strong></p>
+<pre class="sourceCode r"><code class="sourceCode r">A&lt;-<span class="dv">1</span>:<span class="dv">10</span>
+B&lt;-<span class="dv">3</span>:<span class="dv">6</span>
+<span class="kw">print</span>(A%in%B)</code></pre>
+<pre><code>##  [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
+<h1 id="data-structures-and-control-flow">2. Data structures and Control flow</h1>
+<h2 id="data-structures-are-...">2.1. Data structures are ...</h2>
+<p>Data structures are ...</p>
+<h3 id="a-vector-is-the-first-basic-data-structure.">2.1.1. A vector is the first basic data structure.</h3>
+<p>Vectors are one dimension array that can consist of numberic, character,or logical data. All the elements inside a vector should be one data type (numberic, character,or logical).</p>
+<p>A vector is formed using function: c(), which combines all the arguments into one common type.</p>
+<p>For example (1) Create a vector named as a, store letters of b to e into a, (2) print a, (3) check type of a, and (4) structure of a.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#(1)create a character vector: a</span>
+a&lt;-<span class="kw">c</span>(<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>,<span class="st">&#39;d&#39;</span>,<span class="st">&#39;e&#39;</span>)
+<span class="co">#(2)print: a</span>
+<span class="kw">print</span>(a)</code></pre>
+<pre><code>## [1] &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#(3)check type of a</span>
+<span class="kw">class</span>(a)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#(4)check structure of a</span>
+<span class="kw">str</span>(a)</code></pre>
+<pre><code>##  chr [1:4] &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
+<p>Try to (1) create a vector named as a1, store first 10 numbers into a1,(2) print a1, (3) check type of a1, and (4) structure of a1. Which type of above mentiond variable z (z&lt;-c(‘h’,‘i’,9))?</p>
+<h3 id="a-matix-is-a-two-dimentsion-array-in-where-all-the-elements-should-be-same-type">2.1.2. A matix is a two-dimentsion array in where all the elements should be same type</h3>
+<p>Matices are created by matrix() function.</p>
+<pre class="sourceCode r"><code class="sourceCode r">d&lt;-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">20</span>)
+<span class="co">#create a matrix</span>
+matr1&lt;-<span class="kw">matrix</span>(d,<span class="dt">nrow =</span> <span class="dv">5</span>,<span class="dt">ncol=</span><span class="dv">4</span>,<span class="dt">byrow =</span> T,
+              <span class="dt">dimnames =</span><span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;r1&#39;</span>,<span class="st">&#39;r2&#39;</span>,<span class="st">&#39;r3&#39;</span>,<span class="st">&#39;r4&#39;</span>,<span class="st">&#39;r5&#39;</span>),
+                             <span class="kw">c</span>(<span class="st">&#39;c1&#39;</span>,<span class="st">&#39;c2&#39;</span>,<span class="st">&#39;c3&#39;</span>,<span class="st">&#39;c4&#39;</span>)))
+matr1</code></pre>
+<pre><code>##    c1 c2 c3 c4
+## r1  1  2  3  4
+## r2  5  6  7  8
+## r3  9 10 11 12
+## r4 13 14 15 16
+## r5 17 18 19 20</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(matr1)</code></pre>
+<pre><code>##  int [1:5, 1:4] 1 5 9 13 17 2 6 10 14 18 ...
+##  - attr(*, &quot;dimnames&quot;)=List of 2
+##   ..$ : chr [1:5] &quot;r1&quot; &quot;r2&quot; &quot;r3&quot; &quot;r4&quot; ...
+##   ..$ : chr [1:4] &quot;c1&quot; &quot;c2&quot; &quot;c3&quot; &quot;c4&quot;</code></pre>
+<h3 id="an-array-is-similar-to-a-matrix-but-can-have-more-than-two-dimensions.">2.1.3. An array is similar to a matrix, but can have more than two dimensions.</h3>
+<p>Arrays are created by array() function</p>
+<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="kw">c</span>(<span class="st">&#39;a1&#39;</span>,<span class="st">&#39;a2&#39;</span>,<span class="st">&#39;a3&#39;</span>)
+y&lt;-<span class="kw">c</span>(<span class="st">&#39;b1&#39;</span>,<span class="st">&#39;b2&#39;</span>)
+z&lt;-<span class="kw">c</span>(<span class="st">&#39;c1&#39;</span>,<span class="st">&#39;c2&#39;</span>,<span class="st">&#39;c3&#39;</span>,<span class="st">&#39;c4&#39;</span>,<span class="st">&#39;c5&#39;</span>)
+mydata&lt;-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">30</span>)
+array1&lt;-<span class="kw">array</span>(mydata,<span class="kw">c</span>(<span class="dv">3</span>,<span class="dv">2</span>,<span class="dv">5</span>),
+<span class="dt">dimnames =</span> <span class="kw">list</span>(x,y,z))
+array1</code></pre>
+<pre><code>## , , c1
+## 
+##    b1 b2
+## a1  1  4
+## a2  2  5
+## a3  3  6
+## 
+## , , c2
+## 
+##    b1 b2
+## a1  7 10
+## a2  8 11
+## a3  9 12
+## 
+## , , c3
+## 
+##    b1 b2
+## a1 13 16
+## a2 14 17
+## a3 15 18
+## 
+## , , c4
+## 
+##    b1 b2
+## a1 19 22
+## a2 20 23
+## a3 21 24
+## 
+## , , c5
+## 
+##    b1 b2
+## a1 25 28
+## a2 26 29
+## a3 27 30</code></pre>
+<h3 id="a-list-can-contain-mant-types-of-datasets.">2.1.4. A list can contain mant types of datasets.</h3>
+<p>A list is ...</p>
+<pre class="sourceCode r"><code class="sourceCode r">alist&lt;-<span class="kw">list</span>(<span class="kw">c</span>(<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>,<span class="st">&#39;d&#39;</span>,<span class="st">&#39;e&#39;</span>),
+            <span class="kw">c</span>(<span class="st">&#39;control&#39;</span>,<span class="st">&#39;control&#39;</span>,<span class="st">&#39;drought&#39;</span>),
+            <span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>),
+            <span class="kw">c</span>(1L,3L),
+            <span class="dv">88</span>,
+            <span class="st">&#39;%&amp;()&#39;</span>,
+            <span class="kw">c</span>(<span class="fl">0.3</span>,<span class="fl">2.34</span>,<span class="fl">6.57</span>,<span class="dv">0</span>),
+            <span class="dv">3+9</span>,
+            <span class="kw">c</span>(<span class="st">&#39;4&#39;</span>,<span class="st">&#39;9&#39;</span>),
+            <span class="kw">list</span>(<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="st">&#39;g&#39;</span>)))
+<span class="kw">print</span>(alist)</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;
+## 
+## [[2]]
+## [1] &quot;control&quot; &quot;control&quot; &quot;drought&quot;
+## 
+## [[3]]
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## [[4]]
+## [1] 1 3
+## 
+## [[5]]
+## [1] 88
+## 
+## [[6]]
+## [1] &quot;%&amp;()&quot;
+## 
+## [[7]]
+## [1] 0.30 2.34 6.57 0.00
+## 
+## [[8]]
+## [1] 12
+## 
+## [[9]]
+## [1] &quot;4&quot; &quot;9&quot;
+## 
+## [[10]]
+## [[10]][[1]]
+## [1] &quot;1&quot; &quot;2&quot; &quot;g&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(alist)</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(alist)</code></pre>
+<pre><code>## List of 10
+##  $ : chr [1:4] &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;
+##  $ : chr [1:3] &quot;control&quot; &quot;control&quot; &quot;drought&quot;
+##  $ : int [1:10] 1 2 3 4 5 6 7 8 9 10
+##  $ : int [1:2] 1 3
+##  $ : num 88
+##  $ : chr &quot;%&amp;()&quot;
+##  $ : num [1:4] 0.3 2.34 6.57 0
+##  $ : num 12
+##  $ : chr [1:2] &quot;4&quot; &quot;9&quot;
+##  $ :List of 1
+##   ..$ : chr [1:3] &quot;1&quot; &quot;2&quot; &quot;g&quot;</code></pre>
+<h2 id="conditions-and-loops-using-vector-if-for-while-repeat">2.4. Conditions and Loops using vector: if, for, while, repeat</h2>
+<h3 id="conditions">2.4.1. conditions</h3>
+<p>if (condition) {statement} or if (condition) statement</p>
+<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">10</span>
+if (x&lt;<span class="dv">5</span>) {<span class="kw">print</span>(<span class="st">&#39;X is smaller than 5&#39;</span>)}
+if (x&gt;<span class="dv">5</span>) <span class="kw">print</span>(<span class="st">&#39;X is larger than 5&#39;</span>)</code></pre>
+<pre><code>## [1] &quot;X is larger than 5&quot;</code></pre>
+<p>if (condition) { statement1 } else { statement2 } or if (condition) { statement1 } else if (condition2){ statement2 } else if (condition3){ statement3 } else if (condition4){ statement4 } else { statement5 }</p>
+<pre class="sourceCode r"><code class="sourceCode r">y&lt;-<span class="dv">20</span>
+if (y&gt;<span class="dv">10</span>) {
+<span class="kw">print</span> (<span class="st">&#39;y is larger than 10&#39;</span>)
+} else {
+<span class="kw">print</span>(<span class="st">&#39;y is smaller than 10&#39;</span>)
+}</code></pre>
+<pre><code>## [1] &quot;y is larger than 10&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">y&lt;-<span class="dv">20</span>
+if (y&lt;<span class="dv">0</span>) {
+<span class="kw">print</span> (<span class="st">&#39;y is a negative number&#39;</span>)
+} else if (y==<span class="dv">0</span>) {
+<span class="kw">print</span>(<span class="st">&#39;y is 0&#39;</span>)
+} else if (y&gt;<span class="dv">0</span> &amp;<span class="st"> </span>y &lt;<span class="dv">10</span>) {
+<span class="kw">print</span>(<span class="st">&#39;y is greater than 0 and smaller than 10&#39;</span>)
+} else if (y==<span class="dv">10</span>) {
+<span class="kw">print</span> (<span class="st">&#39;y is 10&#39;</span>)
+} else if (y&gt;<span class="dv">10</span> &amp;<span class="st"> </span>y &lt;<span class="dv">20</span>){
+<span class="kw">print</span> (<span class="st">&#39;y is greater than 10 and smaller than 20&#39;</span>)
+} else {
+<span class="kw">print</span> (<span class="st">&#39;y is 20&#39;</span>)
+}</code></pre>
+<pre><code>## [1] &quot;y is 20&quot;</code></pre>
+<p>ifesle (statement, a, b) #if statement is true, print a, if false print b</p>
+<pre class="sourceCode r"><code class="sourceCode r">z&lt;-<span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">10</span>,<span class="dv">30</span>)
+<span class="kw">ifelse</span> (z==<span class="dv">10</span>|z&gt;<span class="dv">15</span>,<span class="st">&#39;yes&#39;</span>,<span class="st">&#39;no&#39;</span>)</code></pre>
+<pre><code>## [1] &quot;no&quot;  &quot;yes&quot; &quot;yes&quot;</code></pre>
+<h2 id="loop">2.4.2. Loop</h2>
+<p>for (variable in sequence) {statement}</p>
+<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>)
+y&lt;-<span class="dv">2</span>
+for (i in x){
+ z&lt;-y+x
+}
+<span class="kw">print</span>(z)</code></pre>
+<pre><code>##  [1]  3  4  5  6  7  8  9 10 11 12</code></pre>
+<p>while (condition) {statement}</p>
+<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">2</span>
+while(x&lt;<span class="dv">10</span>) {
+  <span class="kw">print</span>(<span class="st">&#39;yes&#39;</span>)
+  x=x<span class="dv">+2</span>
+  }</code></pre>
+<pre><code>## [1] &quot;yes&quot;
+## [1] &quot;yes&quot;
+## [1] &quot;yes&quot;
+## [1] &quot;yes&quot;</code></pre>
+<p>repeat()</p>
+<h1 id="advanced-data-structure-dataframe">2.5 Advanced data structure: Dataframe</h1>
+<p>Dataframe is the main and fundamental data structure used in R</p>
+<p>Dataframes are generated by data.frame() function, which has silimar format with the dataset we use in Excel, SPASS, SigmaPlot etc.</p>
+<p>In a dataframe: (1)the columns are variables, the rows are observations (the row numbers will be object numbers); (2) all the variables are of same length.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#create a dataframe</span>
+x=<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">3</span>)
+y=<span class="kw">c</span>(<span class="st">&#39;a&#39;</span>,<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>)
+z=<span class="kw">c</span>(<span class="dv">30</span>,<span class="dv">40</span>,<span class="dv">50</span>)
+df1&lt;-<span class="kw">data.frame</span>(x,y,z)
+<span class="co">#print df1</span>
+<span class="kw">print</span>(df1)</code></pre>
+<pre><code>##   x y  z
+## 1 1 a 30
+## 2 2 b 40
+## 3 3 c 50</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check the structure of df1</span>
+<span class="kw">str</span>(df1)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    3 obs. of  3 variables:
+##  $ x: int  1 2 3
+##  $ y: Factor w/ 3 levels &quot;a&quot;,&quot;b&quot;,&quot;c&quot;: 1 2 3
+##  $ z: num  30 40 50</code></pre>
+<p>Try to create a new dataframe names as mydata, which has 2 variables and 4 objects:</p>
+<h1 id="additional-data-type-factors">3. Additional data type: factors</h1>
+<p>Factor is created using a vector</p>
+<p>All the elements inside this factor will be character. A factor can efficiently store characters, because only once per character is stored.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#create a vector</span>
+treatment&lt;-<span class="kw">c</span>(<span class="st">&#39;control&#39;</span>,<span class="st">&#39;control&#39;</span>,<span class="st">&#39;drought&#39;</span>,<span class="st">&#39;nutrient&#39;</span>,<span class="st">&#39;drought&#39;</span>)
+<span class="co">#check the type of treatment</span>
+<span class="kw">class</span>(treatment)</code></pre>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check the structure of treatment</span>
+<span class="kw">str</span>(treatment)</code></pre>
+<pre><code>##  chr [1:5] &quot;control&quot; &quot;control&quot; &quot;drought&quot; &quot;nutrient&quot; &quot;drought&quot;</code></pre>
+<p>Now let’s create a factor and check the class and structure of this factor.</p>
+<p>Can you see the difference between <strong>treatment</strong> and <strong>treatment.factor</strong>?</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#create a factor</span>
+treatment.factor&lt;-<span class="kw">factor</span>(treatment)
+<span class="co">#check the type</span>
+<span class="kw">class</span>(treatment.factor)</code></pre>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check the structure</span>
+<span class="kw">str</span>(treatment.factor)</code></pre>
+<pre><code>##  Factor w/ 3 levels &quot;control&quot;,&quot;drought&quot;,..: 1 1 2 3 2</code></pre>
+<p>Yes, the numbers of these unique character are called levels in R, which can be examined using <strong>levels()</strong> function</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#check levels of treatment.factor</span>
+<span class="kw">levels</span>(treatment.factor)</code></pre>
+<pre><code>## [1] &quot;control&quot;  &quot;drought&quot;  &quot;nutrient&quot;</code></pre>
+<p>Try to create a factor named as <strong>plantnum.factor</strong> which is from a vector <strong>plant.number</strong> contains 5 elements c(1,2,3,3,2). How many levels <strong>plantnum.factor</strong> have, and what are they? Can you see the difference between <strong>plant.number</strong> and <strong>plantnum.factor</strong>?</p>
+<h1 id="functions-and-applying-functions">4. Functions and Applying functions</h1>
+<p>Functions are central to the way R works; think of them as the building blocks of larger programs.</p>
+<h2 id="section">4.1.</h2>
+<h2 id="section-1">4.2.</h2>
+<h2 id="section-2">4.3.</h2>
+<h2 id="extra-functions-and-other-stuff">4.4. Extra functions and other stuff</h2>
+<p>cat() is similar print(paste())</p>
+<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">2</span>
+<span class="co">#print(&#39;This is&#39;,x), this will generate an error</span>
+<span class="co">#but car can do it</span>
+<span class="kw">cat</span>(<span class="st">&#39;This is&#39;</span>,x)</code></pre>
+<pre><code>## This is 2</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#or use paste() function</span>
+<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;This is&#39;</span>, x))</code></pre>
+<pre><code>## [1] &quot;This is 2&quot;</code></pre>
