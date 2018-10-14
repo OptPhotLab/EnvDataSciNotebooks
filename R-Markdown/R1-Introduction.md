@@ -7,7 +7,7 @@ output: pdf_document
 
 # *Readme* before starting!
 
-Welcome to Environmental Data Sciences introducing R session. In this
+Welcome to Environmental Data Science introducing R session. In this
 session we start from scratch and assume no prior knowledge of R. Fill in
 the blanks as you go to test your understanding.
 
@@ -103,7 +103,7 @@ Try here:
 Each variables has a **data types**. The data type of a variable is its
 defining quality, it is what it is!
 
-In R, there are 4 basic data types that we typically use:
+In R, there are several basic data types in R that we typically use:
 
 character: ‘a’ 
 
@@ -112,6 +112,8 @@ numeric: 2,0, or 5.6
 integer: 4L (the L means R will store 4 as integer) 
 
 logical: TRUE, FALSE
+
+The above datatypes are referred to as *atomic* in R speak.
 
 The data types of R objects can be the variable types. These variables can consist of a dataset.
 Try to find the type of above mentioned variables x,y,z using class(), and the structure of x,y,z using str()
@@ -193,7 +195,7 @@ print(A%in%B)
 ```
 
 
-### Objects
+### Objects and class
 
 #2. Data structures and Control flow
 
@@ -671,41 +673,89 @@ print("print is a commonly used function!")
 ## [1] "print is a commonly used function!"
 ```
 
+You can inspect the contents of a function by typing the function
+name, but missing out the paranthesis:
+
+
+```r
+print
+```
+
+```
+## function (x, ...) 
+## UseMethod("print")
+## <bytecode: 0x242bf60>
+## <environment: namespace:base>
+```
+The code inside the function is called the *body*, the input to the
+functions is referred to as the *argument*(s)
+
 Sometimes there is more than one function that achieves a similar result.
 Can you think of another function that prints messages to the screen?
 
 
 ##4.2. User-defined functions
 
-##4.3. 
+Built-in functions allow us to get stuff done, however user-defined 
+functions allow us to build stuff! 
 
-
-
-##4.4. Extra functions and other stuff
-
-cat() is similar print(paste())
-
-
-```r
-x<-2
-#print('This is',x), this will generate an error
-#but car can do it
-cat('This is',x)
-```
-
-```
-## This is 2
-```
+First we need our function to have a purpose. Maybe our instrument
+has a linear calibration function. The aim of our function is to calculate
+this calibration from out data i.e. takes an input value, 
+and multiply by a calibration coefficient to yield the calibrated value. 
 
 
 ```r
-#or use paste() function
-print(paste('This is', x))
+cal.eq <- function(instrument.data,cal.coeff=2.4){ 
+       instrument.data * cal.coeff
+    }
 ```
 
-```
-## [1] "This is 2"
-```
+Stepping through our function, one part at a time. The name of the
+function is *cal.eq*, the body of the function is  the part in 
+between the curly braces. Our function has two input arguments, 
+the first is *instrument.data*, and the other is our calibration
+coefficient *cal.coeff* which is set to a default value of 2.4.   
+
+Now try to test out the function with some data,
+x <- c(1:10)
+
+
+One important note about functions; the output of an R function is
+whatever is calculated on the last line of the body. In our case we only
+have one line so that is what we get back. 
+
+##4.3. The apply family and anonymous functions
+
+The *apply* family are a special group of functions that most R users
+are familiar with. In essence apply functions are similar to for loops,
+in fact in R when you find yourself reaching for a for-loop we often ask
+ourselves can we use apply instead?
+
+Apply functions iterate (repeat) a function over a datastructure. Let's
+say you have a list containing a bunch of words.
+
+
+  
+
+apply functions come in a few different flavours  
+
+
+
+# 5. Other stuff
+
+We have only scratched the very basics of R in this tutorial. We will cover
+more  
+
+## 5.1. getting help
+
+## 5.2 installing packages 
+
+## 5.3 writing scripts and running files
+
+## 5.4 Additional resources
+
+
 
 
 

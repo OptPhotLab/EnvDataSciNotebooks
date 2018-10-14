@@ -1,5 +1,5 @@
 <h1 id="readme-before-starting"><em>Readme</em> before starting!</h1>
-<p>Welcome to Environmental Data Sciences introducing R session. In this session we start from scratch and assume no prior knowledge of R. Fill in the blanks as you go to test your understanding.</p>
+<p>Welcome to Environmental Data Science introducing R session. In this session we start from scratch and assume no prior knowledge of R. Fill in the blanks as you go to test your understanding.</p>
 <p>Used R before?</p>
 <p>Did you glance at the first section and think, this is very basic?</p>
 <p>It could still be worth going through the whole notebook or just particular sections; there might even be something you skipped over first time round.</p>
@@ -39,11 +39,12 @@
 <p>Try here:</p>
 <h2 id="data-types">1.3. Data types</h2>
 <p>Each variables has a <strong>data types</strong>. The data type of a variable is its defining quality, it is what it is!</p>
-<p>In R, there are 4 basic data types that we typically use:</p>
+<p>In R, there are several basic data types in R that we typically use:</p>
 <p>character: ‘a’</p>
 <p>numeric: 2,0, or 5.6</p>
 <p>integer: 4L (the L means R will store 4 as integer)</p>
 <p>logical: TRUE, FALSE</p>
+<p>The above datatypes are referred to as <em>atomic</em> in R speak.</p>
 <p>The data types of R objects can be the variable types. These variables can consist of a dataset. Try to find the type of above mentioned variables x,y,z using class(), and the structure of x,y,z using str() The common used structure of the dataset in R include: vector (basis), factor, matrix,array, data frame and list.</p>
 <h2 id="operators">1.4. Operators</h2>
 <p>we can use operator to. . .</p>
@@ -70,7 +71,7 @@
 B&lt;-<span class="dv">3</span>:<span class="dv">6</span>
 <span class="kw">print</span>(A%in%B)</code></pre>
 <pre><code>##  [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
-<h3 id="objects">Objects</h3>
+<h3 id="objects-and-class">Objects and class</h3>
 <h1 id="data-structures-and-control-flow">2. Data structures and Control flow</h1>
 <h2 id="data-structures-are-...">2.1. Data structures are ...</h2>
 <p>Data structures are ...</p>
@@ -320,16 +321,30 @@ treatment.factor&lt;-<span class="kw">factor</span>(treatment)
 <p>When you print something to the screen then you are using the <strong>print</strong> function:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="st">&quot;print is a commonly used function!&quot;</span>)</code></pre>
 <pre><code>## [1] &quot;print is a commonly used function!&quot;</code></pre>
+<p>You can inspect the contents of a function by typing the function name, but missing out the paranthesis:</p>
+<pre class="sourceCode r"><code class="sourceCode r">print</code></pre>
+<pre><code>## function (x, ...) 
+## UseMethod(&quot;print&quot;)
+## &lt;bytecode: 0x242bf60&gt;
+## &lt;environment: namespace:base&gt;</code></pre>
+<p>The code inside the function is called the <em>body</em>, the input to the functions is referred to as the <em>argument</em>(s)</p>
 <p>Sometimes there is more than one function that achieves a similar result. Can you think of another function that prints messages to the screen?</p>
 <h2 id="user-defined-functions">4.2. User-defined functions</h2>
-<h2 id="section">4.3.</h2>
-<h2 id="extra-functions-and-other-stuff">4.4. Extra functions and other stuff</h2>
-<p>cat() is similar print(paste())</p>
-<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">2</span>
-<span class="co">#print(&#39;This is&#39;,x), this will generate an error</span>
-<span class="co">#but car can do it</span>
-<span class="kw">cat</span>(<span class="st">&#39;This is&#39;</span>,x)</code></pre>
-<pre><code>## This is 2</code></pre>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#or use paste() function</span>
-<span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">&#39;This is&#39;</span>, x))</code></pre>
-<pre><code>## [1] &quot;This is 2&quot;</code></pre>
+<p>Built-in functions allow us to get stuff done, however user-defined functions allow us to build stuff!</p>
+<p>First we need our function to have a purpose. Maybe our instrument has a linear calibration function. The aim of our function is to calculate this calibration from out data i.e. takes an input value, and multiply by a calibration coefficient to yield the calibrated value.</p>
+<pre class="sourceCode r"><code class="sourceCode r">cal.eq &lt;-<span class="st"> </span>function(instrument.data,<span class="dt">cal.coeff=</span><span class="fl">2.4</span>){ 
+       instrument.data *<span class="st"> </span>cal.coeff
+    }</code></pre>
+<p>Stepping through our function, one part at a time. The name of the function is <em>cal.eq</em>, the body of the function is the part in between the curly braces. Our function has two input arguments, the first is <em>instrument.data</em>, and the other is our calibration coefficient <em>cal.coeff</em> which is set to a default value of 2.4.</p>
+<p>Now try to test out the function with some data, x &lt;- c(1:10)</p>
+<p>One important note about functions; the output of an R function is whatever is calculated on the last line of the body. In our case we only have one line so that is what we get back.</p>
+<h2 id="the-apply-family-and-anonymous-functions">4.3. The apply family and anonymous functions</h2>
+<p>The <em>apply</em> family are a special group of functions that most R users are familiar with. In essence apply functions are similar to for loops, in fact in R when you find yourself reaching for a for-loop we often ask ourselves can we use apply instead?</p>
+<p>Apply functions iterate (repeat) a function over a datastructure. Let's say you have a list containing a bunch of words.</p>
+<p>apply functions come in a few different flavours</p>
+<h1 id="other-stuff">5. Other stuff</h1>
+<p>We have only scratched the very basics of R in this tutorial. We will cover more</p>
+<h2 id="getting-help">5.1. getting help</h2>
+<h2 id="installing-packages">5.2 installing packages</h2>
+<h2 id="writing-scripts-and-running-files">5.3 writing scripts and running files</h2>
+<h2 id="additional-resources">5.4 Additional resources</h2>
