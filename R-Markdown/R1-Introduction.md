@@ -5,15 +5,14 @@ date: "9 lokakuuta 2018"
 output: pdf_document
 ---
 
-# *Readme* before starting!
+# *README* before starting!
 
-Welcome to Environmental Data Science introducing R session. In this
+Welcome to Environmental Data Science's introducing R session. In this
 session we start from scratch and assume no prior knowledge of R. Fill in
-the blanks as you go to test your understanding.
+the blanks as you go to test your understanding, and keep this handy as
+a reference for basic terminology.
 
 Used R before?
-
-Did you glance at the first section and think, this is very basic? 
 
 It could still be worth going through the whole notebook or 
 just particular sections; there might even be something you skipped over
@@ -49,16 +48,23 @@ Let's get started!
 
 #1.Variables and operators
 
-A **variable** is used to store your data or various information that could be
-changed.
+## 1.1 variables
+A **variable** is an object that holds a value. As the name suggest
+the value of a variable can change.In R we assign a variable using the
+following symbols *<- , ->, = *, such symbols are referred to as
+**operators**, there are lots of different types of operators (more on
+those later!).
 
-##1.1. Assign a variable using <- , ->or =
-This is how we assign a variable using <- , ->or =
+Let's name our variable *x* and assign it the value 1:
 
 
 ```r
 x<-1
-#now we want to show the contents of x using print function 
+```
+If we want to show the contents of x, we will have to use the *print* function 
+
+
+```r
 print(x)
 ```
 
@@ -66,69 +72,53 @@ print(x)
 ## [1] 1
 ```
 
-
-```r
-y=c(12,3)
-print(y)
-```
-
-```
-## [1] 12  3
-```
-
-
-```r
-c('h','i',9)->z
-print(z)
-```
-
-```
-## [1] "h" "i" "9"
-```
-
-##1.2. Give your variable a name!
-The name of a variable should be unique, and can consist of letters, numbers, underline or dots. The
-variable should start with: a letter or a dot (this dot cannot followed by a number), but cannot start
-with a number or underline.
-For example, can you find which variable name is not correct?
+The name of a variable should be unique, and can consist of letters,
+numbers, underline (_) or dots (.). The variable should start with a letter
+or a dot (this dot cannot followed by a number). Variables  cannot start with
+a number or underline.  For example, can you find which variable name
+is not correct?
 
 x.1<-1 ; x_2<-2 ;.x<-3 ; 4y<-5 ; *_z<-6; _2<-7, .2a<-8*
 
-Try here:
+Try it out here:
 
 
 
-##1.3. Data types
+##1.2 Data types
 
-Each variables has a **data types**. The data type of a variable is its
-defining quality, it is what it is!
+Every variable has a **data type**. The data type of a variable is its
+defining quality, it is what it is! In R, there are several basic data 
+types in R that we typically use:
 
-In R, there are several basic data types in R that we typically use:
-
-character: ‘a’ 
-
-numeric: 2,0, or 5.6 
-
-integer: 4L (the L means R will store 4 as integer) 
-
-logical: TRUE, FALSE
+* character: ‘a’ 
+* numeric: 2,0, or 5.6 
+* integer: 4L (the L means R will store 4 as integer) 
+* logical: TRUE, FALSE
 
 The above datatypes are referred to as *atomic* in R speak.
 
-The data types of R objects can be the variable types. These variables can consist of a dataset.
-Try to find the type of above mentioned variables x,y,z using class(), and the structure of x,y,z using str()
-The common used structure of the dataset in R include:
-vector (basis), factor, matrix,array, data frame and list.
+Create a variable of type character, and name it y. Print
+it out in the same box:
 
-##1.4. Operators 
 
-we can use operator to. . .
 
-###1.4.1.Arithmetic operators
+To show the type of a varable you can use **class()** command. 
+What is the type of **x** from the above example?
 
-add, substract, mutiply, divide, equal, expeonent: 
 
-+, -, *, /, =, ^ 
+
+##1.3. Operators 
+
+We already met assignment operators above e.g. *<-*. But there are
+lots of other operators too. Operators connect variables by doing
+something to them. Perhaps the most obvious example is mathemitical
+operations, which are performed by the **Arithmetic operators**.
+
+###1.3.1.Arithmetic operators
+
+We can add, substract, mutiply, divide, equal, expeonent variables
+in R using the following **arithmetic operators**: 
+**+, -, *, /, =, ^ **
 
 
 ```r
@@ -148,40 +138,79 @@ print(math1)
 ## [1] 64
 ```
 
-###1.4.2.Relational operators
+###1.3.2.Relational operators
 
-great, less, equal: **>, <, >=, <=, ==, !=**
+**Relational operators** are used to compare variables. The output
+of such a comparison is a *boolean* i.e. a True or False value. 
+We can use such operators to test statements such as is z greater 
+than x? First we have to give z a value:
 
 
 ```r
-34!=5
+z=20
+```
+now let's test our hypothesis:
+
+
+```r
+z>x
 ```
 
 ```
 ## [1] TRUE
 ```
+here is a list of operators: 
+* >  greater than
+* <  less than
+* >=  greater than or equal to 
+* <=  less than or equal to 
+* ==   equal to 
+* !=   not equal to
 
-###1.4.3. Logical operators
 
-and, or, not:       **&, |, !** 
+###1.3.3. Logical operators
 
+More logic here! You will notice that logic is a recurring theme, as computer
+languages are rooted in logic, 0s and 1s etc.
 
-
-
-###1.4.4.Miscellaneous Operators
-
-colon operator: **:**, generate a sequence of numbers
+*Logical operators* can be used to chain operators together. Again the output
+is a Boolen True or False. For example, to test if x is greater than 0 and
+less than 10:
 
 
 ```r
-1:10
+x>0 & x<10
+```
+
+```
+## [1] TRUE
+```
+There are 3 operators in the above **syntax** (bit of code). Two 
+relational operators and one logical, which is the **&** symbol.
+There is also an or symbol: **|**.
+
+How do you test if Z is greater than 100 or greater than 1000? 
+
+
+
+
+###1.3.4.Miscellaneous Operators
+
+There are also a few other operators that don't fit neatly 
+into any other bracket. The colon operator *:* is very handy as it
+is used to generate a sequence of numbers:
+
+
+```r
+x1 <- 1:10
+print(x1)
 ```
 
 ```
 ##  [1]  1  2  3  4  5  6  7  8  9 10
 ```
-
-%in%: detect if the elements in **A** also in **B**
+The *%in%:* can be used to check if the elements 
+that occur in **A** also occur in **B**
 
 
 ```r
@@ -195,22 +224,26 @@ print(A%in%B)
 ```
 
 
-### Objects and class
+#2. Data structures
 
-#2. Data structures and Control flow
+Put simply **data structures** are groups of variables. You can group variables
+of different data types, however the simplest data structures occur when
+you group variables of the same type. These simple structures are called
+**vectors**.
 
+##2.1 vectors
 
-##2.1. Data structures are ...
+Specifically cectors are a one dimensional array that can consist of
+numeric, character,or logical data. All the elements inside a vector
+should be a single data type only. A vector is formed using function
+**c()**. 
 
-Data structures are ...
-
-###2.1.1. A vector is the first basic data structure.
-
-Vectors are one dimension array that can consist of numberic, character,or logical data. All the elements inside a vector should be one data type (numberic, character,or logical).
-
-A vector is formed using function: c(), which combines all the arguments into one common type.
-
-For example (1) Create a vector named as a, store letters of b to e into a, (2) print a, (3) check type of a, and (4) structure of a.
+Let's try the following out:
+1. Create a vector named as a, store letters of b to e
+into a 
+2. print a 
+3. check data type of a
+4. check the structure of a.
 
 
 ```r
@@ -243,16 +276,22 @@ str(a)
 ```
 ##  chr [1:4] "b" "c" "d" "e"
 ```
+The structure command displays the structure of the object in question. In
+this case **a** is character vector.
 
-Try to (1) create a vector named as a1, store first 10 numbers into a1,(2) print a1, (3) check type of a1, and
-(4) structure of a1.
-Which type of above mentiond variable z (z<-c(‘h’,‘i’,9))?
+You should try the following:
+1. create a vector named as a1, store first 10 numbers into a1,(2) 
+2. print a1 
+3. check type of a1, and
+4. structure of a1.
 
 
 
-###2.1.2. A matix is a two-dimentsion array in where all the elements should be same type
+##2.2. Matrices 
 
-Matices are created by matrix() function.
+If we extend our concept of a vector into two dimensions we end up with a 
+2D grid of the same type; this is a **matrix**. Matices are created by the 
+matrix() function:
 
 
 ```r
@@ -273,6 +312,8 @@ matr1
 ## r5 17 18 19 20
 ```
 
+Let's checkout the structure of our matrix:
+
 
 ```r
 str(matr1)
@@ -285,9 +326,10 @@ str(matr1)
 ##   ..$ : chr [1:4] "c1" "c2" "c3" "c4"
 ```
 
-###2.1.3. An array is similar to a matrix, but can have more than two dimensions.
+##2.3. Arrays 
 
-Arrays are created by array() function
+An array is similar to a matrix, but can have more than 
+two dimensions. Arrays are created with the **array()** function
 
 
 ```r
@@ -337,9 +379,13 @@ array1
 ## a3 27 30
 ```
 
-###2.1.4. A list can contain mant types of datasets.
+## 2.4. Lists
 
-A list is ...
+Next we come to **lists**, these are different to matrices and vectors because
+they can store objetcts of different type! 
+
+Let's make a list containing lots of different types and display the
+results ...
 
 
 ```r
@@ -417,125 +463,19 @@ str(alist)
 ##  $ :List of 1
 ##   ..$ : chr [1:3] "1" "2" "g"
 ```
+## 2.5 Advanced data structures: Dataframes 
 
-##2.4. Conditions and Loops using vector: if, for, while, repeat
+It is no exaggeration to say that **Dataframes** are probably the most 
+important data structure used in R. Dataframes are liked matrices, with
+the key difference being that we can mix up datatypes in the same 
+object. This turns out to be incredibly useful in a number of 
+standard data analysis problems, in short our data is never simple
+and dataframes take care of this!
 
-###2.4.1. conditions
-
-if (condition) {statement} or if (condition) statement
-
-
-```r
-x<-10
-if (x<5) {print('X is smaller than 5')}
-if (x>5) print('X is larger than 5')
-```
-
-```
-## [1] "X is larger than 5"
-```
-
-if (condition) { statement1 } else { statement2 }
-or
-if (condition) { statement1 } else if (condition2){ statement2 } else if (condition3){ statement3 } else if
-(condition4){ statement4 } else { statement5 }
-
-
-```r
-y<-20
-if (y>10) {
-print ('y is larger than 10')
-} else {
-print('y is smaller than 10')
-}
-```
-
-```
-## [1] "y is larger than 10"
-```
-
-
-```r
-y<-20
-if (y<0) {
-print ('y is a negative number')
-} else if (y==0) {
-print('y is 0')
-} else if (y>0 & y <10) {
-print('y is greater than 0 and smaller than 10')
-} else if (y==10) {
-print ('y is 10')
-} else if (y>10 & y <20){
-print ('y is greater than 10 and smaller than 20')
-} else {
-print ('y is 20')
-}
-```
-
-```
-## [1] "y is 20"
-```
-
-ifesle (statement, a, b) #if statement is true, print a, if false print b
-
-
-```r
-z<-c(1,10,30)
-ifelse (z==10|z>15,'yes','no')
-```
-
-```
-## [1] "no"  "yes" "yes"
-```
-
-##2.4.2. Loop
-
-for (variable in sequence) {statement}
-
-
-
-```r
-x<-c(1:10)
-y<-2
-for (i in x){
- z<-y+x
-}
-print(z)
-```
-
-```
-##  [1]  3  4  5  6  7  8  9 10 11 12
-```
-
-while (condition) {statement}
-
-
-```r
-x<-2
-while(x<10) {
-  print('yes')
-  x=x+2
-  }
-```
-
-```
-## [1] "yes"
-## [1] "yes"
-## [1] "yes"
-## [1] "yes"
-```
-
-repeat()
-
-
-
-#2.5 Advanced data structure: Dataframe 
-
-Dataframe is the main and fundamental data structure used in R
-
-Dataframes are generated by data.frame() function, which has silimar format with the dataset we use in Excel, SPASS, SigmaPlot etc.
-
-In a dataframe: (1)the columns are variables, the rows are observations (the row numbers will be object numbers); (2) all the variables are of same length.
+Dataframes are generated by **data.frame()** function. In a dataframe:
+(1)the columns are variables, the rows are observations (the row
+numbers will be object numbers); (2) all the variables are of same
+length.
 
 
 ```r
@@ -568,15 +508,18 @@ str(df1)
 ##  $ z: num  30 40 50
 ```
 
-Try to create a new dataframe names as mydata, which has 2 variables and 4 objects:
+Try to create a new dataframe called mydata. This dataframe should 
+have 2 variables and 4 observations. Try to mix up the types of the
+variables:
 
 
 
-#3. Additional data type: factors
+# 2.x Additional data type: factors
 
-Factor is created using a vector
+A *factor* is a kind of advanced vector, that is useful in some analyses. 
 
-All the elements inside this factor will be character. A factor can efficiently store characters, because only once per character is stored.
+All the elements inside a factor are characters. We start by creating a 
+normal character vector:
 
 
 ```r
@@ -589,20 +532,7 @@ class(treatment)
 ```
 ## [1] "character"
 ```
-
-
-```r
-#check the structure of treatment
-str(treatment)
-```
-
-```
-##  chr [1:5] "control" "control" "drought" "nutrient" "drought"
-```
-
-Now let’s create a factor and check the class and structure of this factor. 
-
-Can you see the difference between **treatment** and **treatment.factor**?
+Next we convert our character vector to a factor using the **factor()** function:
 
 
 ```r
@@ -615,18 +545,8 @@ class(treatment.factor)
 ```
 ## [1] "factor"
 ```
-
-
-```r
-#check the structure
-str(treatment.factor)
-```
-
-```
-##  Factor w/ 3 levels "control","drought",..: 1 1 2 3 2
-```
-
-Yes, the numbers of these unique character are called levels in R, which can be examined using **levels()** function
+The difference between factors and character vectors, is that factors
+ contain levels which can be examined using **levels()** function
 
 
 ```r
@@ -637,14 +557,148 @@ levels(treatment.factor)
 ```
 ## [1] "control"  "drought"  "nutrient"
 ```
-
-Try to create a factor named as **plantnum.factor** which is from a vector **plant.number** contains 5 elements
-c(1,2,3,3,2). How many levels **plantnum.factor** have, and what are they? Can you see the difference between **plant.number** and **plantnum.factor**?
-
-
+R also stores factors as numbers rather than characters, this has 
+some consequences which might not be obvious. See here for
+more details on factors https://swcarpentry.github.io/r-novice-inflammation/12-supp-factors/ 
 
 
-#4. Functions and Applying functions
+# 3. Control flow: if statements and loops
+
+Now that we have defined our basic structures (e.g. vectors) we can 
+start to apply some fancier programming constructs. These fall under
+the broad category of Control Flow, as they can be used to direct
+your program.
+
+## 3.1. The if statement
+
+The **if statement** is one of the most widely used constructs in most
+programming langauge. Put simply it allows the program to decide whether
+to do something only if some condition has been fufilled. 
+
+For example if x is below some number, we want to print a statement
+that is true. To achieve this we would do the following:
+
+
+```r
+x<-10
+if (x<5) {print('X is smaller than 5')}
+if (x>5) print('X is larger than 5')
+```
+
+```
+## [1] "X is larger than 5"
+```
+
+We use the **else** keyword to chain together multiple clauses. This
+saves us retyping the whole construct over and over. Try to chain the 
+above example together using the **else** statement:
+
+
+In R we can also use a the **ifelse** function. This works as follows:
+
+
+```r
+z<-c(1,10,30)
+ifelse (z==10|z>15,'yes','no')
+```
+
+```
+## [1] "no"  "yes" "yes"
+```
+
+## 3.2. Loops
+
+*For loops* are programming contructs used to repeat stuff over and
+over, in programming terms this is referred to as **iteration**. Iteration
+is at the heart of solving problems using computing, the computer is 
+put to task to repeat tasks that are either boring or impossible for
+humans to accomplish in a reasonable time frame!
+
+A for loop iterates over a sequence one element at a time. The for loop
+contains the *for* statement, an *variable* in some normal braces, and
+the body (main bit) of the loop is placed between the curly braces. The
+body is where the repetiton occurs.
+
+It we take an example, here x.seq is a vector that we plan to iterate over,
+at each step (iteration) we want to add a new value (y) to the element
+in x that is the subject of the iteration. At each step we 
+also print the variable.
+
+
+```r
+x.seq<-c(1:10)
+y<-2
+for (i in x){
+ z<-y+x
+ print(z)
+}
+```
+
+```
+## [1] 12
+```
+
+Go ahead and  write a for loop where we square x, and also print the variable
+at each step.
+
+
+
+*While loops* are similar to for loops, except in these loops iteration continues
+until some condition is reached. In the following example we keep looping until
+our x variable hits the value of 10, then the loop stops.
+
+
+```r
+x<-2
+while(x<10) {
+  print('yes')
+  x=x+2
+  }
+```
+
+```
+## [1] "yes"
+## [1] "yes"
+## [1] "yes"
+## [1] "yes"
+```
+There is another type of loop called a *repeat loop*, these are similar
+to while loops but to stop the loop we use the keyword *break* and supply
+a condition within the loop itself:
+
+
+```r
+
+x<-9
+
+repeat{
+	print x
+	x <- x - 1
+	if x==8{
+	break
+	}
+	
+}
+```
+
+```
+## Error: <text>:5:15: unexpected symbol
+## 4: repeat{
+## 5:         print x
+##                  ^
+```
+
+In most computing languages the above loops are similar in importance
+to if statements. R is a little different in this respect, as there
+are different methods of iteration that are just as powerful and
+sometimes preferable.  These alternate iteration methods are the
+**apply** functions discussed in the later section of the course. For
+programmers coming from other langauges, it is important to remember
+that in R, an apply function will typically take the place of a for
+loop.
+
+
+# 4. Functions and Applying functions
 
 Functions are central to the way R works; think of them as the
 building blocks of larger programs. Just like building blocks,
@@ -657,7 +711,7 @@ In R language, functions consist of *arguments* which are the input,
 the *body* which is the bit where things happen, and the *name*, which
 is self evident! 
 
-##4.1. built-in functions
+## 4.1. built-in functions
 
 Most things in R involve functions, typically these are built-in to 
 the language or perhaps part of a package that you have installed.
@@ -684,7 +738,7 @@ print
 ```
 ## function (x, ...) 
 ## UseMethod("print")
-## <bytecode: 0x2638070>
+## <bytecode: 0x29a4370>
 ## <environment: namespace:base>
 ```
 
@@ -694,13 +748,14 @@ try it out with print:
 
 
 The code inside the function is called the *body*, the input to the
-functions is referred to as the *argument*(s)
+functions is referred to as the *argument*(s). 
 
-Sometimes there is more than one function that achieves a similar result.
-Can you think of another function that prints messages to the screen?
+Sometimes there is more than one function that achieves a similar
+result.  Can you think of another function that prints messages to the
+screen?
 
 
-##4.2. User-defined functions
+## 4.2. User-defined functions
 
 Built-in functions allow us to get stuff done, however user-defined 
 functions allow us to build stuff! 
@@ -731,7 +786,7 @@ One important note about functions; the output of an R function is
 whatever is calculated on the last line of the body. In our case we only
 have one line so that is what we get back. 
 
-##4.3. The apply family and anonymous functions
+## 4.3. The apply family and anonymous functions
 
 The *apply* family are a special group of functions that most R users
 are familiar with. In essence apply functions are similar to for loops,
@@ -772,6 +827,14 @@ nonsense <- lappy(sentenc.e, function(input) paste(input," oops ")  )
 We have now turned out sentence into nonsense! However if you
 inspect the *class()* of  nonsense you will notice that it is a list!
 
+
+```r
+print(nonsense)
+```
+
+```
+## Error in print(nonsense): object 'nonsense' not found
+```
 
 ```r
 class(nonsense)
