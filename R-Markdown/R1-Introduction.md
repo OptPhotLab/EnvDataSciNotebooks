@@ -103,7 +103,7 @@ Every variable has a **data type**. The data type of a variable is its
 defining quality, it is what it is! In R, there are several basic data 
 types that we typically use:
 
-* character: ‘a’ 
+* character: a 
 * numeric: 2,0, or 5.6 
 * integer: 4L (the L means R will store 4 as integer) 
 * logical: TRUE, FALSE
@@ -201,10 +201,10 @@ x>0 & x<10
 ## [1] TRUE
 ```
 There are 3 operators in the above **syntax** (bit of code). Two 
-relational operators and one logical, which is the **&** symbol.
-There is also an or symbol: **|**.
+relational operators and one logical, which is the & symbol.
+There is also an or symbol: |.
 
-How do you test if Z is greater than 100 **or** greater than 1000? 
+How do you test if z is greater than 100 **or** greater than 1000? 
 
 
 
@@ -225,7 +225,7 @@ print(x1)
 ##  [1]  1  2  3  4  5  6  7  8  9 10
 ```
 The **%in%** operator can be used to check if the elements 
-that occur in **A** also occur in **B**
+that occur in ** A ** also occur in ** B **
 
 
 ```r
@@ -297,7 +297,7 @@ this case **a** is character vector.
 
 You should try the following:
 
-1. create a vector named as a1, store first 10 numbers into a1,(2) 
+1. create a vector named as a1, store first 10 numbers into a1
 2. print a1 
 3. check type of a1, and
 4. structure of a1.
@@ -758,7 +758,7 @@ print
 ```
 ## function (x, ...) 
 ## UseMethod("print")
-## <bytecode: 0x1ba3df0>
+## <bytecode: 0x19dfdf0>
 ## <environment: namespace:base>
 ```
 
