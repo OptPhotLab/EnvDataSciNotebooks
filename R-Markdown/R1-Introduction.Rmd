@@ -45,9 +45,9 @@ aiming for.
 
 Let's get started!  
 
-#1.Variables and operators
+#1. Variables and operators
 
-## 1.1 Variables
+## 1.1. Variables
 A **variable** holds a value, and has a name. The value of a variable
 can change, hence being variable and not constant. In R we assign a
 variable using the following symbols *<- , ->, = *, such symbols are
@@ -89,7 +89,7 @@ When something is wrong R will print an error message to screen. Make sure
 to read this message carefully, and to digest and understand the computer
 speak. If you do not understand then Google away! 
 
-##1.2 Data types
+##1.2. Data types
 
 Every variable has a **data type**. The data type of a variable is its
 defining quality, it is what it is! In R, there are several basic data 
@@ -128,8 +128,7 @@ operations, which are performed by the **arithmetic operators**.
 ###1.3.1.Arithmetic operators
 
 We can add, substract, mutiply, divide, equal, expeonent variables
-in R using the following **arithmetic operators**: 
-**+, -, *, /, =, ^ **
+in R using the following **arithmetic operators**:  +, -, *, /, =, ^ 
 
 ```{r}
 math1=5+6*8-9+5/6
@@ -153,12 +152,13 @@ now let's test our hypothesis:
 z>x
 ```
 here is a list of operators: 
-* >  greater than
-* <  less than
-* >=  greater than or equal to 
-* <=  less than or equal to 
-* ==   equal to 
-* !=   not equal to
+
+* ">" greater than
+* "<"  less than
+* ">="  greater than or equal to 
+* "<="  less than or equal to 
+* "=="   equal to 
+* "!="   not equal to
 
 
 ###1.3.3. Logical operators
@@ -212,7 +212,7 @@ of different data types, however the simplest data structures occur when
 you group variables of the same type. These simple structures are called
 **vectors**.
 
-##2.1 Vectors
+##2.1. Vectors
 
 A vector is a one dimensional array that can consist of
 numeric, character,or logical data. All the elements inside a vector
@@ -221,11 +221,11 @@ should be a single data type only. A vector is formed using function
 
 Let's try the following out:
 
-*  Create a vector named as a, store letters of b to e
+1.  create a vector named as a, store letters of b to e
 into a 
-*  print a 
-*  check data type of a
-*  check the structure of a.
+2.  print a 
+3.  check data type of a
+4.  check the structure of a.
 
 ```{r}
 #(1)create a character vector: a
@@ -247,6 +247,7 @@ The structure command displays the structure of the object in question. In
 this case **a** is character vector.
 
 You should try the following:
+
 1. create a vector named as a1, store first 10 numbers into a1,(2) 
 2. print a1 
 3. check type of a1, and
@@ -322,7 +323,7 @@ class(alist)
 str(alist)
 
 ```
-## 2.5 Advanced data structures: Dataframes 
+## 2.5. Advanced data structures: Dataframes 
 
 It is no exaggeration to say that **Dataframes** are probably the most 
 important data structure used in R. Dataframes are liked matrices, with
@@ -450,7 +451,7 @@ contains the *for* statement, a *variable* in some normal braces, and
 the body (main bit) of the loop is placed between the curly braces. The
 body is where the repetiton occurs.
 
-It we take an example, here x.seq is a vector that we plan to iterate over,
+If we take an example, here x.seq is a vector that we plan to iterate over,
 at each step (iteration) we want to add a new value (y) to the element
 in x that is the subject of the iteration. At each step we 
 also print the variable.
@@ -473,7 +474,7 @@ at each step.
 
 *While loops* are similar to for loops, except in these loops iteration continues
 until some condition is reached. In the following example we keep looping until
-our x variable hits the value of 10, then the loop stops.
+our x variable hits the value of 8 (10-2), then the loop stops.
 
 ```{r}
 x<-2
@@ -491,9 +492,9 @@ a condition within the loop itself:
 x<-9
 
 repeat{
-	print x
+	print (x)
 	x <- x - 1
-	if x==8{
+	if (x==8){
 	break
 	}
 	
@@ -505,7 +506,7 @@ In most computing languages the above loops are similar in importance
 to if statements. R is a little different in this respect, as there
 are different methods of iteration that are just as powerful and
 sometimes preferable.  These alternate iteration methods are the
-**apply** functions discussed in the later section of the course. For
+**apply** functions discussed in the next section of the course. For
 programmers coming from other langauges, it is important to remember
 that in R, an apply function will typically take the place of a for
 loop.
@@ -567,10 +568,11 @@ screen?
 Built-in functions allow us to get stuff done, however user-defined 
 functions allow us to build stuff! 
 
-First we need our function to have a purpose. Maybe our instrument
-has a linear calibration function. The aim of our function is to calculate
-this calibration from out data i.e. takes an input value, 
-and multiply by a calibration coefficient to yield the calibrated value. 
+Time to make a function. First we need our function to have a
+purpose. Maybe our instrument has a linear calibration function. The
+aim of our function is to calculate this calibration using our data
+i.e. takes an input value, and multiply by a calibration coefficient
+to yield the calibrated value.
 
 ```{r}
 
@@ -580,11 +582,11 @@ cal.eq <- function(instrument.data,cal.coeff=2.4){
 
 ```
 
-Stepping through our function, one part at a time. The name of the
-function is *cal.eq*, the body of the function is  the part in 
-between the curly braces. Our function has two input arguments, 
-the first is *instrument.data*, and the other is our calibration
-coefficient *cal.coeff* which is set to a default value of 2.4.   
+Next we should breakdown the individual parts of our function. The
+name of the function is *cal.eq*, the body of the function is the part
+in between the curly braces. Our function has two input arguments, the
+first is *instrument.data*, and the other is our calibration
+coefficient *cal.coeff* which is set to a default value of 2.4.
 
 Now try to test out the function with some data,
 x <- c(1:10)
@@ -604,15 +606,15 @@ are familiar with. In essence apply functions are similar to for loops,
 in fact in R when you find yourself reaching for a for-loop we often ask
 ourselves can we use apply instead?
 
-Apply functions iterate (repeat) a function over a datastructure. We
-can use the *paste* function to join two characters together e.g. 'hi '
-and 'there'
+Apply functions iterate (repeat) a function over a
+datastructure. Let's walk though an example. we can use the *paste*
+function to join two characters together e.g. 'hi ' and 'there'
 
 ```{r}
 paste('hi ','there')
 
 ```
-We could use apply to paste 'hi' to list of different words. We 
+We could use apply to paste 'hi' to a vector of different words. We 
 do this by defining a new *anonymous* function within the apply
 call. An *anonymous* function is simply a function with no name!
 Let's use the lapply function, as this is designed to work on 
@@ -624,7 +626,7 @@ sentenc.e <- c("This "," is a ", " setence." )
 
 # now lets use apply to mess up our sentence!
 
-nonsense <- lappy(sentenc.e, function(input) paste(input," oops ")  )  
+nonsense <- lapply(sentenc.e, function(input) paste(input," oops ")  )  
 
 ```
 We have now turned out sentence into nonsense! However if you
@@ -648,9 +650,11 @@ Now we have a character vector, just like our original sentence.
 In R there are a bunch of apply functions, each one is intended for
 slighly different inputs and outputs. Here are a few that you may
 come across:
+
 * lapply: input are vectors and lists. Outputs are list
 * sapply: input are vectors and lists. Outputs are "user friendly"
 * mapply: multivariate version of sapply. Outputs are "user friendly"
+
 
 what is the difference in using sapply over lapply in the example above?
 

@@ -17,8 +17,8 @@
 <p>By the end of the session you should know what each of these terms refers to.</p>
 <p>As an aside, the <em>dictionary</em> of programming languages borrows heavily from logic and mathematics. This is especially true for R, which is a language designed with applied mathematics (statistics) in mind. Knowing the mathematical meaning of a word, e.g. a matrix is (imprecisely) a grid of numbers, helps with knowing what R is aiming for.</p>
 <p>Let's get started!</p>
-<h1 id="variables-and-operators">1.Variables and operators</h1>
-<h2 id="variables">1.1 Variables</h2>
+<h1 id="variables-and-operators">1. Variables and operators</h1>
+<h2 id="variables">1.1. Variables</h2>
 <p>A <strong>variable</strong> holds a value, and has a name. The value of a variable can change, hence being variable and not constant. In R we assign a variable using the following symbols <em>&lt;- , -&gt;, = </em>, such symbols are referred to as <strong>operators</strong>, there are lots of different types of operators (more on those later!).</p>
 <p>Let's name our variable <em>x</em> and assign it the value 1:</p>
 <pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">1</span></code></pre>
@@ -37,7 +37,7 @@
 </ul>
 <p>Try each statement out here:</p>
 <p>When something is wrong R will print an error message to screen. Make sure to read this message carefully, and to digest and understand the computer speak. If you do not understand then Google away!</p>
-<h2 id="data-types">1.2 Data types</h2>
+<h2 id="data-types">1.2. Data types</h2>
 <p>Every variable has a <strong>data type</strong>. The data type of a variable is its defining quality, it is what it is! In R, there are several basic data types that we typically use:</p>
 <ul>
 <li>character: ‘a’</li>
@@ -51,7 +51,7 @@
 <h2 id="operators">1.3. Operators</h2>
 <p>We already met assignment operators above e.g. <em>&lt;-</em>. But there are lots of other operators too. Operators connect variables by doing something to them. Perhaps the most obvious example is mathematical operations, which are performed by the <strong>arithmetic operators</strong>.</p>
 <h3 id="arithmetic-operators">1.3.1.Arithmetic operators</h3>
-<p>We can add, substract, mutiply, divide, equal, expeonent variables in R using the following <strong>arithmetic operators</strong>: **+, -, *, /, =, ^ **</p>
+<p>We can add, substract, mutiply, divide, equal, expeonent variables in R using the following <strong>arithmetic operators</strong>: +, -, *, /, =, ^</p>
 <pre class="sourceCode r"><code class="sourceCode r">math1=<span class="dv">5+6</span>*<span class="dv">8-9+5</span>/<span class="dv">6</span>
 <span class="kw">print</span>(math1)</code></pre>
 <pre><code>## [1] 44.83333</code></pre>
@@ -63,7 +63,15 @@
 <p>now let's test our hypothesis:</p>
 <pre class="sourceCode r"><code class="sourceCode r">z&gt;x</code></pre>
 <pre><code>## [1] TRUE</code></pre>
-<p>here is a list of operators: * &gt; greater than * &lt; less than * &gt;= greater than or equal to * &lt;= less than or equal to * == equal to * != not equal to</p>
+<p>here is a list of operators:</p>
+<ul>
+<li>&quot;&gt;&quot; greater than</li>
+<li>&quot;&lt;&quot; less than</li>
+<li>&quot;&gt;=&quot; greater than or equal to</li>
+<li>&quot;&lt;=&quot; less than or equal to</li>
+<li>&quot;==&quot; equal to</li>
+<li>&quot;!=&quot; not equal to</li>
+</ul>
 <h3 id="logical-operators">1.3.3. Logical operators</h3>
 <p>More logic here! You will notice that logic is a recurring theme, as computer languages are rooted in logic, 0s and 1s etc.</p>
 <p><em>Logical operators</em> can be used to chain operators together. Again the output is a Boolen <em>TRUE</em> or <em>FALSE</em>. For example, to test if x is greater than 0 and less than 10:</p>
@@ -83,15 +91,15 @@ B&lt;-<span class="dv">3</span>:<span class="dv">6</span>
 <pre><code>##  [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE</code></pre>
 <h1 id="data-structures">2. Data structures</h1>
 <p>Put simply <strong>data structures</strong> are groups of variables. You can group variables of different data types, however the simplest data structures occur when you group variables of the same type. These simple structures are called <strong>vectors</strong>.</p>
-<h2 id="vectors">2.1 Vectors</h2>
+<h2 id="vectors">2.1. Vectors</h2>
 <p>A vector is a one dimensional array that can consist of numeric, character,or logical data. All the elements inside a vector should be a single data type only. A vector is formed using function <strong>c()</strong>.</p>
 <p>Let's try the following out:</p>
-<ul>
-<li>Create a vector named as a, store letters of b to e into a</li>
+<ol style="list-style-type: decimal">
+<li>create a vector named as a, store letters of b to e into a</li>
 <li>print a</li>
 <li>check data type of a</li>
 <li>check the structure of a.</li>
-</ul>
+</ol>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="co">#(1)create a character vector: a</span>
 a&lt;-<span class="kw">c</span>(<span class="st">&#39;b&#39;</span>,<span class="st">&#39;c&#39;</span>,<span class="st">&#39;d&#39;</span>,<span class="st">&#39;e&#39;</span>)
 <span class="co">#(2)print: a</span>
@@ -104,7 +112,13 @@ a&lt;-<span class="kw">c</span>(<span class="st">&#39;b&#39;</span>,<span class=
 <span class="kw">str</span>(a)</code></pre>
 <pre><code>##  chr [1:4] &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot;</code></pre>
 <p>The structure command displays the structure of the object in question. In this case <strong>a</strong> is character vector.</p>
-<p>You should try the following: 1. create a vector named as a1, store first 10 numbers into a1,(2) 2. print a1 3. check type of a1, and 4. structure of a1.</p>
+<p>You should try the following:</p>
+<ol style="list-style-type: decimal">
+<li>create a vector named as a1, store first 10 numbers into a1,(2)</li>
+<li>print a1</li>
+<li>check type of a1, and</li>
+<li>structure of a1.</li>
+</ol>
 <h2 id="matrices">2.2. Matrices</h2>
 <p>If we extend our concept of a vector into two dimensions we end up with a 2D grid of the same type; this is a <strong>matrix</strong>. Matices are created by the matrix() function:</p>
 <pre class="sourceCode r"><code class="sourceCode r">d&lt;-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">20</span>)
@@ -288,8 +302,8 @@ if (x&lt;<span class="dv">50</span>) {<span class="kw">print</span>(<span class=
 <pre><code>## [1] &quot;no&quot;  &quot;yes&quot; &quot;yes&quot;</code></pre>
 <h2 id="loops">3.2. Loops</h2>
 <p><em>For loops</em> are programming contructs used to repeat stuff over and over, in programming terms this is referred to as <strong>iteration</strong>. Iteration is at the heart of solving problems using computing, the computer is put to task to repeat tasks that are either boring or impossible for humans to accomplish in a reasonable time frame!</p>
-<p>A for loop iterates over a sequence one element at a time. The for loop contains the <em>for</em> statement, an <em>variable</em> in some normal braces, and the body (main bit) of the loop is placed between the curly braces. The body is where the repetiton occurs.</p>
-<p>It we take an example, here x.seq is a vector that we plan to iterate over, at each step (iteration) we want to add a new value (y) to the element in x that is the subject of the iteration. At each step we also print the variable.</p>
+<p>A for loop iterates over a sequence one element at a time. The for loop contains the <em>for</em> statement, a <em>variable</em> in some normal braces, and the body (main bit) of the loop is placed between the curly braces. The body is where the repetiton occurs.</p>
+<p>If we take an example, here x.seq is a vector that we plan to iterate over, at each step (iteration) we want to add a new value (y) to the element in x that is the subject of the iteration. At each step we also print the variable.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x.seq&lt;-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>)
 y&lt;-<span class="dv">2</span>
 for (i in x){
@@ -298,7 +312,7 @@ for (i in x){
 }</code></pre>
 <pre><code>## [1] 12</code></pre>
 <p>Go ahead and write a for loop where we square x, and also print the variable at each step.</p>
-<p><em>While loops</em> are similar to for loops, except in these loops iteration continues until some condition is reached. In the following example we keep looping until our x variable hits the value of 10, then the loop stops.</p>
+<p><em>While loops</em> are similar to for loops, except in these loops iteration continues until some condition is reached. In the following example we keep looping until our x variable hits the value of 8 (10-2), then the loop stops.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">2</span>
 while(x&lt;<span class="dv">10</span>) {
   <span class="kw">print</span>(<span class="st">&#39;yes&#39;</span>)
@@ -309,22 +323,18 @@ while(x&lt;<span class="dv">10</span>) {
 ## [1] &quot;yes&quot;
 ## [1] &quot;yes&quot;</code></pre>
 <p>There is another type of loop called a <em>repeat loop</em>, these are similar to while loops but to stop the loop we use the keyword <em>break</em> and supply a condition within the loop itself:</p>
-<pre class="sourceCode r"><code class="sourceCode r">
-x&lt;-<span class="dv">9</span>
+<pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">9</span>
 
 repeat{
-    print x
+    <span class="kw">print</span> (x)
     x &lt;-<span class="st"> </span>x -<span class="st"> </span><span class="dv">1</span>
-    if x==<span class="dv">8</span>{
+    if (x==<span class="dv">8</span>){
     break
     }
     
 }</code></pre>
-<pre><code>## Error: &lt;text&gt;:5:15: unexpected symbol
-## 4: repeat{
-## 5:         print x
-##                  ^</code></pre>
-<p>In most computing languages the above loops are similar in importance to if statements. R is a little different in this respect, as there are different methods of iteration that are just as powerful and sometimes preferable. These alternate iteration methods are the <strong>apply</strong> functions discussed in the later section of the course. For programmers coming from other langauges, it is important to remember that in R, an apply function will typically take the place of a for loop.</p>
+<pre><code>## [1] 9</code></pre>
+<p>In most computing languages the above loops are similar in importance to if statements. R is a little different in this respect, as there are different methods of iteration that are just as powerful and sometimes preferable. These alternate iteration methods are the <strong>apply</strong> functions discussed in the next section of the course. For programmers coming from other langauges, it is important to remember that in R, an apply function will typically take the place of a for loop.</p>
 <h1 id="functions-and-applying-functions">4. Functions and Applying functions</h1>
 <p>Functions are central to the way R works; think of them as the building blocks of larger programs. Just like building blocks, functions are elements of a larger whole. If you want to take the next step beyond writing simple scripts, then functions are your friend!</p>
 <p>In simple terms, a function takes an input, does something to it, then returns something else which is the results of that something.<br />In R language, functions consist of <em>arguments</em> which are the input, the <em>body</em> which is the bit where things happen, and the <em>name</em>, which is self evident!</p>
@@ -337,43 +347,53 @@ repeat{
 <pre class="sourceCode r"><code class="sourceCode r">print</code></pre>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;print&quot;)
-## &lt;bytecode: 0x1603498&gt;
+## &lt;bytecode: 0x2ab17b0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p>You can get information (help) on any function by placing the question mark operator at the front of a function (e.g &quot;?function&quot;), try it out with print:</p>
 <p>The code inside the function is called the <em>body</em>, the input to the functions is referred to as the <em>argument</em>(s).</p>
 <p>Sometimes there is more than one function that achieves a similar result. Can you think of another function that prints messages to the screen?</p>
 <h2 id="user-defined-functions">4.2. User-defined functions</h2>
 <p>Built-in functions allow us to get stuff done, however user-defined functions allow us to build stuff!</p>
-<p>First we need our function to have a purpose. Maybe our instrument has a linear calibration function. The aim of our function is to calculate this calibration from out data i.e. takes an input value, and multiply by a calibration coefficient to yield the calibrated value.</p>
+<p>Time to make a function. First we need our function to have a purpose. Maybe our instrument has a linear calibration function. The aim of our function is to calculate this calibration using our data i.e. takes an input value, and multiply by a calibration coefficient to yield the calibrated value.</p>
 <pre class="sourceCode r"><code class="sourceCode r">cal.eq &lt;-<span class="st"> </span>function(instrument.data,<span class="dt">cal.coeff=</span><span class="fl">2.4</span>){ 
        instrument.data *<span class="st"> </span>cal.coeff
     }</code></pre>
-<p>Stepping through our function, one part at a time. The name of the function is <em>cal.eq</em>, the body of the function is the part in between the curly braces. Our function has two input arguments, the first is <em>instrument.data</em>, and the other is our calibration coefficient <em>cal.coeff</em> which is set to a default value of 2.4.</p>
+<p>Next we should breakdown the individual parts of our function. The name of the function is <em>cal.eq</em>, the body of the function is the part in between the curly braces. Our function has two input arguments, the first is <em>instrument.data</em>, and the other is our calibration coefficient <em>cal.coeff</em> which is set to a default value of 2.4.</p>
 <p>Now try to test out the function with some data, x &lt;- c(1:10)</p>
 <p>One important note about functions; the output of an R function is whatever is calculated on the last line of the body. In our case we only have one line so that is what we get back.</p>
 <h2 id="the-apply-family-and-anonymous-functions">4.3. The apply family and anonymous functions</h2>
 <p>The <em>apply</em> family are a special group of functions that most R users are familiar with. In essence apply functions are similar to for loops, in fact in R when you find yourself reaching for a for-loop we often ask ourselves can we use apply instead?</p>
-<p>Apply functions iterate (repeat) a function over a datastructure. We can use the <em>paste</em> function to join two characters together e.g. 'hi ' and 'there'</p>
+<p>Apply functions iterate (repeat) a function over a datastructure. Let's walk though an example. we can use the <em>paste</em> function to join two characters together e.g. 'hi ' and 'there'</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">paste</span>(<span class="st">&#39;hi &#39;</span>,<span class="st">&#39;there&#39;</span>)</code></pre>
 <pre><code>## [1] &quot;hi  there&quot;</code></pre>
-<p>We could use apply to paste 'hi' to list of different words. We do this by defining a new <em>anonymous</em> function within the apply call. An <em>anonymous</em> function is simply a function with no name! Let's use the lapply function, as this is designed to work on vectors</p>
+<p>We could use apply to paste 'hi' to a vector of different words. We do this by defining a new <em>anonymous</em> function within the apply call. An <em>anonymous</em> function is simply a function with no name! Let's use the lapply function, as this is designed to work on vectors</p>
 <pre class="sourceCode r"><code class="sourceCode r">sentenc.e &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;This &quot;</span>,<span class="st">&quot; is a &quot;</span>, <span class="st">&quot; setence.&quot;</span> )
 
 
 <span class="co"># now lets use apply to mess up our sentence!</span>
 
-nonsense &lt;-<span class="st"> </span><span class="kw">lappy</span>(sentenc.e, function(input) <span class="kw">paste</span>(input,<span class="st">&quot; oops &quot;</span>)  )  </code></pre>
-<pre><code>## Error in lappy(sentenc.e, function(input) paste(input, &quot; oops &quot;)): could not find function &quot;lappy&quot;</code></pre>
+nonsense &lt;-<span class="st"> </span><span class="kw">lapply</span>(sentenc.e, function(input) <span class="kw">paste</span>(input,<span class="st">&quot; oops &quot;</span>)  )  </code></pre>
 <p>We have now turned out sentence into nonsense! However if you inspect the <em>class()</em> of nonsense you will notice that it is a list!</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(nonsense)</code></pre>
-<pre><code>## Error in print(nonsense): object &#39;nonsense&#39; not found</code></pre>
+<pre><code>## [[1]]
+## [1] &quot;This   oops &quot;
+## 
+## [[2]]
+## [1] &quot; is a   oops &quot;
+## 
+## [[3]]
+## [1] &quot; setence.  oops &quot;</code></pre>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">class</span>(nonsense)</code></pre>
-<pre><code>## Error in eval(expr, envir, enclos): object &#39;nonsense&#39; not found</code></pre>
+<pre><code>## [1] &quot;list&quot;</code></pre>
 <p>This is because lapply returns a list. Lists are a little tricky to work with. To convert back to a vector you can use another function:</p>
 <pre class="sourceCode r"><code class="sourceCode r">nonsense &lt;-<span class="st"> </span><span class="kw">unlist</span>(nonsense)</code></pre>
-<pre><code>## Error in unlist(nonsense): object &#39;nonsense&#39; not found</code></pre>
 <p>Now we have a character vector, just like our original sentence.</p>
-<p>In R there are a bunch of apply functions, each one is intended for slighly different inputs and outputs. Here are a few that you may come across: * lapply: input are vectors and lists. Outputs are list * sapply: input are vectors and lists. Outputs are &quot;user friendly&quot; * mapply: multivariate version of sapply. Outputs are &quot;user friendly&quot;</p>
+<p>In R there are a bunch of apply functions, each one is intended for slighly different inputs and outputs. Here are a few that you may come across:</p>
+<ul>
+<li>lapply: input are vectors and lists. Outputs are list</li>
+<li>sapply: input are vectors and lists. Outputs are &quot;user friendly&quot;</li>
+<li>mapply: multivariate version of sapply. Outputs are &quot;user friendly&quot;</li>
+</ul>
 <p>what is the difference in using sapply over lapply in the example above?</p>
 <h1 id="other-stuff">5. Other stuff</h1>
 <p>We have only scratched the very basics of R in this tutorial, there is whole world of resources out there! Many of them free due to R's ethos as an open source language. For programmers coming from other languages, be sure to check out <em>The R inferno</em>. There are also a bunch of online tutorials for you to follow should you have time, Google is your friend here!</p>
