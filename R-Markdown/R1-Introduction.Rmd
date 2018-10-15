@@ -99,7 +99,7 @@ Every variable has a **data type**. The data type of a variable is its
 defining quality, it is what it is! In R, there are several basic data 
 types that we typically use:
 
-* character: ‘a’ 
+* character: a 
 * numeric: 2,0, or 5.6 
 * integer: 4L (the L means R will store 4 as integer) 
 * logical: TRUE, FALSE
