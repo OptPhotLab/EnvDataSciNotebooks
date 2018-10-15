@@ -8,9 +8,13 @@ output: pdf_document
 # *README* before starting!
 
 Welcome to Environmental Data Science's introducing R session. In this
-session we start from scratch and assume no prior knowledge of R. Fill in
-the blanks as you go to test your understanding, and keep this handy as
-a reference for basic terminology.
+session we start from scratch and assume no prior knowledge of R. We
+will cover the very basics of the R language. Things like Rstudio and
+ggplot2 will be covered in future sessions.
+
+
+Fill in the blanks as you go to test your understanding, and keep this
+handy as a reference for basic terminology.
 
 Used R before?
 
@@ -476,7 +480,7 @@ str(alist)
 ##  $ :List of 1
 ##   ..$ : chr [1:3] "1" "2" "g"
 ```
-## 2.5 Advanced data structures: Dataframes 
+## 2.5. Advanced data structures: Dataframes 
 
 It is no exaggeration to say that **Dataframes** are probably the most 
 important data structure used in R. Dataframes are liked matrices, with
@@ -754,7 +758,7 @@ print
 ```
 ## function (x, ...) 
 ## UseMethod("print")
-## <bytecode: 0x2ab17b0>
+## <bytecode: 0x1965df0>
 ## <environment: namespace:base>
 ```
 

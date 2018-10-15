@@ -8,9 +8,13 @@ output: pdf_document
 # *README* before starting!
 
 Welcome to Environmental Data Science's introducing R session. In this
-session we start from scratch and assume no prior knowledge of R. Fill in
-the blanks as you go to test your understanding, and keep this handy as
-a reference for basic terminology.
+session we start from scratch and assume no prior knowledge of R. We
+will cover the very basics of the R language. Things like Rstudio and
+ggplot2 will be covered in future sessions.
+
+
+Fill in the blanks as you go to test your understanding, and keep this
+handy as a reference for basic terminology.
 
 Used R before?
 
