@@ -60,13 +60,19 @@ operators (more on those later!).
 
 Let's name our variable *x* and assign it the value 1:
 
-```{r}
+
+```r
 x<-1
 ```
 If we want to show the contents of x, we will have to use the *print()* function 
 
-```{r}
+
+```r
 print(x)
+```
+
+```
+## [1] 1
 ```
 
 The name of a variable should be unique, and can consist of letters,
@@ -85,13 +91,19 @@ is incorrect?
 
 Try each statement out here:
 
-```{r}
 
-```
 
 When something is wrong R will print an error message to screen. Make sure
 to read this message carefully, and to digest and understand the computer
 speak. If you do not understand then Google away! 
+
+In the example above the final four statements are incorrect: 
+* 4y<-5  
+* _z<-6  
+* _2<-7  
+* .2a<-8*
+
+and result in an "unexpected symbol" error message. 
 
 ##1.2. Data types
 
@@ -111,16 +123,29 @@ sometimes drop the data part of the word and simply refer to the
 Create a variable of type character, and name it y. Print
 it out in the same box:
 
-```{r}
 
+```r
+y <- "EnvDataSci"
+print(y)
+```
+
+```
+## [1] "EnvDataSci"
 ```
 
 To show the type of a variable you can use **class()** command. 
 What is the type of **x** from the above example?
 
-```{r}
+
+```r
+class(x)
+```
 
 ```
+## [1] "numeric"
+```
+
+x is a different type ("numeric") to y.
 
 ##1.3. Operators 
 
@@ -134,10 +159,22 @@ operations, which are performed by the **arithmetic operators**.
 We can add, substract, mutiply, divide, equal, expeonent variables
 in R using the following **arithmetic operators**:  +, -, *, /, =, ^ 
 
-```{r}
+
+```r
 math1=5+6*8-9+5/6
 print(math1)
+```
+
+```
+## [1] 44.83333
+```
+
+```r
 4^3
+```
+
+```
+## [1] 64
 ```
 
 ###1.3.2.Relational operators
@@ -147,13 +184,19 @@ of such a comparison is a *boolean* i.e. a *TRUE* or *FALSE* value.
 We can use such operators to test statements such as is z greater 
 than x? First we have to assign z a value:
 
-```{r}
+
+```r
 z=20
 ```
 now let's test our hypothesis:
 
-```{r}
+
+```r
 z>x
+```
+
+```
+## [1] TRUE
 ```
 here is a list of operators: 
 
@@ -174,9 +217,13 @@ languages are rooted in logic, 0s and 1s etc.
 is a Boolean *TRUE* or *FALSE*. For example, to test if x is greater than 0 and
 less than 10:
 
-```{r}
-x>0 & x<10
 
+```r
+x>0 & x<10
+```
+
+```
+## [1] TRUE
 ```
 There are 3 operators in the above **syntax** (bit of code). Two 
 relational operators and one logical, which is the & symbol.
@@ -184,10 +231,16 @@ There is also an or symbol: |.
 
 How do you test if z is greater than 100 **or** greater than 1000? 
 
-```{r}
 
+```r
+z> 100 | z>1000
 ```
 
+```
+## [1] FALSE
+```
+z has the value 20 which is neither greater than 100 nor greater than 100.
+The statement above is FALSE.
 
 ###1.3.4.Miscellaneous Operators
 
@@ -195,17 +248,27 @@ There are also a few other operators that don't fit neatly
 into any other bracket. The colon operator **:** is very handy as it
 is used to generate a sequence of numbers:
 
-```{r}
+
+```r
 x1 <- 1:10
 print(x1)
+```
+
+```
+##  [1]  1  2  3  4  5  6  7  8  9 10
 ```
 The **%in%** operator can be used to check if the elements 
 that occur in ** A ** also occur in ** B **
 
-```{r}
+
+```r
 A<-1:10
 B<-3:6
 print(A%in%B)
+```
+
+```
+##  [1] FALSE FALSE  TRUE  TRUE  TRUE  TRUE FALSE FALSE FALSE FALSE
 ```
 
 
@@ -231,21 +294,36 @@ into a
 3.  check data type of a
 4.  check the structure of a.
 
-```{r}
+
+```r
 #(1)create a character vector: a
 a<-c('b','c','d','e')
 #(2)print: a
 print(a)
 ```
 
-```{r}
+```
+## [1] "b" "c" "d" "e"
+```
+
+
+```r
 #(3)check type of a
 class(a)
 ```
 
-```{r}
+```
+## [1] "character"
+```
+
+
+```r
 #(4)check structure of a
 str(a)
+```
+
+```
+##  chr [1:4] "b" "c" "d" "e"
 ```
 The structure command displays the structure of the object in question. In
 this case **a** is character vector.
@@ -257,9 +335,33 @@ You should try the following:
 3. check type of a1, and
 4. structure of a1.
 
-```{r}
+
+```r
+a1 <-  c(1:10)
+print(a1)
+```
 
 ```
+##  [1]  1  2  3  4  5  6  7  8  9 10
+```
+
+```r
+class(a1)
+```
+
+```
+## [1] "integer"
+```
+
+```r
+str(a1)
+```
+
+```
+##  int [1:10] 1 2 3 4 5 6 7 8 9 10
+```
+
+In the above case a1 is a vector of type integer (whole numbers).
 
 ##2.2. Matrices 
 
@@ -267,7 +369,8 @@ If we extend our concept of a vector into two dimensions we end up with a
 2D grid of the same type; this is a **matrix**. Matices are created by the 
 matrix() function:
 
-```{r}
+
+```r
 d<-c(1:20)
 #create a matrix
 matr1<-matrix(d,nrow = 5,ncol=4,byrow = T,
@@ -276,10 +379,27 @@ matr1<-matrix(d,nrow = 5,ncol=4,byrow = T,
 matr1
 ```
 
+```
+##    c1 c2 c3 c4
+## r1  1  2  3  4
+## r2  5  6  7  8
+## r3  9 10 11 12
+## r4 13 14 15 16
+## r5 17 18 19 20
+```
+
 Let's checkout the structure of our matrix:
 
-```{r}
+
+```r
 str(matr1)
+```
+
+```
+##  int [1:5, 1:4] 1 5 9 13 17 2 6 10 14 18 ...
+##  - attr(*, "dimnames")=List of 2
+##   ..$ : chr [1:5] "r1" "r2" "r3" "r4" ...
+##   ..$ : chr [1:4] "c1" "c2" "c3" "c4"
 ```
 
 ##2.3. Arrays 
@@ -287,7 +407,8 @@ str(matr1)
 An array is similar to a matrix, but can have more than 
 two dimensions. Arrays are created with the **array()** function
 
-```{r}
+
+```r
 x<-c('a1','a2','a3')
 y<-c('b1','b2')
 z<-c('c1','c2','c3','c4','c5')
@@ -295,6 +416,43 @@ mydata<-c(1:30)
 array1<-array(mydata,c(3,2,5),
 dimnames = list(x,y,z))
 array1
+```
+
+```
+## , , c1
+## 
+##    b1 b2
+## a1  1  4
+## a2  2  5
+## a3  3  6
+## 
+## , , c2
+## 
+##    b1 b2
+## a1  7 10
+## a2  8 11
+## a3  9 12
+## 
+## , , c3
+## 
+##    b1 b2
+## a1 13 16
+## a2 14 17
+## a3 15 18
+## 
+## , , c4
+## 
+##    b1 b2
+## a1 19 22
+## a2 20 23
+## a3 21 24
+## 
+## , , c5
+## 
+##    b1 b2
+## a1 25 28
+## a2 26 29
+## a3 27 30
 ```
 
 ## 2.4. Lists
@@ -305,7 +463,8 @@ they can store objetcts of different type.
 Let's make a list containing lots of different types and display the
 results ...
 
-```{r}
+
+```r
 alist<-list(c('b','c','d','e'),
             c('control','control','drought'),
             c(1:10),
@@ -319,13 +478,66 @@ alist<-list(c('b','c','d','e'),
 print(alist)
 ```
 
-```{r}
+```
+## [[1]]
+## [1] "b" "c" "d" "e"
+## 
+## [[2]]
+## [1] "control" "control" "drought"
+## 
+## [[3]]
+##  [1]  1  2  3  4  5  6  7  8  9 10
+## 
+## [[4]]
+## [1] 1 3
+## 
+## [[5]]
+## [1] 88
+## 
+## [[6]]
+## [1] "%&()"
+## 
+## [[7]]
+## [1] 0.30 2.34 6.57 0.00
+## 
+## [[8]]
+## [1] 12
+## 
+## [[9]]
+## [1] "4" "9"
+## 
+## [[10]]
+## [[10]][[1]]
+## [1] "1" "2" "g"
+```
+
+
+```r
 class(alist)
 ```
 
-```{r}
-str(alist)
+```
+## [1] "list"
+```
 
+
+```r
+str(alist)
+```
+
+```
+## List of 10
+##  $ : chr [1:4] "b" "c" "d" "e"
+##  $ : chr [1:3] "control" "control" "drought"
+##  $ : int [1:10] 1 2 3 4 5 6 7 8 9 10
+##  $ : int [1:2] 1 3
+##  $ : num 88
+##  $ : chr "%&()"
+##  $ : num [1:4] 0.3 2.34 6.57 0
+##  $ : num 12
+##  $ : chr [1:2] "4" "9"
+##  $ :List of 1
+##   ..$ : chr [1:3] "1" "2" "g"
 ```
 ## 2.5. Advanced data structures: Dataframes 
 
@@ -344,7 +556,8 @@ numbers will be object numbers)
 * all the variables are of same length.
 
 
-```{r}
+
+```r
 #create a dataframe
 x=c(1:3)
 y=c('a','b','c')
@@ -354,18 +567,45 @@ df1<-data.frame(x,y,z)
 print(df1)
 ```
 
-```{r}
+```
+##   x y  z
+## 1 1 a 30
+## 2 2 b 40
+## 3 3 c 50
+```
+
+
+```r
 #check the structure of df1
 str(df1)
+```
+
+```
+## 'data.frame':	3 obs. of  3 variables:
+##  $ x: int  1 2 3
+##  $ y: Factor w/ 3 levels "a","b","c": 1 2 3
+##  $ z: num  30 40 50
 ```
 
 Try to create a new dataframe called **mydata**. This dataframe should 
 have 2 variables and 4 observations. Mix up the types of the
 variables:
 
-```{r}
+
+```r
+x.1 <- c(1.2,1.3, 4.2, 99.0)
+y.1 <- c("1.2","1.3", "4.2", "99.0") 
+
+mydata <- data.frame(x.1,y.1)
+str(mydata)
+```
 
 ```
+## 'data.frame':	4 obs. of  2 variables:
+##  $ x.1: num  1.2 1.3 4.2 99
+##  $ y.1: Factor w/ 4 levels "1.2","1.3","4.2",..: 1 2 3 4
+```
+notice that y.1 is type factor.
 
 ## 2.6 Additional data type: factors
 
@@ -374,27 +614,41 @@ A *factor* is a kind of advanced vector, that is useful in some analyses.
 All the elements inside a factor are characters. We start by creating a 
 normal character vector:
 
-```{r}
+
+```r
 #create a vector
 treatment<-c('control','control','drought','nutrient','drought')
 #check the type of treatment
 class(treatment)
 ```
+
+```
+## [1] "character"
+```
 Next we convert our character vector to a factor using the **factor()** function:
 
-```{r}
+
+```r
 #create a factor
 treatment.factor<-factor(treatment)
 #check the type
 class(treatment.factor)
+```
 
+```
+## [1] "factor"
 ```
 The difference between factors and character vectors, is that factors
  contain levels which can be examined using **levels()** function
 
-```{r}
+
+```r
 #check levels of treatment.factor
 levels(treatment.factor)
+```
+
+```
+## [1] "control"  "drought"  "nutrient"
 ```
 R also stores factors as numbers rather than characters, this has 
 some consequences which might not be obvious. See here for
@@ -421,27 +675,43 @@ to do something only if some condition has been fufilled.
 For example if x is below some number, we want to print a statement
 that is true. To achieve this we would do the following:
 
-```{r}
+
+```r
 x<-10
 if (x<50) {print('X is smaller than 50')}
 ```
 
+```
+## [1] "X is smaller than 50"
+```
 We use the **else** keyword to chain together multiple clauses. This
 saves us retyping the whole construct over and over. 
 
 First change the value of x to 100, then combine the previous **if** statement
 with a similar **else** statement,
 
-```{r}
 
+
+```r
+x<-100
+if (x<50) {print('X is smaller than 50')
+}else{print('X is greater than 50')}
+```
+
+```
+## [1] "X is greater than 50"
 ```
 We can also use a the *ifelse()* function to achieve a similar
 result to control flow statements. This works as follows:
 
-```{r}
+
+```r
 z<-c(1,10,30)
 ifelse (z==10|z>15,'yes','no')
+```
 
+```
+## [1] "no"  "yes" "yes"
 ```
 
 ## 3.2. Loops
@@ -462,39 +732,80 @@ at each step (iteration) we want to add a new value (y) to the element
 in x that is the subject of the iteration. At each step we 
 also print the variable.
 
-```{r}
+
+```r
 x.seq<-c(1:10)
 y<-2
 for (i in x.seq){
  z<-y+i
  print(z)
 }
+```
 
+```
+## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10
+## [1] 11
+## [1] 12
 ```
 Go ahead and  write a for loop where we square "i in x.seq", and also print the
 resulting squared variable
 at each step.
 
-```{r}
+
+```r
+x.seq<-c(1:10)
+y<-2
+for (i in x.seq){
+ z<-i^2
+ print(z)
+}
+```
+
+```
+## [1] 1
+## [1] 4
+## [1] 9
+## [1] 16
+## [1] 25
+## [1] 36
+## [1] 49
+## [1] 64
+## [1] 81
+## [1] 100
 ```
 
 *While loops* are similar to for loops, except in these loops iteration continues
 until some condition is reached. In the following example we keep looping until
 our x variable hits the value of 8 (10-2), then the loop stops.
 
-```{r}
+
+```r
 x<-2
 while(x<10) {
   print('yes')
   x=x+2
   }
 ```
+
+```
+## [1] "yes"
+## [1] "yes"
+## [1] "yes"
+## [1] "yes"
+```
 There is another type of loop called a *repeat loop*, these are similar
 to while loops but to stop the loop we use the keyword *break* and supply
 a condition within the loop itself:
 
-```{r}
 
+```r
 x<-9
 
 repeat{
@@ -505,7 +816,10 @@ repeat{
 	}
 	
 }
+```
 
+```
+## [1] 9
 ```
 
 In most computing languages the above loops are similar in importance
@@ -538,25 +852,36 @@ the language or perhaps part of a package that you have installed.
 
 When you print something to the screen then you are using the **print** 
 function:
-```{r}
+
+```r
 print("print is a commonly used function!")
+```
+
+```
+## [1] "print is a commonly used function!"
 ```
 
 You can take a look at the contents of a function by typing the function
 name, but missing out the paranthesis:
 
-```{r}
 
+```r
 print
+```
 
+```
+## function (x, ...) 
+## UseMethod("print")
+## <bytecode: 0x29a4000>
+## <environment: namespace:base>
 ```
 
 You can get information (help) on any function by placing the question 
 mark operator at the front of a function (e.g "?function"), 
 try it out with print:
-```{r}
 
-
+```r
+#?print
 ```
 
 The code inside the function is called the *body*, the input to the
@@ -566,8 +891,13 @@ Sometimes there is more than one function that achieves a similar
 result.  Can you think of another function that prints messages to the
 screen?
 
-```{r}
 
+```r
+cat("Hello")
+```
+
+```
+## Hello
 ```
 ## 4.2. User-defined functions
 
@@ -580,12 +910,11 @@ aim of our function is to calculate this calibration using our data
 i.e. takes an input value, and multiply by a calibration coefficient
 to yield the calibrated value.
 
-```{r}
 
+```r
 cal.eq <- function(instrument.data,cal.coeff=2.4){ 
        instrument.data * cal.coeff
     }
-
 ```
 
 Next we should breakdown the individual parts of our function. The
@@ -597,10 +926,18 @@ coefficient *cal.coeff* which is set to a default value of 2.4.
 Now try to test out the function with some data,
 x <- c(1:10)
 
-```{r}
 
+```r
+output.x <- cal.eq(x)
+print(output.x)
+```
 
 ```
+## [1] 19.2
+```
+
+The result of our function is in *output.x*, a new variable.
+
 One important note about functions; the output of an R function is
 whatever is calculated on the last line of the body. In our case we only
 have one line so that is what we get back. 
@@ -616,9 +953,13 @@ Apply functions iterate (repeat) a function over a
 datastructure. Let's walk though an example. we can use the *paste*
 function to join two characters together e.g. 'hi ' and 'there'
 
-```{r}
-paste('hi ','there')
 
+```r
+paste('hi ','there')
+```
+
+```
+## [1] "hi  there"
 ```
 We could use apply to paste 'hi' to a vector of different words. We 
 do this by defining a new *anonymous* function within the apply
@@ -626,30 +967,53 @@ call. An *anonymous* function is simply a function with no name!
 Let's use the lapply function, as this is designed to work on 
 vectors
 
-```{r}
+
+```r
 sentenc.e <- c("This "," is a ", " setence." )
 
 
 # now lets use apply to mess up our sentence!
 
 nonsense <- lapply(sentenc.e, function(input) paste(input," oops ")  )  
-
 ```
 We have now turned out sentence into nonsense! However if you
 inspect the *class()* of  nonsense you will notice that it is a list!
 
-```{r}
-print(nonsense)
-class(nonsense)
 
+```r
+print(nonsense)
+```
+
+```
+## [[1]]
+## [1] "This   oops "
+## 
+## [[2]]
+## [1] " is a   oops "
+## 
+## [[3]]
+## [1] " setence.  oops "
+```
+
+```r
+class(nonsense)
+```
+
+```
+## [1] "list"
 ```
 
 This is because lapply returns a list. Lists are a little tricky
 to work with. To convert back to a vector you can use another function:
 
-```{r}
-nonsense <- unlist(nonsense)
 
+```r
+nonsense <- unlist(nonsense)
+print(nonsense)
+```
+
+```
+## [1] "This   oops "     " is a   oops "    " setence.  oops "
 ```
 Now we have a character vector, just like our original sentence.
 
@@ -664,10 +1028,26 @@ come across:
 
 what is the difference in using sapply over lapply in the example above?
 
-```{r}
 
+```r
+nonsense.s <- sapply(sentenc.e, function(input) paste(input," oops ")  )  
+print(nonsense.s)
 ```
 
+```
+##              This               is a            setence. 
+##     "This   oops "    " is a   oops " " setence.  oops "
+```
+
+```r
+str(nonsense.s)
+```
+
+```
+##  Named chr [1:3] "This   oops " " is a   oops " " setence.  oops "
+##  - attr(*, "names")= chr [1:3] "This " " is a " " setence."
+```
+**sapply** does the unlisting automatically.
 
 # 5. Other stuff
 
