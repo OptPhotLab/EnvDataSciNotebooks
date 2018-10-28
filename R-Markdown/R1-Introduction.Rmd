@@ -108,7 +108,7 @@ The above datatypes are referred to as *atomic* in R speak. We will
 sometimes drop the data part of the word and simply refer to the
 **type** of a variable when we talk about datatypes.
 
-Create a variable of type character, and name it y. Print
+Create a variable of type character, and name it "y". Print
 it out in the same box:
 
 ```{r}
@@ -463,14 +463,14 @@ also print the variable.
 ```{r}
 x.seq<-c(1:10)
 y<-2
-for (i in x){
- z<-y+x
+for (i in x.seq){
+ z<-y+i
  print(z)
 }
 
 ```
-
-Go ahead and  write a for loop where we square x, and also print the variable
+Go ahead and  write a for loop where we square "i in x.seq", and also print the
+resulting squared variable
 at each step.
 
 ```{r}

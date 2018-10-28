@@ -47,7 +47,7 @@
 <li>logical: TRUE, FALSE</li>
 </ul>
 <p>The above datatypes are referred to as <em>atomic</em> in R speak. We will sometimes drop the data part of the word and simply refer to the <strong>type</strong> of a variable when we talk about datatypes.</p>
-<p>Create a variable of type character, and name it y. Print it out in the same box:</p>
+<p>Create a variable of type character, and name it &quot;y&quot;. Print it out in the same box:</p>
 <p>To show the type of a variable you can use <strong>class()</strong> command. What is the type of <strong>x</strong> from the above example?</p>
 <h2 id="operators">1.3. Operators</h2>
 <p>We already met assignment operators above e.g. <em>&lt;-</em>. But there are lots of other operators too. Operators connect variables by doing something to them. Perhaps the most obvious example is mathematical operations, which are performed by the <strong>arithmetic operators</strong>.</p>
@@ -307,12 +307,21 @@ if (x&lt;<span class="dv">50</span>) {<span class="kw">print</span>(<span class=
 <p>If we take an example, here x.seq is a vector that we plan to iterate over, at each step (iteration) we want to add a new value (y) to the element in x that is the subject of the iteration. At each step we also print the variable.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x.seq&lt;-<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">10</span>)
 y&lt;-<span class="dv">2</span>
-for (i in x){
- z&lt;-y+x
+for (i in x.seq){
+ z&lt;-y+i
  <span class="kw">print</span>(z)
 }</code></pre>
-<pre><code>## [1] 12</code></pre>
-<p>Go ahead and write a for loop where we square x, and also print the variable at each step.</p>
+<pre><code>## [1] 3
+## [1] 4
+## [1] 5
+## [1] 6
+## [1] 7
+## [1] 8
+## [1] 9
+## [1] 10
+## [1] 11
+## [1] 12</code></pre>
+<p>Go ahead and write a for loop where we square &quot;i in x.seq&quot;, and also print the resulting squared variable at each step.</p>
 <p><em>While loops</em> are similar to for loops, except in these loops iteration continues until some condition is reached. In the following example we keep looping until our x variable hits the value of 8 (10-2), then the loop stops.</p>
 <pre class="sourceCode r"><code class="sourceCode r">x&lt;-<span class="dv">2</span>
 while(x&lt;<span class="dv">10</span>) {
@@ -348,7 +357,7 @@ repeat{
 <pre class="sourceCode r"><code class="sourceCode r">print</code></pre>
 <pre><code>## function (x, ...) 
 ## UseMethod(&quot;print&quot;)
-## &lt;bytecode: 0x21e9590&gt;
+## &lt;bytecode: 0x12ae3c0&gt;
 ## &lt;environment: namespace:base&gt;</code></pre>
 <p>You can get information (help) on any function by placing the question mark operator at the front of a function (e.g &quot;?function&quot;), try it out with print:</p>
 <p>The code inside the function is called the <em>body</em>, the input to the functions is referred to as the <em>argument</em>(s).</p>
