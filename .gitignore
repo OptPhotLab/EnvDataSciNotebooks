@@ -4,3 +4,4 @@
 .Ruserdata
 ./R-Markdown/*.ipynb
 *~
+./scratch
