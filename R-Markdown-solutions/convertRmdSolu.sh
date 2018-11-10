@@ -4,10 +4,12 @@
 # convert to html and ipynb formats
 #
 
-Rscript -e "library(knitr); knit('R1-Introduction-solutions.Rmd')"
-pandoc R1-Introduction-solutions.md > R1-Introduction-solutions.html
-Rscript -e "library(rmd2jupyter); rmd2jupyter('R1-Introduction-solutions.Rmd')"
-htmldoc -f R1-Introduction-solutions.pdf R1-Introduction-solutions.html
+fn='R3-databasics-solutions'
 
-#git rm ../R1-Introduction.ipynb
-mv R1-Introduction-solutions.ipynb ../solutions/R1-Introduction-solutions.ipynb
+Rscript -e "library(knitr); knit('$fn.Rmd')"
+pandoc $fn.md > $fn.html
+Rscript -e "library(rmd2jupyter); rmd2jupyter('$fn.Rmd')"
+htmldoc -f $fn.pdf $fn.html
+
+#git rm ../R1-databasics.ipynb
+mv $fn.ipynb ../solutions/$fn.ipynb
