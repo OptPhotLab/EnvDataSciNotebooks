@@ -1,5 +1,5 @@
 <h1 id="introduction">Introduction</h1>
-<p>In this session we will outline a basic data workflow. Our goal is to highlight common data tasks, and typical ways to solve them in R.</p>
+<p>In this session we will outline a basic environmental data workflow. Our goal is to highlight common data tasks, and typical ways to solve them in R.</p>
 <p>We will once again work with data downloaded from SMARTSMEAR, in this case we will used flux data measured using the eddy covariance technique at SMEARII research station.</p>
 <p>When working with environmental data, there are usually a few steps that come up each time. These are:</p>
 <ul>
@@ -11,7 +11,7 @@
 <p>To do these efficiciently in R is mainly about learning which functions to use, and how to apply these functions.</p>
 <p>Before we start there is one other thing we should mention.In this session we will assume that terms like <em>function</em>, <em>argument</em> are familiar to you. If they are not then go back to R1-introduction.ipynb, and check the definition. If you cannot find the definition in there then complain to your instructors to update the intro! Alright, let's get started.</p>
 <h1 id="reading">1. Reading</h1>
-<p>To make things a little easier we have downloaded our data ahead of time from SMARTSMEAR and stored it in the /data directory (folder) on our github. You can inspect the data files by opening in a text editor if you wish.</p>
+<p>We have downloaded our data ahead of time from SMARTSMEAR and stored it in the /data directory (folder) on our github: https://github.com/OptPhotLab/EnvDataSciNotebooks/tree/master/data (You can inspect the data files by clicking the github link, but this could slow your computer right down!)</p>
 <p>Reading data takes data from storage (typically your computer's hard disk) and places it somewhere that is can be operated on (RAM). If you have very large files to read you may notice your computer grind to a halt, this is because you are filling up your RAM. If this happens you should think about breaking your analysis down into more manageable chunks.</p>
 <p>There are a few different functions for reading data in R, these include:</p>
 <ul>
@@ -104,7 +104,7 @@ gpp.ET.midday &lt;-<span class="st"> </span><span class="kw">subset</span>(gpp.E
 <h1 id="analysis">4. Analysis</h1>
 <p>Our final step is to perform some simple analysis on our data. And because R is the perhaps the language of choice for stats,the possibilitues for analyses really are nearly limitless!</p>
 <p>Although we only look at very simple examples here, your own analyses are likely to be more sophisticated. In this case, it is always a good idea to search online for analysis packages and code before writing your own, as someone else has probably faced your issue before.</p>
-<p>4.1. Summary stats</p>
+<h2 id="summary-stats">4.1. Summary stats</h2>
 <p>Statisitics are at the heart of R, so let's use some! We can use the <em>mean</em> function on idividual columns. We can even be a bit clever and <em>sapply</em> mean to a whole dataframe:</p>
 <pre class="sourceCode r"><code class="sourceCode r">col.means &lt;-<span class="st"> </span><span class="kw">sapply</span>(gpp.ET.midday, mean, <span class="dt">na.rm=</span><span class="ot">TRUE</span>)
 <span class="kw">print</span>(col.means)</code></pre>
@@ -160,8 +160,8 @@ gpp.ET.midday &lt;-<span class="st"> </span><span class="kw">subset</span>(gpp.E
 <div class="figure">
 <img src="figure/unnamed-chunk-18-1.png" alt="plot of chunk unnamed-chunk-18" /><p class="caption">plot of chunk unnamed-chunk-18</p>
 </div>
-<p>In this notebook we relied soley on built-in functionality. In the real world of running scripts on your computer however you should make full use of external packages. We will cover some of the most popular packages in upcoming sessions but for a now a small intro:</p>
 <h2 id="a-final-note-on-packages">A final note on packages</h2>
+<p>In this notebook we relied soley on built-in functionality. In the real world of running scripts on your computer however you should make full use of external packages. We will cover some of the most popular packages in upcoming sessions but for a now a small intro:</p>
 <p>A great deal of useful functionality in R is found in external <em>packages</em>. These are basically collections of code (functions) written by someone else, and kindly release for our use. Because these are external to our computer and hosted online, they require installation (downloading + building in correct location).</p>
 <p>When running notebooks in class packages are installed ahead of time, so the actual installation is hidden from view from the user (you).</p>
 <p>However when you are writing scripts to solve your own problems you may need to install these yourself. For example to install the package <em>ggplot2</em> which can be used for making publication quality plots, you would type the command <em>install.packages('ggplot2')</em>. This command then downloads the purr code to your machine, in a location speficied by R.</p>

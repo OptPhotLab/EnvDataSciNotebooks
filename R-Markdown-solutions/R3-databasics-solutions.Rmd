@@ -1,15 +1,15 @@
 ---
 title: "R-session-1"
-author: "Chao, Jon"
+author: "Chao, Jon,Yann"
 date: "8 lokakuuta 2018"
 output: pdf_document
 ---
 
 # Introduction
 
-In this session we will outline a basic data workflow. Our goal 
+In this session we will outline a basic environmental data workflow. Our goal 
 is to highlight common data tasks, and typical ways to solve
-them in R.
+them in R. 
 
 We will once again work with data downloaded from SMARTSMEAR, in this
 case we will used flux data measured using the eddy covariance
@@ -41,10 +41,12 @@ the intro! Alright, let's get started.
  
 #1. Reading
 
-To make things a little easier we have downloaded our data ahead of
+We have downloaded our data ahead of
 time from SMARTSMEAR and stored it in the /data directory (folder) on
-our github. You can inspect the data files by opening in a text editor
-if you wish.
+our github:
+https://github.com/OptPhotLab/EnvDataSciNotebooks/tree/master/data
+(You can inspect the data files by clicking the github link, but this
+could slow your computer right down!)
 
 Reading data takes data from storage (typically your computer's hard
 disk) and places it somewhere that is can be operated on (RAM). If you
@@ -210,7 +212,7 @@ are likely to be more sophisticated. In this case, it is always a good
 idea to search online for analysis packages and code before writing
 your own, as someone else has probably faced your issue before.
 
-4.1. Summary stats
+##4.1. Summary stats
 
 Statisitics are at the heart of R, so let's use some! We can use the *mean*
 function on idividual columns. We can even be a bit clever and *sapply* mean 
@@ -252,15 +254,15 @@ abline function call.
 plot(HYY_EDDY233.GPP~HYY_EDDY233.ET_gapf, data=gpp.ET.midday)
 abline(lm(HYY_EDDY233.GPP~HYY_EDDY233.ET_gapf,data=gpp.ET.midday))
 
-
 ```
+
+
+## A final note on packages
 
 In this notebook we relied soley on built-in functionality. In the 
 real world of running scripts on your computer however you should 
 make full use of external packages. We will cover some of the most
 popular packages in upcoming sessions but for a now a small intro:
-
-## A final note on packages
 
 A great deal of useful functionality in R is found in external
 *packages*.  These are basically collections of code (functions)
