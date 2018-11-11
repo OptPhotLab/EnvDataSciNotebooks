@@ -1,5 +1,5 @@
 ---
-title: "R-session-1"
+title: "R-session-databasics"
 author: "Chao, Jon,Yann"
 date: "8 lokakuuta 2018"
 output: pdf_document
@@ -7,13 +7,10 @@ output: pdf_document
 
 # Introduction
 
-In this session we will outline a basic environmental data workflow. Our goal 
+In this session we will outline a basic environmental data work-flow. Our goal 
 is to highlight common data tasks, and typical ways to solve
 them in R. 
 
-We will once again work with data downloaded from SMARTSMEAR, in this
-case we will used flux data measured using the eddy covariance
-technique at SMEARII research station.
 
 When working with environmental data, there are usually a few steps
 that come up each time. These are:
@@ -25,11 +22,19 @@ untidy , for example we may need to subset to correct dates.
 * **plotting**. Plotting data is always worth doing as early as
 possible. Use histograms or simple line plots as your first steps
 in visualising data.  
-* **analysis**. This step could indlude performing a statiscial analysis or 
+* **analysis**. This step could include performing a statistical analysis or 
 fitting a model.
 
-To do these efficiciently in R is mainly about learning which
+To do these efficiently in R is mainly about learning which
 functions to use, and how to apply these functions. 
+
+In this notebook we will work through each step in turn with 
+example data. We will once again work with data downloaded from
+SMARTSMEAR, in this case we will use flux data measured using the
+eddy co-variance technique at SMEARII research station. We will use
+Gross Primary Production (GPP) which is derived from measurements
+of CO2 exchange, and Evapotranspiration (ET) which is derived from
+measurements of H2O exchange. 
 
 Before we start there is one other thing we should mention.In this
 session we will assume that terms like *function*, *argument* are
@@ -41,19 +46,16 @@ the intro! Alright, let's get started.
  
 #1. Reading
 
-We have downloaded our data ahead of
-time from SMARTSMEAR and stored it in the /data directory (folder) on
+Reading data takes data from storage (typically your computer's hard
+disk) and places it somewhere (in RAM) that is can be operated on by R. Our 
+task is to read in our GPP and ET data. 
+
+We have already downloaded our data as two seperate text files from 
+SMARTSMEAR, and stored these files in the */data* directory (folder) on
 our github:
 https://github.com/OptPhotLab/EnvDataSciNotebooks/tree/master/data
 (You can inspect the data files by clicking the github link, but this
 could slow your computer right down!)
-
-Reading data takes data from storage (typically your computer's hard
-disk) and places it somewhere that is can be operated on (RAM). If you
-have very large files to read you may notice your computer grind to a
-halt, this is because you are filling up your RAM. If this happens you
-should think about breaking your analysis down into more manageable
-chunks.
 
 There are a few different functions for reading data in R, these include:
 
@@ -62,21 +64,24 @@ There are a few different functions for reading data in R, these include:
 * read.delim 
 * read.csv2 
 
-We can use **help** to inspect our functions, what arguments they
+We can use **help** to inspect these functions, see what arguments they
 have, and how to set these arguments so that you can read your
-data/file in a proper way.
+data/file in a proper way. 
 
-We will use *read.csv* to read in our GPP dataset. 
+```{r}
+#help(read.csv)
+```
+
+Let's use *read.csv* to read in our GPP dataset. 
 
 ```{r}
 gpp<-read.csv('../data/gppsmeardata_20160101120000.csv',header = T,sep = ',',dec='.')
 
 ```
-
 The double dots **..** in the path tell R to go up a level in the directory (folder) 
-heirachy.
+hierarchy.
 
-Now try to read the Evapotranspirtation data using the same function:
+Now try to read the ET data using the same function:
 
 ```{r}
 
@@ -110,7 +115,7 @@ check out a few of them that make life easier.
 ##2.1. Combining 
 
 We read in two different data files. We can make life easier by combining
-these into a single file. 
+these into a single dataframe. 
 
 Use the *by* argument to set which variables are shared.
 
@@ -118,13 +123,19 @@ Use the *by* argument to set which variables are shared.
 gpp.ET<-merge(gpp,ET,by=c("Year","Month","Day","Hour","Minute", "Second"),all = T)
 ```
 
-#2. Subsetting
+Use *head* to check the combination worked:
 
-Sometimes we are only interested in a particluar section of our data. We can
-use *subset* to pull out data by date. 
+```{r}
+
+```
+
+##2.2 Subsetting
+
+Often we download much more data than we need. Subsetting using the *subset* function
+is a useway to restrict our datasets to the bits we are actually interested in.
 
 Subset accepts column names as a second argument. You can use subset to 
-extract data for the month of september from *gpp.ET* like this:
+extract data for the month of September from *gpp.ET* like this:
 
 ```{r}
 gpp.ET.sep <- subset(gpp.ET, Month==9)
@@ -147,7 +158,7 @@ Did you notice something odd? The days are not in ascending order. We can
 sort this out using the following (rather complicated!) line:
 
 ```{r}
-gpp.ET.midday <- gpp.ET.midday[with(gpp.ET.midday, order(Month, Day)), ]
+gpp.ET.midday <- gpp.ET.midday[with(gpp.ET.midday, order(Year, Month, Day)), ]
 ```
 
 Let's check this has worked out as expected:
@@ -160,7 +171,7 @@ of the various sorting options here:
 https://stackoverflow.com/questions/1296646/how-to-sort-a-dataframe-by-multiple-columns
 
 
-Now we have a single dataframe with data at our desired midday timestep we 
+Now we have a single dataframe with data at our desired midday time-step we 
 can start with our visualisations.
 
 
@@ -178,9 +189,9 @@ plot(gpp.ET.midday$HYY_EDDY233.GPP)
 
 ##3.2 Scatter plot
 
-We can also use *plot* to make scatter plots. You should use the **~** operator
-to achieve this e.g. *plot(A~B.Width,data=data.AB)*. Here A and B are our variables
-and data.AB is our dataframe that contains our variables. 
+We can also use *plot* to make scatter plots. Use the **~** operator
+to achieve this e.g. *plot(A~B.Width,data=data.AB)*, where *A* and *B* are our variables
+and *data.AB* is our dataframe that contains our variables. 
 
 Try to make a scatter plot between GPP and ET for our midday data:
 
@@ -200,11 +211,28 @@ hist(gpp.ET.midday$HYY_EDDY233.GPP)
 
 ##3.4 Panels
 
+Subplots (multiple plots in the same window) in R are achieved with
+the panels or *par* command. Simply specify the number of rows and
+columns as a two element vector and pass it using the *mfrow* key word
+as an argument to *par* e.g. par(mfrow =(num.row,num.col)), then use
+repeated calls to *plot* in the usual way.
+
+Can you complete the box below to draw ET and GPP in the same window
+but as separate subplots?We will start you off with the correct:
+
+```{r}
+# swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*
+par(mfrow = c(2, 1))
+plot(gpp.ET.midday$HYY_EDDY233.GPP)
+plot(gpp.ET.midday$HYY_EDDY233.ET_gapf)
+
+```
+ 
 
 #4. Analysis
 
 Our final step is to perform some simple analysis on our data. And because
-R is the perhaps the language of choice for stats,the possibilitues for
+R is the perhaps the language of choice for stats,the possibilities for
 analyses really are nearly limitless! 
 
 Although we only look at very simple examples here, your own analyses
@@ -214,9 +242,9 @@ your own, as someone else has probably faced your issue before.
 
 ##4.1. Summary stats
 
-Statisitics are at the heart of R, so let's use some! We can use the *mean*
-function on idividual columns. We can even be a bit clever and *sapply* mean 
-to a whole dataframe:
+Statistics are at the heart of R, so let's use some! We can use the *mean*
+function on individual columns. We can use *sapply* with *mean* 
+to work out the mean values for each column:
 
 ```{r}
 col.means <- sapply(gpp.ET.midday, mean, na.rm=TRUE)
@@ -230,23 +258,23 @@ when we try out summary on our midday data?
 summary(gpp.ET.midday)
 ```
 
-4.2 Linear models
+##4.2 Linear models
 
 Fitting models is a very common thing in environmental science, and the straight
-line is the most common of them all! To do this in R we use  linear model *lm* function:
+line is the most common of them all! To fit a line in R we use  linear model *lm* function:
 
-Let's try this out between on our midday data between GPP and ET.
+Let's model the relationship between ET and GPP in our midday data:
 
 ```{r}
 model.1<-lm(HYY_EDDY233.GPP~HYY_EDDY233.ET_gapf, data=gpp.ET.midday)
 
 ```
-*summary* also works on linear model results:
+*summary* also works on linear model results, try it below:
 ```{r}
 summary(model.1)
 
 ```
-The *abline* function can be used to plot linear models over scatter plots. Try it 
+The *abline* function can be used to plot linear models over scatter plots. To try it 
 out, you will need to enter the scatter plot code from section 2 and an 
 abline function call.
 
@@ -259,7 +287,7 @@ abline(lm(HYY_EDDY233.GPP~HYY_EDDY233.ET_gapf,data=gpp.ET.midday))
 
 ## A final note on packages
 
-In this notebook we relied soley on built-in functionality. In the 
+In this notebook we relied solely on built-in functionality. In the 
 real world of running scripts on your computer however you should 
 make full use of external packages. We will cover some of the most
 popular packages in upcoming sessions but for a now a small intro:
@@ -277,11 +305,11 @@ However when you are writing scripts to solve your own problems you
 may need to install these yourself. For example to install the package
 *ggplot2* which can be used for making publication quality plots, you
 would type the command *install.packages('ggplot2')*.  This command
-then downloads the purr code to your machine, in a location speficied
+then downloads the ggplot2 code to your machine, in a location specified
 by R.
 
 Some packages are also hosted on github, for example you can browse
-the *purr* source code before you install here:
+the *ggplot2* source code before you install here:
 
 https://github.com/tidyverse/ggplot2
 
