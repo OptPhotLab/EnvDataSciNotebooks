@@ -67,9 +67,8 @@
 <pre><code>## Error in hist(gpp.ET.midday$HYY_EDDY233.GPP): object &#39;gpp.ET.midday&#39; not found</code></pre>
 <h2 id="panels">3.4 Panels</h2>
 <p>Subplots (multiple plots in the same window) in R are achieved with the panels or <em>par</em> command. Simply specify the number of rows and columns as a two element vector and pass it using the <em>mfrow</em> key word as an argument to <em>par</em> e.g. par(mfrow =(num.row,num.col)), then use repeated calls to <em>plot</em> in the usual way.</p>
-<p>Can you complete the box below to draw ET and GPP in the same window but as separate subplots?We will start you off with the correct:</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*</span>
-<span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>))</code></pre>
+<p>Can you complete the box below to draw ET and GPP in the same window but as separate subplots?</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*</span></code></pre>
 <h1 id="analysis">4. Analysis</h1>
 <p>Our final step is to perform some simple analysis on our data. And because R is the perhaps the language of choice for stats,the possibilities for analyses really are nearly limitless!</p>
 <p>Although we only look at very simple examples here, your own analyses are likely to be more sophisticated. In this case, it is always a good idea to search online for analysis packages and code before writing your own, as someone else has probably faced your issue before.</p>

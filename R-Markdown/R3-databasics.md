@@ -230,12 +230,11 @@ as an argument to *par* e.g. par(mfrow =(num.row,num.col)), then use
 repeated calls to *plot* in the usual way.
 
 Can you complete the box below to draw ET and GPP in the same window
-but as separate subplots?We will start you off with the correct:
+but as separate subplots?
 
 
 ```r
 # swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*
-par(mfrow = c(2, 1))
 ```
  
 
