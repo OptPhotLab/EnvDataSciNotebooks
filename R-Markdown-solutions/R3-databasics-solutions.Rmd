@@ -102,7 +102,7 @@ head(ET)
 can you also remember how to check the type of our objects?
 
 ```{r}
-
+str(ET)
 ```
 
 #2. Processing

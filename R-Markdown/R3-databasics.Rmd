@@ -46,16 +46,14 @@ the intro! Alright, let's get started.
  
 #1. Reading
 
-Reading data takes data from storage (typically your computer's hard
-disk) and places it somewhere (in RAM) that is can be operated on by R. Our 
-task is to read in our GPP and ET data. 
-
-We have already downloaded our data as two seperate text files from 
-SMARTSMEAR, and stored these files in the */data* directory (folder) on
-our github:
+Our first task is to read in our GPP and ET data.  Reading data takes
+data from storage (typically your computer's hard disk) and places it
+somewhere (in RAM) that is can be operated on by R.  We have already
+downloaded our data as two seperate text files from SMARTSMEAR, and
+stored these files in the */data* directory (folder) on github:
 https://github.com/OptPhotLab/EnvDataSciNotebooks/tree/master/data
-(You can inspect the data files by clicking the github link, but this
-could slow your computer right down!)
+(You can inspect the data files by clicking the github link, but opening
+the individual files on github could slow your computer down!)
 
 There are a few different functions for reading data in R, these include:
 
@@ -78,14 +76,14 @@ Let's use *read.csv* to read in our GPP dataset.
 gpp<-read.csv('../data/gppsmeardata_20160101120000.csv',header = T,sep = ',',dec='.')
 
 ```
-The double dots **..** in the path tell R to go up a level in the directory (folder) 
-hierarchy.
+The double dots **..** in the path tell R to go up a level in the directory (folder) hierarchy. The full path (location) of the ET data is:
 
-Now try to read the ET data using the same function:
+*../data/ET smeardata_20160101120000.csv*
+
+go ahead and read the ET data:
 
 ```{r}
-
-
+# name the output data ET
 
 ```
 It is as simple as that! 
@@ -134,7 +132,7 @@ Use *head* to check the combination worked:
 Often we download much more data than we need. Subsetting using the *subset* function
 is a useway to restrict our datasets to the bits we are actually interested in.
 
-Subset accepts column names as a second argument. You can use subset to 
+*subset* accepts column names as a second argument. You can use subset to 
 extract data for the month of September from *gpp.ET* like this:
 
 ```{r}
@@ -147,7 +145,7 @@ Can you create a new dataframe containing data measured at midday only?
 
 ```
 
-Use head to check the dates are correct:
+Use *head* to check the dates are correct:
 
 ```{r}
 
@@ -177,8 +175,8 @@ can start with our visualisations.
 #3. Plotting
 
 ##3.1 Line plot
-The simplest plot of them all is the dot (or line) plot. The *plot* command is your
-friend here!
+
+The simplest plot of them all is the dot (or line) plot. The *plot* command is your friend here!
 
 Let's see what our GPP data looks like:
 
@@ -188,9 +186,10 @@ plot(gpp.ET.midday$HYY_EDDY233.GPP)
 
 ##3.2 Scatter plot
 
-We can also use *plot* to make scatter plots. Use the **~** operator
-to achieve this e.g. *plot(A~B.Width,data=data.AB)*, where *A* and *B* are our variables
-and *data.AB* is our dataframe that contains our variables. 
+We can also use *plot* to plot the relationship between variables by
+making scatter plots. Use the **~** operator to achieve this
+e.g. *plot(A~B.Width,data=data.AB)*, where *A* and *B* are our
+variables and *data.AB* is our dataframe that contains our variables.
 
 Try to make a scatter plot between GPP and ET for our midday data:
 
@@ -205,13 +204,13 @@ Checking the distribution of your data is usually a very good idea!
 
 ```{r}
 
-hist(gpp.ET.midday$HYY_EDDY233.GPP)
+
 ```
 
 ##3.4 Panels
 
 Subplots (multiple plots in the same window) in R are achieved with
-the panels or *par* command. Simply specify the number of rows and
+the panels or *par* command. Specify the number of rows and
 columns as a two element vector and pass it using the *mfrow* key word
 as an argument to *par* e.g. par(mfrow =(num.row,num.col)), then use
 repeated calls to *plot* in the usual way.
@@ -220,7 +219,8 @@ Can you complete the box below to draw ET and GPP in the same window
 but as separate subplots?
 
 ```{r}
-# swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*
+# first swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*
+# then call plot() for each plot instance
 
 
 ```
@@ -228,14 +228,11 @@ but as separate subplots?
 
 #4. Analysis
 
-Our final step is to perform some simple analysis on our data. And because
-R is the perhaps the language of choice for stats,the possibilities for
-analyses really are nearly limitless! 
+Our final step is to perform some simple analysis on our data. And
+because R is one of the languages of choice for stats,the
+possibilities for analyses really are nearly limitless!
 
-Although we only look at very simple examples here, your own analyses
-are likely to be more sophisticated. In this case, it is always a good
-idea to search online for analysis packages and code before writing
-your own, as someone else has probably faced your issue before.
+Let's start with some simple summary statistics.
 
 ##4.1. Summary stats
 
@@ -282,14 +279,20 @@ abline function call.
 
 ## A final note on packages
 
-In this notebook we relied solely on built-in functionality. In the 
-real world of running scripts on your computer however you should 
-make full use of external packages. We will cover some of the most
-popular packages in upcoming sessions but for a now a small intro:
+In this notebook we relied solely on built-in functionality, or in
+other words we did not use any R *packages*. But back in the real
+world of running scripts on our own machines we should make full use
+of external packages. In fact I would go as far to say that you should
+**always** check out what others have done and released before writing
+any code yourself. This could save you re-inventing the wheel!
+
+We will cover some of the most popular packages in upcoming sessions
+but for a now a small intro on the concept for those of you who are
+unfamiliar:
 
 A great deal of useful functionality in R is found in external
 *packages*.  These are basically collections of code (functions)
-written by someone else, and kindly release for our use. Because these
+written by someone else, and kindly released for our use. Because these
 are external to our computer and hosted online, they require
 installation (downloading + building in correct location).
 
