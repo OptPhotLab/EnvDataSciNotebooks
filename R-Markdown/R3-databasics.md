@@ -152,6 +152,8 @@ gpp.ET.sep <- subset(gpp.ET, Month==9)
 
 Can you create a new dataframe containing data measured at midday only? 
 
+Name this dataframe *gpp.ET.midday*
+
 
 
 Use *head* to check the dates are correct:
@@ -203,7 +205,7 @@ plot(gpp.ET.midday$HYY_EDDY233.GPP)
 
 We can also use *plot* to plot the relationship between variables by
 making scatter plots. Use the **~** operator to achieve this
-e.g. *plot(A~B.Width,data=data.AB)*, where *A* and *B* are our
+e.g. *plot(A~B,data=data.AB)*, where *A* and *B* are our
 variables and *data.AB* is our dataframe that contains our variables.
 
 Try to make a scatter plot between GPP and ET for our midday data:
@@ -222,7 +224,7 @@ Checking the distribution of your data is usually a very good idea!
 Subplots (multiple plots in the same window) in R are achieved with
 the panels or *par* command. Specify the number of rows and
 columns as a two element vector and pass it using the *mfrow* key word
-as an argument to *par* e.g. par(mfrow =(num.row,num.col)), then use
+as an argument to *par* e.g. par(mfrow =c(num.row,num.col)), then use
 repeated calls to *plot* in the usual way.
 
 Can you complete the box below to draw ET and GPP in the same window
@@ -230,7 +232,7 @@ but as separate subplots?
 
 
 ```r
-# first swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*
+# first swap num.row and num.col for integers *par(mfrow =c(num.row,num.col))*
 # then call plot() for each plot instance
 ```
  

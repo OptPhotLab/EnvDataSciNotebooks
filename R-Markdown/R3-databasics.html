@@ -46,6 +46,7 @@
 <pre class="sourceCode r"><code class="sourceCode r">gpp.ET.sep &lt;-<span class="st"> </span><span class="kw">subset</span>(gpp.ET, Month==<span class="dv">9</span>)</code></pre>
 <pre><code>## Error in subset(gpp.ET, Month == 9): object &#39;gpp.ET&#39; not found</code></pre>
 <p>Can you create a new dataframe containing data measured at midday only?</p>
+<p>Name this dataframe <em>gpp.ET.midday</em></p>
 <p>Use <em>head</em> to check the dates are correct:</p>
 <p>Did you notice something odd? The days are not in ascending order. We can sort this out using the following (rather complicated!) line:</p>
 <pre class="sourceCode r"><code class="sourceCode r">gpp.ET.midday &lt;-<span class="st"> </span>gpp.ET.midday[<span class="kw">with</span>(gpp.ET.midday, <span class="kw">order</span>(Year, Month, Day)), ]</code></pre>
@@ -60,14 +61,14 @@
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(gpp.ET.midday$HYY_EDDY233.GPP)</code></pre>
 <pre><code>## Error in plot(gpp.ET.midday$HYY_EDDY233.GPP): object &#39;gpp.ET.midday&#39; not found</code></pre>
 <h2 id="scatter-plot">3.2 Scatter plot</h2>
-<p>We can also use <em>plot</em> to plot the relationship between variables by making scatter plots. Use the <strong>~</strong> operator to achieve this e.g. <em>plot(A~B.Width,data=data.AB)</em>, where <em>A</em> and <em>B</em> are our variables and <em>data.AB</em> is our dataframe that contains our variables.</p>
+<p>We can also use <em>plot</em> to plot the relationship between variables by making scatter plots. Use the <strong>~</strong> operator to achieve this e.g. <em>plot(A~B,data=data.AB)</em>, where <em>A</em> and <em>B</em> are our variables and <em>data.AB</em> is our dataframe that contains our variables.</p>
 <p>Try to make a scatter plot between GPP and ET for our midday data:</p>
 <h2 id="histogram">3.3 histogram</h2>
 <p>Checking the distribution of your data is usually a very good idea! <strong>hist</strong> is used to draw histograms. How is our midday GPP distributed?</p>
 <h2 id="panels">3.4 Panels</h2>
-<p>Subplots (multiple plots in the same window) in R are achieved with the panels or <em>par</em> command. Specify the number of rows and columns as a two element vector and pass it using the <em>mfrow</em> key word as an argument to <em>par</em> e.g. par(mfrow =(num.row,num.col)), then use repeated calls to <em>plot</em> in the usual way.</p>
+<p>Subplots (multiple plots in the same window) in R are achieved with the panels or <em>par</em> command. Specify the number of rows and columns as a two element vector and pass it using the <em>mfrow</em> key word as an argument to <em>par</em> e.g. par(mfrow =c(num.row,num.col)), then use repeated calls to <em>plot</em> in the usual way.</p>
 <p>Can you complete the box below to draw ET and GPP in the same window but as separate subplots?</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first swap num.row and num.col for integers *par(mfrow =(num.row,num.col))*</span>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># first swap num.row and num.col for integers *par(mfrow =c(num.row,num.col))*</span>
 <span class="co"># then call plot() for each plot instance</span></code></pre>
 <h1 id="analysis">4. Analysis</h1>
 <p>Our final step is to perform some simple analysis on our data. And because R is one of the languages of choice for stats,the possibilities for analyses really are nearly limitless!</p>
