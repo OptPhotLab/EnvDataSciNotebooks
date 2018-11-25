@@ -5,7 +5,6 @@ date: "22 November 2018"
 output: html_document
 ---
 
-
 # A deeper look at functions
 
 In this session we take a deeper look at functions and the apply 
