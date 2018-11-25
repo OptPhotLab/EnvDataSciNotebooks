@@ -1,0 +1,211 @@
+<h1 id="a-deeper-look-at-functions">A deeper look at functions</h1>
+<p>In this session we take a deeper look at functions and the apply family of functions.</p>
+<p>R makes extensive use of the <em>functional</em> programming paradigm (style); what this means in practice is that getting things done in R involves using functions. You can check out the reminder below (section 1) or in the first notebook (R1) for a definition of a function.</p>
+<p>We will also take another look at the <strong>apply</strong> family of functions. These functions are used to achieve iteration in R and are basically an alternative way of looping over stuff.</p>
+<p>Finally, it is worth working seeking out at a definition of different programming paradigms (functional, imperative, object orientated) to see where R sits in the universe of computer languages.</p>
+<h1 id="what-is-a-function">1. What is a function?</h1>
+<p>A function is a set of instructions (lines of codes) that you need to repeat or that you want to have self-contained to limit the complexity of your program</p>
+<p>in R, function are build along the following principal:</p>
+<p>function.name &lt;- function(arguments) { body of function i.e. set of operations/instructions involving the arguments }</p>
+<p>arguments are the elements that you import from the general program and on which you want to apply the function variables defined inside the function exists only within the function environment.</p>
+<p>example 1</p>
+<pre class="sourceCode r"><code class="sourceCode r">f1&lt;-function (x,y) {
+  x+y
+}
+<span class="kw">f1</span>(<span class="dv">10</span>,<span class="dv">5</span>)</code></pre>
+<pre><code>## [1] 15</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f1</span>(<span class="dv">2</span>,<span class="dv">4</span>)</code></pre>
+<pre><code>## [1] 6</code></pre>
+<p>simple, isn't it?</p>
+<p>remember, our first function was very simple. But what happen when you have a more complex functions producing several output</p>
+<pre class="sourceCode r"><code class="sourceCode r">f2&lt;-<span class="st"> </span>function(x,y) {
+  z1&lt;-x+y
+  z2&lt;-x-y
+  z3&lt;-x*y
+}
+
+<span class="kw">f2</span>(<span class="dv">10</span>,<span class="dv">5</span>)</code></pre>
+<p>what to do to tackle this issue? You can include a return statement, with the list of output you wan to have</p>
+<pre class="sourceCode r"><code class="sourceCode r">f3&lt;-<span class="st"> </span>function(x,y) {
+  z1&lt;-x+y
+  z2&lt;-x-y
+  z3&lt;-x*y
+  <span class="kw">return</span>(<span class="kw">c</span>(z1,z2,z3))
+}
+
+<span class="kw">f3</span>(<span class="dv">10</span>,<span class="dv">5</span>)</code></pre>
+<pre><code>## [1] 15  5 50</code></pre>
+<p>you can now call those results,</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f3</span>(<span class="dv">10</span>,<span class="dv">5</span>)[[<span class="dv">1</span>]]</code></pre>
+<pre><code>## [1] 15</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f3</span>(<span class="dv">10</span>,<span class="dv">5</span>)[[<span class="dv">3</span>]]</code></pre>
+<pre><code>## [1] 50</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f3</span>(<span class="dv">10</span>,<span class="dv">5</span>)[[<span class="dv">2</span>]]</code></pre>
+<pre><code>## [1] 5</code></pre>
+<p>but remember the variables inside the function (here z1, z2, and z3) only exist within the function</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f3</span>(<span class="dv">10</span>,<span class="dv">5</span>)$z1</code></pre>
+<pre><code>## Error in f3(10, 5)$z1: $ operator is invalid for atomic vectors</code></pre>
+<p>it can be convenient to name the output</p>
+<pre class="sourceCode r"><code class="sourceCode r">f4&lt;-<span class="st"> </span>function(x,y) {
+  z1&lt;-x+y
+  z2&lt;-x-y
+  z3&lt;-x*y
+  <span class="kw">list</span>(<span class="dt">result1=</span>z1,<span class="dt">result2=</span>z2,<span class="dt">result3=</span>z3)
+}
+
+<span class="kw">f4</span>(<span class="dv">10</span>,<span class="dv">5</span>)</code></pre>
+<pre><code>## $result1
+## [1] 15
+## 
+## $result2
+## [1] 5
+## 
+## $result3
+## [1] 50</code></pre>
+<p>now you can use those output name</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f4</span>(<span class="dv">10</span>,<span class="dv">5</span>)$result1</code></pre>
+<pre><code>## [1] 15</code></pre>
+<p>it is also often convenient to store the output of the function into a object. For example, if there are going to be used for further operations</p>
+<pre class="sourceCode r"><code class="sourceCode r">obj1&lt;-<span class="kw">f4</span>(<span class="dv">10</span>,<span class="dv">5</span>)</code></pre>
+<p>what is the nature of obj1 and can you now extract the results from it?</p>
+<p>it is also possible to set default values for the arguments</p>
+<pre class="sourceCode r"><code class="sourceCode r">f5&lt;-<span class="st"> </span>function(<span class="dt">x=</span><span class="dv">20</span>,<span class="dt">y=</span><span class="dv">1</span>) {
+  z1&lt;-x+y
+  z2&lt;-x-y
+  <span class="kw">list</span>(<span class="dt">result1=</span>z1,<span class="dt">result2=</span>z2)
+}
+<span class="kw">f5</span>()</code></pre>
+<pre><code>## $result1
+## [1] 21
+## 
+## $result2
+## [1] 19</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">f5</span>(<span class="dv">10</span>,)$result1</code></pre>
+<pre><code>## [1] 11</code></pre>
+<p>finally, the arguments can be vectors or matrices.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># vectors </span>
+
+v1&lt;-<span class="kw">seq</span>(<span class="dv">1</span>:<span class="dv">5</span>)
+v2&lt;-<span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">4</span>,<span class="dv">6</span>,<span class="dv">8</span>,<span class="dv">10</span>)
+v3&lt;-<span class="kw">seq</span>(<span class="dv">1</span>:<span class="dv">4</span>)
+
+<span class="co">#matrix</span>
+
+m1&lt;-<span class="kw">matrix</span>( <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>), <span class="dt">ncol=</span><span class="dv">2</span>)
+m2&lt;-<span class="kw">matrix</span>( <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">6</span>, <span class="dv">8</span>, <span class="dv">10</span>, <span class="dv">12</span>), <span class="dt">ncol=</span><span class="dv">2</span>)
+m3&lt;-<span class="kw">matrix</span>( <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>, <span class="dv">7</span>, <span class="dv">8</span>), <span class="dt">ncol=</span><span class="dv">2</span>)</code></pre>
+<p>now create a function that: (1) subtract x from y, and (2) square the result apply it to v1 and v2 as well as m1 and m2 export those results to an new object and print see what happens when you use v3 or m3 instead of v1 and m1</p>
+<p>Be careful that if the different arguments are all vectors and matrices they should be of the same length</p>
+<p>functions can be used in loops, but R has a better way. This is the <em>apply</em> family. In comparison to a for loop, apply is typically easier to read and results in less side effects (unintended consequences). The efficiency (speed) of apply Vs a for loop will depend on the particular task at hand, you can read more about that here:</p>
+<p>https://stackoverflow.com/questions/42393658/lapply-vs-for-loop-performance-r</p>
+<h1 id="apply-ing-functions">2. apply-ing functions</h1>
+<p>There is a all family of function based on apply(), the idea is the same though: manipulate slices of matrix, array, list, dataframe in a repetitive way (<em>iterate</em>) and thus avoid the use of loops</p>
+<p>apply operates on array or matrix (array of dimension 2) X</p>
+<p>apply is written as apply(X,MARGIN,FUN)</p>
+<p>where margin specify how the function is applied, 1 is on row and 2 is on column</p>
+<p>FUN is the function to apply</p>
+<pre class="sourceCode r"><code class="sourceCode r">X &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="kw">rnorm</span>(<span class="dv">30</span>), <span class="dt">nrow=</span><span class="dv">5</span>, <span class="dt">ncol=</span><span class="dv">6</span>)
+<span class="kw">print</span>(X)</code></pre>
+<pre><code>##            [,1]       [,2]       [,3]      [,4]         [,5]       [,6]
+## [1,] -0.2430682 -0.2321973 -1.7474844 1.7406033 -0.736532336  0.9134031
+## [2,] -0.2062890  1.0827686 -0.8357843 0.9055297  2.191044726  1.0394131
+## [3,] -0.7669125 -0.7751872  1.5299468 1.0312771 -0.162034550 -0.6878966
+## [4,] -0.2836406  1.0183318  1.1521713 0.9900358  0.004463097  0.8340394
+## [5,]  0.4085151 -0.9883006 -0.6758801 0.3769301  1.243341385  1.0820966</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(X,<span class="dv">2</span>,sum)</code></pre>
+<pre><code>## [1] -1.0913951  0.1054152 -0.5770306  5.0443759  2.5402823  3.1810556</code></pre>
+<p>we have summed the values of each column do the same with the lines</p>
+<p>when you want to use a similar approach but with dataframes, lists or vectors, there is the lapply() function or sapply function</p>
+<p>lapply returns a list sapply retruns a vector</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#cars: The data give the speed of cars and the distances taken to stop. Note that the data were recorded in the 1920s.</span>
+<span class="co"># [,1]   speed   numeric     Speed (mph)</span>
+<span class="co"># [,2]   dist    numeric     Stopping distance (ft)</span>
+
+<span class="co">#we calculate the average speed and breaking distance</span>
+CarDat&lt;-cars
+speed_av_l&lt;-<span class="kw">lapply</span>(CarDat,mean)
+speed_av_v&lt;-<span class="kw">sapply</span>(CarDat,mean)
+
+speed_av_l</code></pre>
+<pre><code>## $speed
+## [1] 15.4
+## 
+## $dist
+## [1] 42.98</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r">speed_av_v</code></pre>
+<pre><code>## speed  dist 
+## 15.40 42.98</code></pre>
+<p>now, find out the min and max of these values</p>
+<p>tapply computes a measure (e.g., mean or max) of a object X (usually a vector) as a function of a factor contained in another variables.</p>
+<p>we will use the iris data (in R), This famous (Fisher's or Anderson's) iris data set gives the measurements in centimetres of the variables sepal length and width and petal length and width, respectively, for 50 flowers from each of 3 species of iris. The species are Iris setosa, versicolor, and virginica.</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">str</span>(iris)</code></pre>
+<pre><code>## &#39;data.frame&#39;:    150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels &quot;setosa&quot;,&quot;versicolor&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...</code></pre>
+<p>now we want to calculate the mean petal length per species</p>
+<pre class="sourceCode r"><code class="sourceCode r">flowerDat&lt;-iris
+Petal_l_av&lt;-<span class="st"> </span><span class="kw">tapply</span>(flowerDat$Petal.Length, flowerDat$Species, mean)
+Petal_l_av</code></pre>
+<pre><code>##     setosa versicolor  virginica 
+##      1.462      4.260      5.552</code></pre>
+<p>to the same for the other variables</p>
+<p>Now wouldn't it be convenient to do be able to do it for multiple variables at the same time?</p>
+<h2 id="mapply">mapply</h2>
+<p>That's were the mapply (m for multi) becomes handy</p>
+<pre class="sourceCode r"><code class="sourceCode r">res&lt;-<span class="kw">mapply</span>(mean,flowerDat[,<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>)])
+res</code></pre>
+<pre><code>## Sepal.Length  Sepal.Width Petal.Length  Petal.Width 
+##     5.843333     3.057333     3.758000     1.199333</code></pre>
+<p>but is it exactly what we want? no quite</p>
+<pre class="sourceCode r"><code class="sourceCode r">res2&lt;-<span class="kw">mapply</span>(function(x) <span class="kw">tapply</span>(x, flowerDat$Species, mean),flowerDat[,<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>)])
+res2</code></pre>
+<pre><code>##            Sepal.Length Sepal.Width Petal.Length Petal.Width
+## setosa            5.006       3.428        1.462       0.246
+## versicolor        5.936       2.770        4.260       1.326
+## virginica         6.588       2.974        5.552       2.026</code></pre>
+<h2 id="aggregate">aggregate</h2>
+<p>Now, there is another way to do that which I tend to prefer in such situation it relies on the aggregate function, which operate similarly as apply, but has the additional possibly to use &quot;by&quot; to specify on which sets of variable the function is apply independently</p>
+<pre class="sourceCode r"><code class="sourceCode r">res3&lt;-<span class="kw">aggregate</span>(flowerDat[,<span class="kw">c</span>(<span class="dv">1</span>:<span class="dv">4</span>)],<span class="dt">by=</span><span class="kw">list</span>(flowerDat$Species),mean)
+res3</code></pre>
+<pre><code>##      Group.1 Sepal.Length Sepal.Width Petal.Length Petal.Width
+## 1     setosa        5.006       3.428        1.462       0.246
+## 2 versicolor        5.936       2.770        4.260       1.326
+## 3  virginica        6.588       2.974        5.552       2.026</code></pre>
+<h1 id="what-are-r-packages">3. What are R packages?</h1>
+<p>Before we finish, let's take a little detour into the world of packages. R packages are basically sets of functions, developed by the R user community to tackle a problem/coding need.</p>
+<p>There are probably more than 10000 packages for R, usually available online. You can develop your own and share it.</p>
+<p>A package usually includes some documentations, a set of functions (and possibly some data), a some test to see it works fine basic information are given the description file (available online, e.g., cran.r-project.org or stat.ethz.ch)</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">packageDescription</span>(<span class="st">&quot;datasets&quot;</span>)</code></pre>
+<pre><code>## Package: datasets
+## Version: 3.5.1
+## Priority: base
+## Title: The R Datasets Package
+## Author: R Core Team and contributors worldwide
+## Maintainer: R Core Team &lt;R-core@r-project.org&gt;
+## Description: Base R datasets.
+## License: Part of R 3.5.1
+## Built: R 3.5.1; ; 2018-07-03 02:29:26 UTC; unix
+## 
+## -- File: /usr/lib/R/library/datasets/Meta/package.rds</code></pre>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co">#help(package=&quot;datasets&quot;), might not work here</span></code></pre>
+<p>packages are usually on repositories from where they can be installed (CRAN, GitHub,...)</p>
+<p>to install a package from R: &quot;might not work form notebook&quot; &quot;install.packages(&quot;ggplot2&quot;)&quot;</p>
+<p>to install from CRAN &quot;install.packages(&quot;ggplot2&quot;, repo=&quot;https://ftp.acc.umu.se/mirror/CRAN/&quot;)&quot;</p>
+<p>packages can be removed with remove.packages(always specify which package) packages can be updated with update.packages(), if not specify all packages will be updated</p>
+<p>In the notebooks we install packages ahead of time. To use the packages, you can either load it in the memory</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(ggplot2)</code></pre>
+<p>or you can just use one function with the following syntax <em>package::function</em></p>
+<p>In Rstudio, you can install and load packages from the packages tab in the lower right corner.</p>
+<p>note: do not mix library (a command to load packages) with the packages</p>
+<h1 id="an-additional-exercise-to-test-your-understanding.">4. An additional exercise to test your understanding.</h1>
+<p>Here we will try to use what we have learnt to datadownloaded from SMARTSMEAR.</p>
+<p>Read (either) data file from https://github.com/OptPhotLab/EnvDataSciNotebooks/tree/master/data</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hint, take a look in notebook R3-databasics </span></code></pre>
+<p>read the other file, and combine the two files together into a single dataframe:</p>
+<p>create a function to calculate a single column mean. Do not use 'mean' built in, but write the formula yourself:</p>
+<pre class="sourceCode r"><code class="sourceCode r"><span class="co"># hint, the input argument should be a vector of values</span></code></pre>
+<p>apply this function to both columns:</p>
+<p>plot both daily means using ggplot</p>

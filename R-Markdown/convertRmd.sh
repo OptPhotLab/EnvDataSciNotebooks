@@ -4,7 +4,7 @@
 # convert to html and ipynb formats
 #
 
-fn='R3-databasics'
+fn='R4-functions-and-apply'
 
 Rscript -e "library(knitr); knit('$fn.Rmd')"
 pandoc $fn.md > $fn.html
