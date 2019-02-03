@@ -4,7 +4,7 @@
 # convert to html and ipynb formats
 #
 
-fn='R4-functions-and-apply'
+fn='R5-model_selection'
 
 Rscript -e "library(knitr); knit('$fn.Rmd')"
 pandoc $fn.md > $fn.html

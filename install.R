@@ -1,1 +1,5 @@
 install.packages("ggplot2")
+install.packages("nlme")
+install.packages("MASS")
+install.packages("ggplot2")
+install.packages("MuMIn")

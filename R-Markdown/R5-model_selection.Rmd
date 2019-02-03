@@ -1,0 +1,291 @@
+---
+title: "Model selection"
+author: "Yann Salmon"
+date: "30 January 2019"
+output: html_document
+---
+
+## what is model selection
+
+It is choosing the simplest model that adequately explain the data
+
+
+Here we are not going to be able to go through all the theory behind it and cover everything into details. However, I will provide you with a reliable method to do it. If you are interested to go further, we can discuss.
+
+# to do before we get started
+
+```{r}
+
+NSCdata0<-read.csv("../data/NSCdata2.csv",header=T,se=",")
+str(NSCdata0)
+NSCdata<-subset(NSCdata0,!NSCdata0$Health=="?")
+str(NSCdata)
+
+library(nlme)
+library(MASS)
+
+```
+This is a subset of a real dataset published some time ago (Salmon et al. 2015 PCE).
+This present non-structural carbohydrates (Total, Starch, Sucrose, Glucose and Fructose, and total soluble sugars) in Pinus sylvestris trees in a spanish population.
+The data are group into:
+- Season
+- sampled tissue: needles (L) or twing (R)
+- Health status: Defoliated (D) means dying, Non-defoliated (ND) means healthy
+Measurments were done on the same trees repeatedly
+
+## fixed effect model (ANOVA, Linear model)
+
+I assume most of you are familiar with those types of model. Thus this is mostly to refresh memories and get you thinking about the model selection.
+If that's not the case, let me know
+
+#ANOVA
+
+Now for the sake of testing, image all measurements are independent.
+We can look at the effect of Season, Part and Health on total NSC with a classical ANOVA
+
+Do you have an idea how to code it? Or at least structure it?
+Give it a try
+```{r}
+
+```
+
+
+Note that there are different ways to code for an ANOVA in R,
+```{r}
+anova1<-aov(Total_NSC~Season*Part*Health,data=NSCdata)
+summary(anova1)
+```
+
+How to check if the model is ok?
+
+```{r}
+par(mfrow=c(2,2));plot(anova1)
+```
+Let's look at the residual
+```{r}
+residuals <- residuals(anova1)
+par(mfrow=c(1,2))
+hist(NSCdata$Total_NSC,breaks=8)   # Breaks only suggestion
+hist(residuals,breaks=8)
+```
+
+
+Now, can we simplify the model?
+How would you do it?
+
+```{r}
+
+
+```
+
+#linear regression
+
+Now, let's try to see if there is a relation betweem continous variable.
+For example, does the amount of starch and soluble sugars are related?
+
+```{r}
+lm1<-lm(Starch~Soluble_Sugars,data=NSCdata)
+summary(lm1)
+```
+now if you account for other factors
+```{r}
+lm2<-lm(Starch~Soluble_Sugars*Season*Part*Health,data=NSCdata)
+summary(lm2)
+```
+Do you know what are the Multiple R-square and Adjusted R-square
+
+Multiple R squared simply measure of Rsquared for the model: i.e.,  the amount of variation in the response variable that can be explained by the independent variables. It alwasy increase with the increasing number of variables used in the model.T
+
+Adjusted Rsquared controls against this increase, and adds penalties for the number of predictors in the model. Therefore it shows a balance between the most parsimonious model, and the best fitting model. 
+
+Big difference can be an sign of overfitting.
+
+Think when you want to consider each one of them
+
+What would you do to simplify the above complex model? How would you text it?
+```{r}
+
+```
+
+
+
+
+## mixed effect models or additive mixed effect model
+
+Now we know that those measurments were actually repeatidly made on the same trees, so we should account for that in the models.
+
+Note that there are different ways to do mixed-effect model in R. We will go with the package "nlme"
+
+
+This is mostly based on Zuur et al. 2009 - mixed effects models and extension in ecology with R
+That's a great stat book and they details things a lot more, but this should be enough to get you going.
+
+Model selection is based on:
+1)Akaike Information Criteria (AIC), or the Bayesian Information Criteria (BIC).
+Both measure the fit of the models and give a penality for its complexity. The simpler the model (that explain the data as well) the better
+
+2)
+
+Two types of approaches: top-down (starting from the full model and trying to simplify it) and step-up (the opposite). Top-down is usually recommended.
+ 
+
+1. Start with a model where the fixed component contains all explanatory variables and as many interactions as possible (the beyond optimal model). 
+
+gls only deals with heterogenity of the variance
+lme deals with real random terms (for example here it account for the nesting/repeating of the measurements on trees)
+The random term (here the tree) can influence only the intercept of the regression (model2) or the slope as well (model3, 4, 5 and 6)
+
+```{r}
+
+NSCdata1<-na.omit(NSCdata)
+
+mix1<-gls(Total_NSC~Season*Part*Health,data=NSCdata1,method="REML")
+mix2<-lme(Total_NSC~Season*Part*Health,random=~1|Tree,data=NSCdata1,method="REML")
+#mix3<-lme(Total_NSC~Season*Part*Health,random=~1+Season|Tree,data=NSCdata1 ,method="REML") #there is a problem with that model (you can remove the # to see it). Because, it doesn't matter here for the model selection process with will just ignore it for now
+mix4<-lme(Total_NSC~Season*Part*Health,random=~1+Health|Tree,data=NSCdata1 ,method="REML")
+mix5<-lme(Total_NSC~Season*Part*Health,random=~1+Part|Tree,data=NSCdata1 ,method="REML")
+mix6<-lme(Total_NSC~Season*Part*Health,random=~1+Part+Health|Tree,data=NSCdata1 ,method="REML")
+```
+
+2. Using the beyond optimal model, find the optimal structure of the random component. 
+
+This can be done by looking at the model with the lowest AIC
+
+```{r}
+AIC(mix1,mix2,mix4,mix5,mix6)
+#BIC(mix1,mix2,mix4,mix5,mix6)
+```
+
+Here model 2, the mixed effect model where the random term only impact the intercept, is best.
+```{r}
+summary(mix2)
+anova(mix2)
+```
+Do you know the difference between these two output?
+
+3. find the optimal fixed structure. 
+
+
+
+```{r}
+sel1<-lme(Total_NSC~Season*Part*Health,random=~1|Tree,data=NSCdata1,method="ML") #note this is the same as mix2 but with ML
+sel2<-lme(Total_NSC~(Season+Part+Health)^2,random=~1|Tree,data=NSCdata1,method="ML")
+AIC(sel1,sel2)
+
+```
+
+That's a bit of a tricky case. The three way interaction is not significant (see above) and the AIC is almost equal if very slightly higher than the complex model. Ultimately we would prefer a simpler model.
+There are a few things that can be considered when deciding how to proceed. One is to look at the residual and model validation (see below 4), another is to see what the BIC tells us
+
+```{r}
+BIC(sel1,sel2)
+```
+Maybe we can go further, but let's check that our simpler model is not significantly worse than the full model
+```{r}
+anova(sel1,sel2)
+```
+That's ok.
+
+Thus, let's decide to see if we can simply the model even further. Can one of the two-way interaction be removed?
+```{r}
+sel3a<-lme(Total_NSC~Season+Part+Health+Season:Part+Season:Health,random=~1|Tree,data=NSCdata1,method="ML")
+sel3b<-lme(Total_NSC~Season+Part+Health+Season:Part+Part:Health,random=~1|Tree,data=NSCdata1,method="ML")
+sel3c<-lme(Total_NSC~Season+Part+Health+Health:Part+Season:Health,random=~1|Tree,data=NSCdata1,method="ML")
+AIC(sel2,sel3a,sel3b,sel3c)
+
+```
+It seems Part:health is not very important (that can also be seem from the anova(mix2) above)
+
+you can check that to:
+```{r}
+#anova(sel1,sel3a)
+```
+
+
+Can we go further?
+```{r}
+sel4a<-lme(Total_NSC~Season+Part+Health+Season:Part,random=~1|Tree,data=NSCdata1,method="ML")
+sel4b<-lme(Total_NSC~Season+Part+Health+Season:Health,random=~1|Tree,data=NSCdata1,method="ML")
+AIC(sel3a,sel4a,sel4b)
+```
+
+
+```{r}
+#anova(sel1,sel4a)
+```
+
+(we could do a test to remove the Season:Part interaction but if you look at the AIC of model 3c, 4c and the output of the anova(mix2) it is clear that it matters)
+
+Now we have the following model: Total_NSC~Season+Part+Health+Season:Part
+Does the Heatlh actually matter?
+
+```{r}
+sel5<-lme(Total_NSC~Season+Part+Season:Part,random=~1|Tree,data=NSCdata1,method="ML")
+AIC(sel4a,sel5)
+```
+
+this suggest that the health status doesn't matter
+
+```{r}
+anova(sel1,sel5)
+```
+So this suggest that we are not doing a worth job at explaining the data with the model:
+Total_NSC~Season+Part+Season:Part
+than with the model:
+Total_NSC~Season+Part+Health+Season:Part+Season:Health+Part:Health+Season:Part:Health
+
+4. Present the final model using REML estimation and test it's validity
+
+```{r}
+Final1<-lme(Total_NSC~Season+Part+Season:Part,random=~1|Tree,data=NSCdata1,method="REML")
+summary(Final1)
+anova(Final1)
+
+```
+
+Here we presented cases with mixed effect model but the same can be used with additive models
+
+
+Now you can try the same process of model selection with other NSC variables
+```{r}
+E<-resid(Final1,type="normalized")
+fit<-fitted(Final1)
+op<-par(mfrow=c(1,2))
+plot(x=fit, y=E,
+     xlab="Fitted values", ylab="Residuals",
+     main="Residual versus fitted values")
+#identify(fit,E)
+hist(E,nclass=30)
+par(op)
+```
+
+Really not too bad (one outlier), even if there is a bit of an increase in the residual vs fitted values. 
+It might be that some information are missing in the dataset/model. For example, there might be a temperature effect that is not included here.
+That could be handled with data transformation, glm, etc. but that will be for another course.
+
+
+
+## special cases
+
+# interaction with more than two variables
+
+There is no clear rule how to handle that. On one hand from a statisitcal method point-of-view you should start with the most complex model and if there is a three-way interaction, you should keep it. On the other hand, I haven't met anyone so far that is able to interpret the meaning of a three (or higher) way interaction. Thus, there might be a very important term, but we cannot make sense of it.
+
+# small sample size
+
+AICc is the AIC corrected for small sample size since there is a risk that AIC will select too complicated model in that case (overfit)
+Whn to use it? not set in stone but some author recommnend AICc when N/K<40 with N the number of sample and K the number of variables fitted in the model
+```{r}
+library(MuMIn)
+AIC(sel4a,sel5)
+AICc(sel4a,sel5)
+```
+
+
+# what to do if the variables are not orthogonals
+
+Two variables are othogonal if there is no correlation between them.
+That's a complicated, albeit common issue. For example, PAR and VPD or tempearture are often correlated.
+The order n which they come n the model then matters.
+
+We will keep it as food for thought at this point, but we could come back to it anther time.
