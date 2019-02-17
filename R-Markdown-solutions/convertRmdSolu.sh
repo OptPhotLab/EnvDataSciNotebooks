@@ -4,7 +4,7 @@
 # convert to html and ipynb formats
 #
 
-fn='R3-databasics-solutions'
+fn='R6-times-and-timeseries'
 
 Rscript -e "library(knitr); knit('$fn.Rmd')"
 pandoc $fn.md > $fn.html
