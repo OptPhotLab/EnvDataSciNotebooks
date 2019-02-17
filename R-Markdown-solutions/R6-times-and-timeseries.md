@@ -13,21 +13,20 @@ time-series data consist of two columns (vectors) of data. The first is
 the date-time column (plotted as X-axis on graph) and the second
 column is the variable of interest that changes as a function of time.
 
-The two things we should keep in mind with time-series data is firstly 
-it is easiest to get dates into the correct date-time format as soon as 
-possible, this way we can let the computer do the hard work when it comes
-to plotting etc. The next thing we should keep in mind is that there are
-any number of data analysis and statistical methods specifically designed
-for time-series data. There are also caveats related to using standard
-statistical techniques (e.g. linear regression) to time-series data, so 
-watch out for these! 
+There are two things we should keep in mind when working with
+time-series data. Firstly it is easiest to get dates into the correct
+datetime format as soon as possible, this way we can let the computer
+do the hard work when it comes to plotting etc. Secondly, we
+should keep in mind is that there are any number of data analysis and
+statistical methods specifically designed for time-series data. There
+are also caveats related to using standard statistical techniques
+(e.g. linear regression) to time-series data, so watch out for these!
    
-In this session we will explain what dates are, show how to read
-dates in R, and we will also look at auto-correlation of time-series,
-which are two concepts that are great importance in time-series
-analysis and find application in a number of different places
-(e.g. Durbin Watson statistic, ARIMA models, eddy co-variance
-calculations etc).
+In this session we will explain how R handles dates, and we will also
+look at auto-correlation and cross-correlation of time-series, which
+are two concepts that are great importance in time-series analysis and
+find application in a number of different places (e.g. Durbin Watson
+statistic, ARIMA models, eddy co-variance calculations etc).
 
 #1. What is a date and datetime exactly?
 
@@ -99,7 +98,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2019-02-17 18:37:49 EET"
+## [1] "2019-02-17 21:26:15 EET"
 ```
 This is referred to as a datetime object, and is the main object type
 that we will deal with. Datetime objects objects contains date, time
@@ -117,7 +116,7 @@ str(just.before)
 ```
 
 ```
-##  POSIXct[1:1], format: "2019-02-17 18:37:49"
+##  POSIXct[1:1], format: "2019-02-17 21:26:15"
 ```
 
 In R, datetimes are either categorised as *POSIXct* or *POSIXlt*,
@@ -132,7 +131,7 @@ str(just.before.lt)
 ```
 
 ```
-##  POSIXlt[1:1], format: "2019-02-17 18:37:49"
+##  POSIXlt[1:1], format: "2019-02-17 21:26:15"
 ```
 
 So what's the difference then? 
@@ -144,15 +143,14 @@ all about here [the unix Epoch](https://en.wikipedia.org/wiki/Unix_time)).
 
 So when to use which? In all honesty I am not 100% sure. However as
 POSIXct takes less memory and is somewhat simpler then perhaps that
-is the preferred option. Probably the answer will depend on which 
-ever is the preferred format of the package you are using, because
-as we now know, packages make life easy...
+is the preferred option. 
 
+# 2. Dates and real data
 
-## read data (See Chao's script)
+Let's see how we would read in some dates using real data. We have
+used this data before! GPP is an estimate of CO2 exchange of tree
+canopies:
 
-We have used this data before! GPP is an estimate of CO2 exchange
-of tree canopies:
 
 ```r
 gpp<-read.csv('../data/gppsmeardata_20160101120000.csv',header = T,sep = ',',dec='.')
@@ -203,30 +201,45 @@ head(gpp$date)
 ## [6] "2016-01-01"
 ```
 
-To make our life easier in the following selection we will use data
-measured at midday only. We can select this using our non-datetime
-columns:
+To make our life easier in the following selection we will use daily
+data:
 
 
 ```r
-gpp.midday <- subset(gpp, Hour==12)
-gpp.midday <- subset(gpp.midday, Minute==0) 
+gpp.daily <- aggregate(HYY_EDDY233.GPP ~ date, gpp, median)
+
+head(gpp.daily)
+```
+
+```
+##         date HYY_EDDY233.GPP
+## 1 2016-01-01               0
+## 2 2016-01-02               0
+## 3 2016-01-03               0
+## 4 2016-01-04               0
+## 5 2016-01-05               0
+## 6 2016-01-06               0
 ```
 
 Remember to stick to the midday data in the following sections...
 
 
-#3. Does data remember? 
+#3. Does data have a sense of history? 
 
-A key aspect of analysing time-series data is understanding and dealing
-with history (or memory). History in the context of time-series refers
-to how current values (or future values) depend on past values. This
-is seen as trends in behaviour over time, and referred to as
-*non-stationary* in math jargon. Likewise *stationary* data has no
-trend, and both the mean and variability (variance) remains constant
-during the time-series.  
+A key aspect of analysing time-series data is understanding and
+dealing with history (or memory). History in the context of
+time-series refers to how current values (or future values) depend on
+past values. This is seen as trends in behaviour over time, and
+referred to as *non-stationary* in math jargon. Likewise *stationary*
+data has no trend, and both the mean and variability (variance)
+remains constant. Running a regression model with two non-stationary
+time-series can often lead to highly inflated R2 value, this is a
+common problem in economics and is known as [spurious
+regression](https://www.reed.edu/economics/parker/312/tschapters/S13_Ch_2.pdf).
 
-Is our GPP data stationary or non-stationary? Let's graph it and find out.
+
+So how about our GPP data, is there a trend in time? As always, let's start
+with a graph...
 
 When we graph time-series data, we can use the *scales* package to make
 our life easier.
@@ -240,7 +253,7 @@ x-axis in 1 day time steps :
 
 
 ```r
-ggplot(gpp.midday,aes(x=date,y=HYY_EDDY233.GPP))+
+ggplot(gpp.daily,aes(x=date,y=HYY_EDDY233.GPP))+
   geom_point()+ ylab("GPP [umol/m2/s]") +
   scale_x_date(breaks = date_breaks('1 day'),
                labels = date_format("%m-%d"))
@@ -255,7 +268,7 @@ to more days, you can also change the *date_format argument* to
 
 
 ```r
-ggplot(gpp.midday,aes(x=date,y=HYY_EDDY233.GPP))+
+ggplot(gpp.daily,aes(x=date,y=HYY_EDDY233.GPP))+
   geom_point() +  ylab("GPP [umol/m2/s]") +
   scale_x_date(breaks = date_breaks('30 day'),
                labels = date_format("%b-%d")) 
@@ -263,17 +276,13 @@ ggplot(gpp.midday,aes(x=date,y=HYY_EDDY233.GPP))+
 
 ![plot of chunk unnamed-chunk-15](figure/unnamed-chunk-15-1.png)
 
-We have a clear seasonal pattern here, so our data is not stationary.
-
 Once we identify history in our data then we can start to do
 interesting things; we might attempt to remove the dependence (by
-differencing) or we could attempt to model the history using
-*autoregressive* techniques.
+differencing). 
 
 ## what is auto-correlation?
 
-**Auto-correlation** is a method to quantify time-series history. In
-simple terms auto-correlation is the correlation between a variable and
+In simple terms auto-correlation is the correlation between a variable and
 itself shifted in time. The shift in time is referred to as the
 *lag*. Typically we compute auto-correlation for a whole range of lags,
 and then plot the output as an **auto-correlation function**, which is
@@ -289,10 +298,10 @@ plot the output:
 
 ```r
 lag <- 30
-n <- length(gpp.midday$HYY_EDDY233.GPP)
-gpp.lag <- gpp.midday$HYY_EDDY233.GPP[1:(n-lag)]
-gpp.short <- gpp.midday$HYY_EDDY233.GPP[(1+lag):n]  
-date.short <-  as.Date(gpp.midday$datetime[(1+lag):n]  )
+n <- length(gpp.daily$HYY_EDDY233.GPP)
+gpp.lag <- gpp.daily$HYY_EDDY233.GPP[1:(n-lag)]
+gpp.short <- gpp.daily$HYY_EDDY233.GPP[(1+lag):n]  
+date.short <-  gpp.daily$date[(1+lag):n]  
 
 df.lag <- data.frame(date.short,gpp.lag,gpp.short)
 
@@ -334,18 +343,18 @@ What's the GPP auto-correlation at 30 days?
 
 
 ```r
-lag.corr(gpp.midday$HYY_EDDY233.GPP,30)
+lag.corr(gpp.daily$HYY_EDDY233.GPP,30)
 ```
 
 ```
-## [1] 0.6111566
+## [1] 0.6102147
 ```
 
 How about lag=0? 
 
 
 ```r
-lag.corr(gpp.midday$HYY_EDDY233.GPP,0)
+lag.corr(gpp.daily$HYY_EDDY233.GPP,0)
 ```
 
 ```
@@ -363,7 +372,7 @@ sensible value (maximum number of days),try it out on the midday *gpp* data:
 
 
 ```r
-z<-acf(gpp.midday$HYY_EDDY233.GPP,lag.max=100)
+z<-acf(gpp.daily$HYY_EDDY233.GPP,lag.max=100)
 ```
 
 ![plot of chunk unnamed-chunk-20](figure/unnamed-chunk-20-1.png)
@@ -376,11 +385,11 @@ Let's double check our manual calculation:
 
 
 ```r
-lag.corr(gpp.midday$HYY_EDDY233.GPP,25)
+lag.corr(gpp.daily$HYY_EDDY233.GPP,25)
 ```
 
 ```
-## [1] 0.6798987
+## [1] 0.6464757
 ```
 
 ```r
@@ -389,13 +398,71 @@ z[25]
 
 ```
 ## 
-## Autocorrelations of series 'gpp.midday$HYY_EDDY233.GPP', by lag
+## Autocorrelations of series 'gpp.daily$HYY_EDDY233.GPP', by lag
 ## 
-##   25 
-## 0.68
+##    25 
+## 0.646
 ```
 
-# Putting our new knowledge to work: cross correlation.
+So when might we use this result? Well zero auto-correlation 
+of residuals is an assumption of linear regression models. In 
+fact the [Durbin Watson](https://en.wikipedia.org/wiki/Durbin%E2%80%93Watson_statistic) statistic specifically tests for this. 
+
+# 4. How to forget: *differencing* a time-series
+
+Differencing a time-series can be used to reduce auto-correlation.  It is
+a simple idea, we just take the difference between adjacent values. We
+use the *diff* function in R to do this. 
+
+Try it out below:
+
+
+```r
+gpp.diff <- diff(gpp.daily$HYY_EDDY233.GPP)
+```
+Note that the length of gpp.diff is one less than the the length
+of the original GPP time-series. Let's add a NA so we can fit
+it into the original dataframe, and plot the output:
+
+
+```r
+gpp.daily$gpp.diff <- c(gpp.diff, NA)
+
+ggplot(gpp.daily,aes(x=date,y=gpp.diff))+
+  geom_point() +  ylab("GPP difference") +
+  scale_x_date(breaks = date_breaks('30 day'),
+               labels = date_format("%b-%d")) 
+```
+
+```
+## Warning: Removed 1 rows containing missing values (geom_point).
+```
+
+![plot of chunk unnamed-chunk-23](figure/unnamed-chunk-23-1.png)
+let's see what the acf plot looks like (note that we have to use the
+gpp.diff variable here not the dataframe, as acf fails for vectors
+with NA):
+
+
+```r
+acf(gpp.diff,lag.max=100)
+```
+
+![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
+Notice how different this *acf* plot is to the one for the
+undifferenced data? The rapid fall-off in the acf means that our data
+no longer remembers so much of its history.
+
+So is the difference time-series stationary? well the mean stays constant, 
+but the variabilty (variance) is still a funcion of time. So we cannot
+say that our time-series is stationary in variance. Transforming data
+(using e.g. square root) is typically used for dealing with changing
+variance, see [here](https://robjhyndman.com/uwafiles/6-Stationarity-Transformations-Differencing.pdf).
+
+If you're working on time-series data, try differencing it and removing the
+trend to avoid the curse of spurious correlations.
+
+# 5. Putting our new knowledge to work: cross correlation.
 
 What we have done so far is a little theoretical, how can
 we use this information to learn something about our data? For 
@@ -425,42 +492,9 @@ head(T168)
 ## 6 2016     1   1    2     30      0     -6.122000
 ```
 
-Extract midday values, like our GPP:
-
-
-```r
-T168.midday <- subset(T168, Hour==12)
-T168.midday <- subset(T168.midday, Minute==0) 
-```
-
-When we plot GPP and temperature together, what do we see?
-
-
-```r
-gpp.midday$HYY_META.T168 <- T168.midday$HYY_META.T168
-
-ggplot() + 
-  geom_line(data = gpp.midday, aes(x = date, 
-  y = HYY_EDDY233.GPP), color = "red") +		 
-  geom_line(data = gpp.midday, aes(x = date,
-   y = HYY_META.T168), color = "blue") + 
-   
-  scale_x_date(breaks = date_breaks('30 day'),
-               labels = date_format("%b-%d")) 
-```
-
-![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
-
-
-Now here comes the new bit, where we apply *cross-correlation*. 
-Cross-correlation is just like auto-correlation, only we calculate
-lags between two *different* variables, at differing lags. This
-allows us to estimate the lag at which maximum correlation occurs. 
-
-Let's try out the R built in *ccf()*, first we have to remove interpolate
-a few missing values in T168 as ccf does not like these. We can use
-zoo package to fill in missing values:
-
+There are some missing values in our temperature data, let's fill 
+them in using interpolation before we move onto our next bit of
+analysis:
 
 
 ```r
@@ -479,83 +513,103 @@ library(zoo)
 ```
 
 ```r
-gpp.midday$HYY_META.T168i <- na.approx(gpp.midday$HYY_META.T168)
+T168$HYY_META.T168i <- na.approx(T168$HYY_META.T168)
 
-sum(is.na(gpp.midday$HYY_META.T168))
+sum(is.na(T168$HYY_META.T168))
 ```
 
 ```
-## [1] 5
+## [1] 266
 ```
 
 ```r
-sum(is.na(gpp.midday$HYY_META.T168i))
+sum(is.na(T168$HYY_META.T168i))
 ```
 
 ```
 ## [1] 0
 ```
 
-Finally, time to try out the ccf and find out if GPP lags temperature:
+
+Extract daily values, like our GPP above:
 
 
 ```r
-ccf(gpp.midday$HYY_EDDY233.GPP,gpp.midday$HYY_META.T168i,lag.max=40)
+T168$date <-gpp$date
+T168.daily <- aggregate(HYY_META.T168i ~ date, T168, max)
+
+head(T168.daily)
 ```
 
-![plot of chunk unnamed-chunk-26](figure/unnamed-chunk-26-1.png)
-The strength of the positive lags here could indeed be an indication 
-of the fact that GPP follows temperature. The maximum occurs at
-2 day lag, so I reckon we need a little more work here to come
-up with a more realistic lag value.
-
-
-# Differencing a timeseries and Autocorrelation
-
-Differencing a time-series is a technique that removes history i.e.
-attempts to make a time-series stationary. It is a simple idea, we
-just take the difference between adjacent values. We use the *diff*
-function in R to do this. Try it out below:
-
-
-```r
-gpp.diff <- diff(gpp.midday$HYY_EDDY233.GPP)
 ```
-Note that the length of gpp.diff is one less than the the length
-of the original GPP time-series. Let's add a NA so we can fit
-it into the original dataframe, and plot the output:
+##         date HYY_META.T168i
+## 1 2016-01-01      -5.223000
+## 2 2016-01-02     -12.015333
+## 3 2016-01-03      -8.656333
+## 4 2016-01-04     -14.159000
+## 5 2016-01-05     -18.530333
+## 6 2016-01-06     -23.453333
+```
+
+When we plot GPP and temperature together, what do we see?
 
 
 ```r
-gpp.midday$gpp.diff <- c(gpp.diff, NA)
+gpp.daily$HYY_META.T168 <- T168.daily$HYY_META.T168
 
-ggplot(gpp.midday,aes(x=date,y=gpp.diff))+
-  geom_point() +  ylab("GPP difference") +
+ggplot() + 
+  geom_line(data = gpp.daily, aes(x = date, 
+  y = HYY_EDDY233.GPP), color = "red") +		 
+  geom_line(data = gpp.daily, aes(x = date,
+   y = HYY_META.T168), color = "blue") + 
+   
   scale_x_date(breaks = date_breaks('30 day'),
                labels = date_format("%b-%d")) 
 ```
 
-```
-## Warning: Removed 1 rows containing missing values (geom_point).
-```
-
 ![plot of chunk unnamed-chunk-28](figure/unnamed-chunk-28-1.png)
 
-let's see what the acf 
-plot looks like (note that we have to use the gpp.diff variable here
-not the dataframe, as acf fails for vectors with NA):
+
+Now here comes the new bit, where we apply *cross-correlation*. 
+Cross-correlation is just like auto-correlation, only we calculate
+lags between two *different* variables, at differing lags. This
+allows us to estimate the lag at which maximum correlation occurs. 
+
+Finally, time to try out the ccf and find out if GPP lags temperature:
 
 
 ```r
-acf(gpp.diff,lag.max=100)
+ccf(gpp.daily$HYY_EDDY233.GPP,gpp.daily$HYY_META.T168,lag.max=40)
 ```
 
 ![plot of chunk unnamed-chunk-29](figure/unnamed-chunk-29-1.png)
+Now this is a confusing picture. From these results is appears
+that temperature actually follows photosynthesis! How about if
+select just the spring recovery period?
 
-The rapid fall-off in the acf means that our data no longer remembers
-so much of its history. 
 
-So is the difference time-series stationary? well the mean stays constant, 
-but the variabilty (variance) is still a funcion of time. So we cannot
-say that our time-series is stationary in variance. 
+```r
+gpp.spring.daily <-gpp.daily[25:180,]
 
+
+ggplot() + 
+  geom_line(data = gpp.spring.daily, aes(x = date, 
+  y = HYY_EDDY233.GPP), color = "red") +		 
+  geom_line(data = gpp.spring.daily, aes(x = date,
+   y = HYY_META.T168), color = "blue") + 
+   
+  scale_x_date(breaks = date_breaks('30 day'),
+               labels = date_format("%b-%d")) 
+```
+
+![plot of chunk unnamed-chunk-30](figure/unnamed-chunk-30-1.png)
+
+
+```r
+ccf(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,lag.max=40)
+```
+
+![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
+
+Now that is more like it! The positive values imply that GPP lags
+temperature during the spring, as we would expect.
