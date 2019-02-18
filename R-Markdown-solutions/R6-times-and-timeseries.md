@@ -98,7 +98,7 @@ Sys.time()
 ```
 
 ```
-## [1] "2019-02-18 10:27:38 EET"
+## [1] "2019-02-18 10:33:04 EET"
 ```
 This is referred to as a datetime object, and is the main object type
 that we will deal with. Datetime objects contains date, time and also
@@ -112,7 +112,7 @@ str(just.before)
 ```
 
 ```
-##  POSIXct[1:1], format: "2019-02-18 10:27:38"
+##  POSIXct[1:1], format: "2019-02-18 10:33:04"
 ```
 
 In R, datetimes are either categorised as *POSIXct* or *POSIXlt*,
@@ -127,7 +127,7 @@ str(just.before.lt)
 ```
 
 ```
-##  POSIXlt[1:1], format: "2019-02-18 10:27:38"
+##  POSIXlt[1:1], format: "2019-02-18 10:33:04"
 ```
 
 So what's the difference then? 
@@ -275,7 +275,7 @@ Once we identify history in our data then we can start to do
 interesting things; we might attempt to remove the dependence (by
 differencing), and we can also look at auto-correlation... 
 
-## what is auto-correlation?
+## What is auto-correlation?
 
 In simple terms auto-correlation is the correlation between a variable and
 itself shifted in time. The shift in time is referred to as the
@@ -606,19 +606,7 @@ ccf(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,lag.max=40)
 ```
 
 ![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
-
-we can also calculate the pcf
-
-
-```r
-pcf(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,lag.max=40)
-```
-
-```
-## Error in pcf(gpp.spring.daily$HYY_EDDY233.GPP, gpp.spring.daily$HYY_META.T168, : could not find function "pcf"
-```
-
-
 Now that is more like it! The positive values imply that GPP lags
-temperature during the spring, as we would expect.
+temperature during the spring, and there is also a secondary peak
+visible.
 

@@ -22,16 +22,16 @@
 <pre><code>## Time difference of 478 days</code></pre>
 <p>We can use a similar function to print out the current time and date</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">Sys.time</span>()</code></pre>
-<pre><code>## [1] &quot;2019-02-18 10:27:38 EET&quot;</code></pre>
+<pre><code>## [1] &quot;2019-02-18 10:33:04 EET&quot;</code></pre>
 <p>This is referred to as a datetime object, and is the main object type that we will deal with. Datetime objects contains date, time and also specifies the local timezone. Let's inspect a datetime object to find out what we are dealing with:</p>
 <pre class="sourceCode r"><code class="sourceCode r">just.before &lt;-<span class="st"> </span><span class="kw">Sys.time</span>()
 <span class="kw">str</span>(just.before)</code></pre>
-<pre><code>##  POSIXct[1:1], format: &quot;2019-02-18 10:27:38&quot;</code></pre>
+<pre><code>##  POSIXct[1:1], format: &quot;2019-02-18 10:33:04&quot;</code></pre>
 <p>In R, datetimes are either categorised as <em>POSIXct</em> or <em>POSIXlt</em>, which are the different methods R uses to store the information.</p>
 <p>Can you convert <em>just.before</em> from <em>POSIXct</em> to a <em>POSIXlt</em>?:</p>
 <pre class="sourceCode r"><code class="sourceCode r">just.before.lt &lt;-<span class="st"> </span><span class="kw">as.POSIXlt</span>(just.before)
 <span class="kw">str</span>(just.before.lt)</code></pre>
-<pre><code>##  POSIXlt[1:1], format: &quot;2019-02-18 10:27:38&quot;</code></pre>
+<pre><code>##  POSIXlt[1:1], format: &quot;2019-02-18 10:33:04&quot;</code></pre>
 <p>So what's the difference then?</p>
 <p>POSIXlt stores dates as lists (remember those?). Whereas POSIXct stores dates as the number of seconds that have elapsed since a particular date (1 January 1970, which you can read all about here <a href="https://en.wikipedia.org/wiki/Unix_time">the unix Epoch</a>).</p>
 <p>So when to use which? In all honesty I am not 100% sure. However as POSIXct takes less memory and is somewhat simpler then perhaps that is the preferred option.</p>
@@ -93,7 +93,7 @@
 <img src="figure/unnamed-chunk-15-1.png" alt="plot of chunk unnamed-chunk-15" /><p class="caption">plot of chunk unnamed-chunk-15</p>
 </div>
 <p>Once we identify history in our data then we can start to do interesting things; we might attempt to remove the dependence (by differencing), and we can also look at auto-correlation...</p>
-<h2 id="what-is-auto-correlation">what is auto-correlation?</h2>
+<h2 id="what-is-auto-correlation">What is auto-correlation?</h2>
 <p>In simple terms auto-correlation is the correlation between a variable and itself shifted in time. The shift in time is referred to as the <em>lag</em>. Typically we compute auto-correlation for a whole range of lags, and then plot the output as an <strong>auto-correlation function</strong>, which is a plot of lag Vs correlation value. Confused? well let's walk through a manual example using our GPP data.</p>
 <p>Lagging a variable simply shifts it in time. We can do that for our GPP data here and plot against the original time-series (which is shortened to the same length). Let's lag by 30 days and plot the output:</p>
 <pre class="sourceCode r"><code class="sourceCode r">lag &lt;-<span class="st"> </span><span class="dv">30</span>
@@ -238,10 +238,4 @@ T168.daily &lt;-<span class="st"> </span><span class="kw">aggregate</span>(HYY_M
 </div>
 <p>Now try the ccf on the spring recovery data:</p>
 <pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ccf</span>(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,<span class="dt">lag.max=</span><span class="dv">40</span>)</code></pre>
-<div class="figure">
-<img src="figure/unnamed-chunk-31-1.png" alt="plot of chunk unnamed-chunk-31" /><p class="caption">plot of chunk unnamed-chunk-31</p>
-</div>
-<p>we can also calculate the pcf</p>
-<pre class="sourceCode r"><code class="sourceCode r"><span class="kw">pcf</span>(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,<span class="dt">lag.max=</span><span class="dv">40</span>)</code></pre>
-<pre><code>## Error in pcf(gpp.spring.daily$HYY_EDDY233.GPP, gpp.spring.daily$HYY_META.T168, : could not find function &quot;pcf&quot;</code></pre>
-<p>Now that is more like it! The positive values imply that GPP lags temperature during the spring, as we would expect.</p>
+<p><img src="figure/unnamed-chunk-31-1.png" alt="plot of chunk unnamed-chunk-31" /> Now that is more like it! The positive values imply that GPP lags temperature during the spring, and there is also a secondary peak visible.</p>
