@@ -8,9 +8,9 @@ date: "February 14, 2019"
 
 In this session we will tackle the issue of dates and time-series.
 
-Time-series are everywhere in environmental data.  At there most basic
+Time-series are everywhere in environmental data.  At its most basic
 time-series data consist of two columns (vectors) of data. The first is
-the date-time column (plotted as X-axis on graph) and the second
+the date (time) column (plotted as X-axis on graph) and the second
 column is the variable of interest that changes as a function of time.
 
 There are two things we should keep in mind when working with
@@ -24,7 +24,7 @@ are also caveats related to using standard statistical techniques
    
 In this session we will explain how R handles dates, and we will also
 look at auto-correlation and cross-correlation of time-series, which
-are two concepts that are great importance in time-series analysis and
+are two concepts that are of great importance in time-series analysis and
 find application in a number of different places (e.g. Durbin Watson
 statistic, ARIMA models, eddy co-variance calculations etc).
 
@@ -32,10 +32,8 @@ statistic, ARIMA models, eddy co-variance calculations etc).
 
 The simplest representation of dates in R, is the suitably named
 *date* object. You can create one of these by converting a character
-of correct form e.g.
-
-Use the *as.Date()* function to convert *a.great.date.char* to 
-*a.great.R.date*
+of correct form. Use the *as.Date()* function to convert
+*a.great.date.char* to *a.great.R.date*
 
 
 ```r
@@ -63,11 +61,24 @@ print(a.great.R.date)
 ```
 ## [1] "2017-10-28"
 ```
-These variables may look similar, so why don't we just use the character
-representation "2017-10-28" rather than the special *date* object?
-One example of the usefulness of dates is the fact that we can
-perform arithmetic with dates. Try it out; what is the difference between the 
-date today *Sys.Date()* and *a.great.R.date*?
+
+You can also use the *Sys.Date()* function to print the current date
+
+
+```r
+Sys.Date()
+```
+
+```
+## [1] "2019-02-18"
+```
+
+
+Date and character variables look similar, so why don't we just
+use the character representation "2017-10-28" rather than the special
+*date* object?  One example of the usefulness of dates is the fact
+that we can perform arithmetic with dates. Try it out; what is the
+difference between the date today *Sys.Date()* and *a.great.R.date*?
 
 
 ```r
@@ -76,18 +87,7 @@ print(time.diff)
 ```
 
 ```
-## Time difference of 477 days
-```
-
-You can also use the *Sys.time()* function to print the current date
-
-
-```r
-Sys.Date()
-```
-
-```
-## [1] "2019-02-17"
+## Time difference of 478 days
 ```
 
 We can use a similar function to print out the current time and date
@@ -98,16 +98,12 @@ Sys.time()
 ```
 
 ```
-## [1] "2019-02-17 21:26:15 EET"
+## [1] "2019-02-18 10:27:38 EET"
 ```
 This is referred to as a datetime object, and is the main object type
-that we will deal with. Datetime objects objects contains date, time
-and also specifies the local timezone. We are typically interested in
-datetimes, so we will continue with those in this session. However
-keep in mind that a simple date object exists if you want to analyse
-data on a daily time-step.
-
-Let's inspect a datetime object to find out what we are dealing with:
+that we will deal with. Datetime objects contains date, time and also
+specifies the local timezone. Let's inspect a datetime object to find
+out what we are dealing with:
 
 
 ```r
@@ -116,7 +112,7 @@ str(just.before)
 ```
 
 ```
-##  POSIXct[1:1], format: "2019-02-17 21:26:15"
+##  POSIXct[1:1], format: "2019-02-18 10:27:38"
 ```
 
 In R, datetimes are either categorised as *POSIXct* or *POSIXlt*,
@@ -131,7 +127,7 @@ str(just.before.lt)
 ```
 
 ```
-##  POSIXlt[1:1], format: "2019-02-17 21:26:15"
+##  POSIXlt[1:1], format: "2019-02-18 10:27:38"
 ```
 
 So what's the difference then? 
@@ -148,8 +144,8 @@ is the preferred option.
 # 2. Dates and real data
 
 Let's see how we would read in some dates using real data. We have
-used this data before! GPP is an estimate of CO2 exchange of tree
-canopies:
+used this data before, but as a reminder GPP is an estimate of CO2
+exchange of tree canopies:
 
 
 ```r
@@ -176,7 +172,7 @@ we will start with a new character vector of date:
 date.char<-paste(gpp$Year,gpp$Month,gpp$Day,sep = '-')
 ```
 
-do the same for time, but this time set the *sep* argument to *:*:
+do the same for time, but this time set the *sep=:*:
 
 
 ```r
@@ -202,7 +198,7 @@ head(gpp$date)
 ```
 
 To make our life easier in the following selection we will use daily
-data:
+data. We can use *aggregate* to calculate median values:
 
 
 ```r
@@ -221,8 +217,7 @@ head(gpp.daily)
 ## 6 2016-01-06               0
 ```
 
-Remember to stick to the midday data in the following sections...
-
+Let's use this data in the following sections...
 
 #3. Does data have a sense of history? 
 
@@ -278,7 +273,7 @@ ggplot(gpp.daily,aes(x=date,y=HYY_EDDY233.GPP))+
 
 Once we identify history in our data then we can start to do
 interesting things; we might attempt to remove the dependence (by
-differencing). 
+differencing), and we can also look at auto-correlation... 
 
 ## what is auto-correlation?
 
@@ -289,8 +284,7 @@ and then plot the output as an **auto-correlation function**, which is
 a plot of lag Vs correlation value. Confused? well let's walk through
 a manual example using our GPP data.
 
-
-Lagging a variable simple shifts it in time. We can do that for
+Lagging a variable simply shifts it in time. We can do that for
 our GPP data here and plot against the original time-series
 (which is shortened to the same length). Let's lag by 30 days and
 plot the output:
@@ -317,7 +311,7 @@ ggplot() +
 
 ![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16-1.png)
 
-Auto-correlation is simply the correlation between these two variables
+Auto-correlation is the correlation between these two variables
 (the time-series and its lagged version). The following function *lags*
 data and works out the correlation:
 
@@ -332,7 +326,7 @@ lag.corr <- function(ts, lag){
   sum(b * c)/sum(a^2)
 }
 ```
-note that we do not use the simple *cor* function on our lagged data
+note that we do not use the built-in *cor* function on our lagged data
 to work out correlation, because the strict definition means that we
 use this alternative method instead. Click
 [here](https://stackoverflow.com/questions/32569322/apparent-error-in-r-acf-calculation/32570260#32570260)
@@ -449,7 +443,7 @@ acf(gpp.diff,lag.max=100)
 ```
 
 ![plot of chunk unnamed-chunk-24](figure/unnamed-chunk-24-1.png)
-Notice how different this *acf* plot is to the one for the
+Notice how different this *acf* plot is to the
 undifferenced data? The rapid fall-off in the acf means that our data
 no longer remembers so much of its history.
 
@@ -530,8 +524,8 @@ sum(is.na(T168$HYY_META.T168i))
 ## [1] 0
 ```
 
-
-Extract daily values, like our GPP above:
+Extract daily values, like our GPP above. You try out maximum for this 
+(rather than median):
 
 
 ```r
@@ -604,6 +598,8 @@ ggplot() +
 
 ![plot of chunk unnamed-chunk-30](figure/unnamed-chunk-30-1.png)
 
+Now try the ccf on the spring recovery data:
+
 
 ```r
 ccf(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,lag.max=40)
@@ -611,5 +607,18 @@ ccf(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,lag.max=40)
 
 ![plot of chunk unnamed-chunk-31](figure/unnamed-chunk-31-1.png)
 
+we can also calculate the pcf
+
+
+```r
+pcf(gpp.spring.daily$HYY_EDDY233.GPP,gpp.spring.daily$HYY_META.T168,lag.max=40)
+```
+
+```
+## Error in pcf(gpp.spring.daily$HYY_EDDY233.GPP, gpp.spring.daily$HYY_META.T168, : could not find function "pcf"
+```
+
+
 Now that is more like it! The positive values imply that GPP lags
 temperature during the spring, as we would expect.
+
