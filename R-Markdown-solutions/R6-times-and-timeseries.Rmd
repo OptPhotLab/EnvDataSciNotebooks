@@ -210,7 +210,7 @@ Once we identify history in our data then we can start to do
 interesting things; we might attempt to remove the dependence (by
 differencing), and we can also look at auto-correlation... 
 
-## what is auto-correlation?
+## What is auto-correlation?
 
 In simple terms auto-correlation is the correlation between a variable and
 itself shifted in time. The shift in time is referred to as the
