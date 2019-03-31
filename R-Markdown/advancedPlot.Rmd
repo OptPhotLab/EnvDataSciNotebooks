@@ -1,0 +1,405 @@
+---
+title: "advanced Plot"
+author: "Chao"
+date: "March 15, 2019"
+output: html_document
+---
+
+#1. draw and save figures separately using ggplot and lapply 
+
+read data
+
+'Plotting_excercise.csv' is the data from last session (ggplot2-20190304)
+
+```{r}
+testdata<-read.csv('Plotting_excercise.csv',header = T,sep = ';')
+```
+
+##1.1. check names of the variables
+
+```{r}
+names(testdata)
+```
+
+we want to plot scatterplot to compare:
+
+* RespVar1 vs. VarIndep1
+
+* RespVar1 vs. VarIndep2
+
+* RespVar1 vs. VarIndep3
+
+* RespVar2 vs. VarIndep1
+
+* RespVar2 vs. VarIndep2
+
+* RespVar2 vs. VarIndep3
+
+we have also groups, e.g. "Treatment","Exp" ,"Species","FuncGrp" 
+
+##1.2. load package
+
+```{r library}
+library(ggplot2,warn.conflicts = F,quietly = T)
+library(scales,warn.conflicts = F,quietly = T)
+```
+
+##1.3. build a theme, which will be used throughout the script
+
+```{r mytheme}
+mytheme<-
+  theme_bw()+        
+  theme(plot.background=element_blank(),
+        plot.title=element_text(lineheight=0.93,face='bold'),
+        panel.background=element_blank(),
+        panel.grid.minor=element_blank(),
+        panel.grid.major=element_blank(),
+        panel.border=element_rect(fill=NULL,colour='black',linetype=1),
+        axis.line=element_line(colour='black',linetype=1),
+        axis.ticks=element_line(colour='black',linetype=1),
+        axis.title.y = element_text(face='bold',
+                                    colour='black',size=15,vjust=1),
+        axis.text.y  = element_text(colour='black',vjust=0.5, size=10,
+                                    face = "bold"),
+        axis.title.x = element_text(face='bold',
+                                    colour='black',size=10,vjust=0.2),
+        axis.text.x  = element_text(colour='black',angle=0, face = "bold",
+                                    vjust=0.2, size=8),
+        legend.title=element_blank(),
+        legend.background=element_blank(),
+        legend.text =
+          element_text(colour="black", size = 12, face = "bold"),
+        legend.position='top',
+        legend.key=element_blank(),
+        legend.direction="horizontal")
+```
+
+##1.4. Scatterplot 
+
+###1.4.1 RespVar1 vs. all VarIndep by group of "FuncGrp", named as individual.plot1 
+
+* RespVar1 vs. VarIndep1
+
+* RespVar1 vs. VarIndep2
+
+* RespVar1 vs. VarIndep3
+
+```{r fig.width=3,fig.height=2}
+individual.plot1<-
+  lapply(names(testdata)[9:11], function(i){
+    ggplot(testdata,aes_string('RespVar1',i))+
+      geom_point(aes(color=FuncGrp))+
+      geom_smooth(aes(group=FuncGrp,color=FuncGrp),
+                 method = 'lm',se=F,size=0.5)+
+      mytheme})
+```
+
+check the result
+
+```{r}
+individual.plot1
+```
+
+
+###1.4.2 Save individual.plot1 (if this one doesnot work, put it into comment)
+
+```{r}
+invisible(lapply(seq_along(individual.plot1),function(x)
+  ggsave(filename=paste0(names(testdata)[9:11][x],".tiff"),plot=individual.plot1[[x]],
+         dpi = 600,compression='lzw',height = 3,width = 3)))
+```
+
+###1.4.3 all RespVar vs. all VarIndep by group of "FuncGrp", named as individual.plot2 
+
+```{r fig.width=3,fig.height=2}
+ individual.plot2<-
+  lapply(names(testdata)[7:8],function(i){
+    lapply(names(testdata)[9:11], function(j){
+      ggplot(testdata,aes_string(i,j))+
+        geom_point(aes(color=FuncGrp))+
+        geom_smooth(aes(group=FuncGrp,color=FuncGrp),
+                   method = 'lm',se=F,size=0.5)+
+        scale_color_manual(values = c('blue','orange'))+
+        mytheme})
+    })
+```
+
+check the result
+
+```{r}
+individual.plot2
+```
+
+###1.4.4 Save individual.plot2  (if this one doesnot work, put it into comment)
+
+```{r}
+invisible(
+  lapply(seq_along(individual.plot2),function(x){
+    lapply(seq_along(individual.plot2[[x]]),function(y){
+      ggsave(filename=paste0(names(testdata)[7:8][x],'_',
+                             names(testdata)[9:11][y],".tiff"),
+             plot=individual.plot2[[x]][[y]],
+             dpi = 600,compression='lzw',height = 3,width = 3)})}))
+```
+
+###1.4.5 all RespVar vs. all VarIndep by group of 'Species' and "FuncGrp", named as individual.plot3
+
+```{r fig.width=3,fig.height=4}
+ individual.plot3<-
+  lapply(names(testdata)[7:8],function(i){
+    lapply(names(testdata)[9:11], function(j){
+      ggplot(testdata,aes_string(i,j))+
+        facet_grid(Species~.,scales = 'free')+
+        geom_point(aes(color=FuncGrp))+
+        geom_smooth(aes(group=FuncGrp,color=FuncGrp),
+                    method = 'lm',se=F,size=0.5)+
+        scale_color_manual(values = c('blue','orange'))+
+        mytheme})
+    })
+```
+
+check the result
+
+```{r}
+individual.plot3
+```
+
+
+###1.4.6 Save individual.plot3 (if this one doesnot work, put it into comment)
+
+```{r}
+invisible(
+  lapply(seq_along(individual.plot3),function(x){
+    lapply(seq_along(individual.plot3[[x]]),function(y){
+      ggsave(filename=paste0('Species_',
+                             names(testdata)[7:8][x],'_',
+                             names(testdata)[9:11][y],
+                             ".tiff"),
+             plot=individual.plot3[[x]][[y]],
+             dpi = 600,compression='lzw',height = 5,width = 3)})}))
+```
+
+###1.4.7 all RespVar vs. all VarIndep by group of 'Species' and "FuncGrp", named as individual.plot4
+
+```{r fig.width=10,fig.height=6}
+ individual.plot4<-
+  lapply(names(testdata)[7:8],function(i){
+    lapply(names(testdata)[9:11], function(j){
+      ggplot(testdata,aes_string(i,j))+
+        facet_grid(Species~Exp,scales = 'free')+
+        geom_point(aes(color=FuncGrp))+
+        geom_smooth(aes(group=FuncGrp,color=FuncGrp),
+                    method = 'lm',se=F,size=0.5)+
+        scale_color_manual(values = c('blue','orange'))+
+        mytheme})
+    })
+```
+
+check the result
+
+```{r}
+individual.plot4
+```
+
+###1.4.8 Save individual.plot4 (if this one doesnot work, put it into comment)
+
+```{r}
+invisible(
+  lapply(seq_along(individual.plot4),function(x){
+    lapply(seq_along(individual.plot4[[x]]),function(y){
+      ggsave(filename=paste0('Species_Exp_',
+                             names(testdata)[7:8][x],'_',
+                             names(testdata)[9:11][y],
+                             ".tiff"),
+             plot=individual.plot4[[x]][[y]],
+             dpi = 600,compression='lzw',height = 6,width = 8)})}))
+```
+
+#2. plot correlation matrix
+
+
+use chart.Correlation() function from 'PerformanceAnalytics'
+
+```{r}
+library(PerformanceAnalytics)
+chart.Correlation(testdata[,7:11],histogram=F, pch=19,cex=0.2,na.action=na.omit)
+```
+
+plot correlation matrix by groups of Treatment and FuncGrp
+
+results should be followed by 
+
+figure 1: treat1*FG1
+figure 2: treat1*FG2
+figure 3: treat2*FG1
+figure 4: treat2*FG2
+
+```{r}
+test.subset<-
+  lapply(levels(testdata$Treatment),function(i){ 
+  lapply(levels(testdata$FuncGrp),function(j){
+        chart.Correlation(
+          testdata[testdata$Treatment==i&
+                   testdata$FuncGrp==j,7:11],
+          histogram=F, pch=19,cex=0.2)
+        })
+      })
+```
+
+use rcorr() from 'Hmisc' package for obtaining correlation matrix
+
+```{r}
+library(Hmisc)
+lrm.resul<-rcorr(as.matrix(testdata[,7:11]))
+```
+
+check the structure of lrm.result
+
+```{r}
+str(lrm.resul)
+```
+
+plot correlation matrix by using corrplot() function from 'corrplot' package
+
+```{r fig.width=10,fig.height=6}
+library(corrplot)
+# r value
+corrplot(lrm.resul$r,method='col',tl.cex = 1, tl.col='black',cl.cex=1,
+         #addCoef.col = "black",
+         col= colorRampPalette(c("#D6604D", "#F4A582", "#FDDBC7",
+        "#FFFFFF", "#D1E5F0", "#92C5DE", "#4393C3"))(10))
+
+```
+
+```{r}
+# p value
+corrplot(lrm.resul$P,method='col',tl.cex = 1, tl.col='black',cl.cex=1,
+         addCoef.col = "black",
+         col= colorRampPalette(c("#D6604D", "#F4A582", "#FDDBC7",
+        "#FFFFFF", "#D1E5F0", "#92C5DE", "#4393C3"))(10))
+```
+
+#3. 3D plot 
+
+```{r}
+#read data
+correctF<-read.csv('correctF.csv',header = T,sep='')
+#convert colunm of 'Date' to date format
+correctF$Date<-as.Date(correctF$Date)
+#subset, namely, choose data when 680<wavelength<770
+correctF<-correctF[which(correctF$wavelength>680&correctF$wavelength<770),]
+```
+
+plot 3D figure using plot_ly() function from 'plotly' package
+
+'ggplot2' uses '+' to add functions, while 'plotly' uses %>% to add functions
+
+```{r}
+library(plotly)
+F.3d1<-correctF %>% group_by(Date) %>% 
+  plot_ly(y = ~Date, x = ~wavelength, z = ~corre.F,type='scatter3d',mode='lines',color=I("BLUE"))
+```
+
+check the result
+
+```{r}
+F.3d1
+```
+
+save the result to 'html' format (if this one doesnot work, put it into comment)
+
+```{r}
+htmlwidgets::saveWidget(F.3d1, "F3D1.html")
+```
+
+optimize the figure by setting the axis format and text font
+
+```{r}
+#set text font
+f1 <- list(family = "Times New Roman",size = 10,color = "black")
+#set axis format
+axis.x<- list(titlefont = f1,tickfont = f1,
+            gridcolor="rgb(0,0,0)",ticklen = 5,
+            gridwidth = 2.5,title='Wavelength (nm)')
+axis.y<- list(titlefont = f1,tickfont = f1,
+            gridcolor="rgb(0,0,0)",ticklen = 5,
+            gridwidth = 2.5,title='Date')
+axis.z<- list(titlefont = f1,tickfont = f1,
+            gridcolor="rgb(0,0,0)",ticklen = 5,
+            gridwidth = 2.5,title='Fluorescence (mW m-2 sr-1 nm-1)')
+```
+
+plot 3D figure by adding axis setting
+
+```{r}
+F.3d2<-correctF %>% group_by(Date) %>% 
+  plot_ly(y = ~Date, x = ~wavelength, z = ~corre.F,type='scatter3d',mode='lines',color=I("BLUE"))%>% 
+  layout(scene=list(xaxis = axis.x,
+                    yaxis = axis.y,  
+                    zaxis = axis.z))
+F.3d2
+#save the result(if this one doesnot work, put it into comment)
+htmlwidgets::saveWidget(F.3d2, "F3D2.html") 
+```
+
+
+#4. contour plot using plot_ly() funciton from 'plotly' package
+
+setting the text font, axis format, and title format of the legend 
+
+```{r include=FALSE}
+#set the font
+f1 <- list(family = "Times New Roman",size = 16,color = "black")
+# sett the axis
+axis.x <- list(titlefont = f1,tickfont = f1,showgrid = T,title='Wavelength (nm)',
+               autotick = FALSE,  ticks = "outside",  tick0 = 680,  dtick = 20,ticklen = 5)
+axis.y <- list(titlefont = f1,tickfont = f1,showgrid = T,title='Date')
+# set the legend title format
+legend.title<-list(titlefont = f1,title='Fluorescence (mW m-2 sr-1 nm-1)')
+```
+
+plot the contour figure 
+
+
+```{r}
+library(plotly)
+F.contour1<-correctF %>% 
+  plot_ly(y = ~Date, x = ~wavelength, z = ~corre.F,type='contour',#colors = c('grey','black'),
+                             contours = list(size=0.2,showlabels = TRUE),  #contours=list(coloring='heatmap')
+                             marker = list(colorbar = list(len = 0.1, 
+                                      title = legend.title)))%>%
+  layout(autosize = F, 
+    margin = list(t = 80, r = 30, b = 160, l = 240),
+    xaxis=axis.x,
+    yaxis=axis.y)
+F.contour1
+```
+
+save figure (if this one doesnot work, put it into comment)
+
+```{r}
+htmlwidgets::saveWidget(F.contour1, "Fcontour1.html")
+```
+
+add two vertical lines using add_segments() function
+
+```{r}
+F.contour2<-
+  F.contour1%>%
+  add_segments(x = 690, xend = 690,inherit=FALSE,  showlegend=FALSE,
+               line = list(color='orange',dash = 'dash'),
+               y=as.Date('2015-03-04'),
+               yend=as.Date('2015-07-20'))%>%
+  add_segments(x = 740, xend = 740,inherit=FALSE,  showlegend=FALSE,
+               line = list(color='orange',dash = 'dash'),
+               y=as.Date('2015-03-04'),
+               yend=as.Date('2015-07-20'))
+F.contour2
+```
+
+check and save figure (if this one doesnot work, put it into comment)
+
+```{r}
+htmlwidgets::saveWidget(F.contour2, "Fcontour2.html")
+```
+
